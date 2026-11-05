@@ -1,0 +1,2721 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeyType Pro | Ultimate Typing Test, AI Coach & Exam Platform</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter, JetBrains Mono, Noto Sans Devanagari, Lexend (Dyslexia Friendly) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Lexend:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Noto Sans Devanagari', 'monospace'],
+                        hindi: ['Noto Sans Devanagari', 'sans-serif'],
+                        dyslexic: ['Lexend', 'sans-serif']
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                        'gradient-x': 'gradient-x 8s ease infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-6px)' },
+                        },
+                        'gradient-x': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-primary: #090b14;
+            --bg-card: rgba(19, 23, 40, 0.78);
+            --text-main: #f8fafc;
+            --accent-glow: rgba(139, 92, 246, 0.45);
+            --typing-font-size: 1.5rem;
+            --typing-line-height: 2.35rem;
+        }
+
+        body.theme-light {
+            --bg-primary: #f1f5f9;
+            --bg-card: rgba(255, 255, 255, 0.88);
+            --text-main: #0f172a;
+            --accent-glow: rgba(99, 102, 241, 0.25);
+        }
+
+        body.theme-contrast {
+            --bg-primary: #000000;
+            --bg-card: #111111;
+            --text-main: #ffff00;
+            --accent-glow: rgba(0, 255, 255, 0.7);
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Vibrant Background Mesh */
+        .bg-vibrant-mesh {
+            background-image: 
+                radial-gradient(at 12% 15%, rgba(124, 58, 237, 0.26) 0px, transparent 50%),
+                radial-gradient(at 88% 12%, rgba(236, 72, 153, 0.22) 0px, transparent 50%),
+                radial-gradient(at 50% 85%, rgba(6, 182, 212, 0.20) 0px, transparent 50%),
+                radial-gradient(at 85% 80%, rgba(16, 185, 129, 0.16) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.35);
+        }
+
+        .theme-light .glass-card {
+            border: 1px solid rgba(99, 102, 241, 0.18);
+            box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.1);
+        }
+
+        /* Gradient Borders & Buttons */
+        .vibrant-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+        }
+
+        .vibrant-gradient-cyan {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+        }
+
+        .vibrant-gradient-emerald {
+            background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+        }
+
+        .vibrant-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #a855f7 50%, #f43f5e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Typing Display Box Styling */
+        #typing-text-container {
+            font-size: var(--typing-font-size);
+            line-height: var(--typing-line-height);
+            scroll-behavior: smooth;
+            user-select: none;
+        }
+
+        .char-item {
+            position: relative;
+            transition: color 0.08s ease, background-color 0.08s ease;
+            border-radius: 4px;
+            padding: 0 1px;
+        }
+
+        .char-pending {
+            color: #64748b;
+        }
+        .theme-light .char-pending {
+            color: #94a3b8;
+        }
+
+        .char-correct {
+            color: #10b981;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+        }
+
+        .char-incorrect {
+            color: #f43f5e;
+            background-color: rgba(244, 63, 94, 0.22);
+            border-bottom: 2px solid #f43f5e;
+        }
+
+        /* Active Caret Styles */
+        .char-current.caret-block {
+            background: rgba(168, 85, 247, 0.35);
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+            animation: caretPulse 0.9s infinite;
+        }
+
+        .char-current.caret-line::before {
+            content: '';
+            position: absolute;
+            left: -1px;
+            top: 8%;
+            height: 84%;
+            width: 3px;
+            background: #ec4899;
+            box-shadow: 0 0 10px #ec4899;
+            animation: caretBlink 0.8s infinite;
+        }
+
+        .char-current.caret-underline {
+            border-bottom: 3px solid #06b6d4;
+            box-shadow: 0 4px 10px -2px rgba(6, 182, 212, 0.6);
+        }
+
+        @keyframes caretBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.15; }
+        }
+        @keyframes caretPulse {
+            0%, 100% { background-color: rgba(168, 85, 247, 0.42); }
+            50% { background-color: rgba(236, 72, 153, 0.22); }
+        }
+
+        /* Virtual Keyboard Keys */
+        .vk-key {
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.45);
+            user-select: none;
+        }
+
+        .vk-key.active-press {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+            filter: brightness(1.3);
+        }
+
+        .vk-key.next-target {
+            border: 2px solid #ec4899 !important;
+            box-shadow: 0 0 16px rgba(236, 72, 153, 0.7), 0 4px 0 rgba(157, 23, 77, 0.8) !important;
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        /* Finger Guide Color Coding */
+        .finger-l-pinky { border-bottom: 3px solid #f43f5e; }
+        .finger-l-ring  { border-bottom: 3px solid #fb923c; }
+        .finger-l-mid   { border-bottom: 3px solid #facc15; }
+        .finger-l-index { border-bottom: 3px solid #10b981; }
+        .finger-thumb   { border-bottom: 3px solid #a855f7; }
+        .finger-r-index { border-bottom: 3px solid #06b6d4; }
+        .finger-r-mid   { border-bottom: 3px solid #3b82f6; }
+        .finger-r-ring  { border-bottom: 3px solid #8b5cf6; }
+        .finger-r-pinky { border-bottom: 3px solid #ec4899; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #6366f1, #ec4899);
+            border-radius: 9999px;
+        }
+
+        /* Print Certificate Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #certificate-print-area, #certificate-print-area * {
+                visibility: visible;
+            }
+            #certificate-print-area {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: auto;
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-vibrant-mesh min-h-screen flex flex-col selection:bg-fuchsia-500 selection:text-white">
+
+    <!-- TOP ANNOUNCEMENT & GAMIFICATION HEADER -->
+    <header class="sticky top-0 z-40 glass-card border-b border-white/10 px-4 py-2.5">
+        <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-3">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('typing-test')">
+                <div class="w-11 h-11 rounded-2xl vibrant-gradient flex items-center justify-center shadow-lg shadow-fuchsia-500/30 animate-float">
+                    <i class="fa-solid fa-keyboard text-white text-xl"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-black text-xl tracking-tight vibrant-text">KEYTYPE PRO</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30">Ultra v4.0</span>
+                    </div>
+                    <p class="text-xs text-slate-400 hidden sm:block">AI Typing Coach • Govt Exam Simulator • Multilingual</p>
+                </div>
+            </div>
+
+            <!-- Live Quick Telemetry & User Level Bar -->
+            <div class="flex items-center flex-wrap gap-3 sm:gap-5">
+                <!-- Streak Counter -->
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold" title="Daily Typing Streak">
+                    <i class="fa-solid fa-fire-flame-curved text-amber-400 animate-bounce"></i>
+                    <span>Streak: <strong id="header-streak">5</strong> Days</span>
+                </div>
+
+                <!-- XP & Level Pill -->
+                <div class="flex items-center gap-2.5 bg-slate-900/70 border border-white/10 px-3.5 py-1.5 rounded-xl">
+                    <div class="w-7 h-7 rounded-lg vibrant-gradient-cyan flex items-center justify-center font-bold text-xs text-white" id="header-level-badge">
+                        L4
+                    </div>
+                    <div class="w-24 sm:w-32">
+                        <div class="flex justify-between text-[11px] font-semibold mb-1">
+                            <span id="header-rank-title" class="text-cyan-300">Cyber Typist</span>
+                            <span id="header-xp-text" class="text-slate-400">450 XP</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                            <div id="header-xp-bar" class="h-full vibrant-gradient transition-all duration-500" style="width: 65%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sound Toggle Quick Button -->
+                <button onclick="toggleQuickSound()" id="quick-sound-btn" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-cyan-300 transition" title="Toggle Mechanical Keyboard Sound">
+                    <i class="fa-solid fa-volume-high" id="quick-sound-icon"></i>
+                </button>
+
+                <!-- Theme Quick Switch -->
+                <button onclick="cycleTheme()" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-fuchsia-300 transition" title="Switch Visual Theme">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </button>
+
+                <!-- User Profile Button -->
+                <button onclick="openProfileModal()" class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600/30 to-fuchsia-600/30 border border-fuchsia-400/30 hover:border-fuchsia-400 transition">
+                    <div class="w-7 h-7 rounded-lg vibrant-gradient flex items-center justify-center text-white font-bold text-xs" id="header-avatar">
+                        A
+                    </div>
+                    <span class="text-xs font-bold hidden md:inline" id="header-username">Gautam sachdev</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN WORKSPACE: SIDEBAR NAVIGATION + DYNAMIC MODULE VIEW -->
+    <div class="max-w-[1600px] w-full mx-auto flex-1 flex flex-col lg:flex-row gap-5 p-4 sm:p-6">
+
+        <!-- LEFT NAVIGATION SIDEBAR (10 Structured Modules) -->
+        <aside class="w-full lg:w-64 shrink-0">
+            <nav class="glass-card rounded-2xl p-3 sticky top-20 flex lg:flex-col gap-1.5 overflow-x-auto lg:overflow-x-visible">
+                <button onclick="switchTab('dashboard')" data-tab="dashboard" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i class="fa-solid fa-chart-pie w-5 text-center text-indigo-400"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button onclick="switchTab('typing-test')" data-tab="typing-test" class="nav-btn active-nav flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i class="fa-solid fa-bolt w-5 text-center text-fuchsia-400"></i>
+                    <span>Typing Test</span>
+                    <span class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-white/20 text-white">LIVE</span>
+                </button>
+                <button onclick="switchTab('practice')" data-tab="practice" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i class="fa-solid fa-graduation-cap w-5 text-center text-emerald-400"></i>
+                    <span>Practice & AI Weak Keys</span>
+                </button>
+                <button onclick="switchTab('exam-mode')" data-tab="exam-mode" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i class="fa-solid fa-building-columns w-5 text-center text-amber-400"></i>
+                    <span>Govt Exam Mode</span>
+                    <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300">SSC/CPCT</span>
+                </button>
+                <button onclick="switchTab('results')" data-tab="results" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i class="fa-solid fa-square-poll-vertical w-5 text-center text-cyan-400"></i>
+                    <span>Results & DNA Report</span>
+                </button>
+                <button onclick="switchTab('leaderboard')" data-tab="leaderboard" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i class="fa-solid fa-flag-checkered w-5 text-center text-rose-400"></i>
+                    <span>Multiplayer & Ranks</span>
+                </button>
+                <button onclick="switchTab('challenges')" data-tab="challenges" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i class="fa-solid fa-trophy w-5 text-center text-yellow-400"></i>
+                    <span>Challenges & Badges</span>
+                </button>
+                <button onclick="switchTab('certificates')" data-tab="certificates" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i class="fa-solid fa-award w-5 text-center text-purple-400"></i>
+                    <span>Certificates</span>
+                </button>
+                <button onclick="switchTab('settings')" data-tab="settings" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i class="fa-solid fa-sliders w-5 text-center text-sky-400"></i>
+                    <span>Settings & Themes</span>
+                </button>
+                <button onclick="switchTab('admin')" data-tab="admin" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i class="fa-solid fa-user-shield w-5 text-center text-teal-400"></i>
+                    <span>Admin & Institute</span>
+                </button>
+
+                <!-- Quick AI Tip Card inside Sidebar (Desktop) -->
+                <div class="hidden lg:block mt-4 p-3.5 rounded-xl bg-gradient-to-br from-indigo-900/50 via-purple-900/40 to-fuchsia-900/40 border border-fuchsia-500/30">
+                    <div class="flex items-center gap-2 text-xs font-bold text-fuchsia-300 mb-1">
+                        <i class="fa-solid fa-robot"></i>
+                        <span>AI COACH TIP</span>
+                    </div>
+                    <p id="sidebar-ai-tip" class="text-[11px] text-slate-300 leading-relaxed">
+                        Keep your wrists elevated and thumbs resting on the Spacebar. Focus on 98%+ accuracy before pushing speed!
+                    </p>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- RIGHT MAIN CONTENT AREA -->
+        <main class="flex-1 min-w-0">
+
+            <!-- ==========================================
+                 MODULE 1: TYPING TEST (CORE ENGINE)
+                 ========================================== -->
+            <section id="tab-typing-test" class="tab-section space-y-5">
+                
+                <!-- Top Control Bar: Duration, Mode, Content Type, Language -->
+                <div class="glass-card rounded-2xl p-4 border border-white/15">
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-3">
+                        
+                        <!-- 1. Test Mode & Duration -->
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                                <i class="fa-regular fa-clock text-fuchsia-400 mr-1"></i> Duration / Mode
+                            </label>
+                            <select id="test-duration-select" onchange="handleConfigChange()" class="w-full bg-slate-900/90 text-white text-xs font-semibold rounded-xl px-3 py-2.5 border border-white/15 focus:border-fuchsia-500 outline-none">
+                                <option value="15">15 Seconds (Sprint)</option>
+                                <option value="30">30 Seconds (Quick)</option>
+                                <option value="60" selected>1 Minute (Standard)</option>
+                                <option value="120">2 Minutes</option>
+                                <option value="180">3 Minutes</option>
+                                <option value="300">5 Minutes (Endurance)</option>
+                                <option value="600">10 Minutes (SSC/Exam)</option>
+                                <option value="900">15 Minutes (CPCT/Court)</option>
+                                <option value="1800">30 Minutes (Marathon)</option>
+                                <option value="free">Practice Without Timer (Free)</option>
+                                <option value="custom-time">Custom Duration...</option>
+                            </select>
+                        </div>
+
+                        <!-- 2. Content Category -->
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                                <i class="fa-solid fa-layer-group text-cyan-400 mr-1"></i> Content Type
+                            </label>
+                            <select id="test-content-select" onchange="handleConfigChange()" class="w-full bg-slate-900/90 text-white text-xs font-semibold rounded-xl px-3 py-2.5 border border-white/15 focus:border-cyan-500 outline-none">
+                                <optgroup label="Paragraph Typing">
+                                    <option value="para-simple" selected>Simple Paragraphs</option>
+                                    <option value="para-long">Long Literature & Essays</option>
+                                    <option value="para-tech">Technical & AI Articles</option>
+                                </optgroup>
+                                <optgroup label="Word Typing">
+                                    <option value="words-common">Top 200 Common Words</option>
+                                    <option value="words-difficult">Difficult & Complex Words</option>
+                                    <option value="words-misspelled">Frequently Misspelled Words</option>
+                                </optgroup>
+                                <optgroup label="Special & Alphanumeric">
+                                    <option value="special-numbers">Numbers & Data Entry</option>
+                                    <option value="special-symbols">Symbols & Code Syntax</option>
+                                    <option value="special-mixed">Mixed Alphanumeric + Caps</option>
+                                </optgroup>
+                                <optgroup label="Personalized">
+                                    <option value="ai-weak-keys">AI Weak-Key Custom Drill</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <!-- 3. Language & Font Script -->
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                                <i class="fa-solid fa-language text-emerald-400 mr-1"></i> Language & Script
+                            </label>
+                            <select id="test-language-select" onchange="handleConfigChange()" class="w-full bg-slate-900/90 text-white text-xs font-semibold rounded-xl px-3 py-2.5 border border-white/15 focus:border-emerald-500 outline-none">
+                                <option value="en-qwerty" selected>English (QWERTY Standard)</option>
+                                <option value="hi-unicode">Hindi Unicode (Mangal / InScript)</option>
+                                <option value="hi-krutidev">Hindi Kruti Dev / Remington Style</option>
+                                <option value="mr-marathi">Marathi (Devanagari)</option>
+                                <option value="sa-sanskrit">Sanskrit (Devanagari)</option>
+                                <option value="bn-bengali">Bengali (বাংলা)</option>
+                                <option value="ta-tamil">Tamil (தமிழ்)</option>
+                                <option value="te-telugu">Telugu (తెలుగు)</option>
+                                <option value="pa-punjabi">Punjabi (ਪੰਜਾਬੀ)</option>
+                                <option value="gu-gujarati">Gujarati (ગુજરાતી)</option>
+                            </select>
+                        </div>
+
+                        <!-- 4. Active Exam / Rules Preset -->
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                                <i class="fa-solid fa-shield-halved text-amber-400 mr-1"></i> Rules & Anti-Cheat
+                            </label>
+                            <select id="test-rules-select" onchange="handleRulesChange()" class="w-full bg-slate-900/90 text-white text-xs font-semibold rounded-xl px-3 py-2.5 border border-white/15 focus:border-amber-500 outline-none">
+                                <option value="standard" selected>Standard Mode (Backspace Allowed)</option>
+                                <option value="strict">Strict Exam Mode (No Backspace/Pause)</option>
+                                <option value="word-lock">Word Lock (Fix Error to Advance)</option>
+                            </select>
+                        </div>
+
+                        <!-- 5. Custom Upload / Paste & Fullscreen -->
+                        <div class="flex items-end gap-2">
+                            <button onclick="openCustomTextModal()" class="flex-1 py-2.5 px-3 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-400/40 text-indigo-200 text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-file-arrow-up"></i>
+                                <span>Custom Text</span>
+                            </button>
+                            <button onclick="toggleFullScreen()" class="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-bold transition" title="Full Screen Typing Mode">
+                                <i class="fa-solid fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Telemetry HUD (Floating Gradient Stat Cards) -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <!-- Timer -->
+                    <div class="glass-card rounded-2xl p-3.5 border-l-4 border-l-fuchsia-500 flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Time Left</p>
+                            <p id="live-timer" class="text-2xl font-black font-mono text-white">01:00</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-fuchsia-500/15 flex items-center justify-center text-fuchsia-400">
+                            <i class="fa-solid fa-stopwatch text-lg"></i>
+                        </div>
+                    </div>
+
+                    <!-- Net WPM -->
+                    <div class="glass-card rounded-2xl p-3.5 border-l-4 border-l-cyan-400 flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Net WPM</p>
+                            <p id="live-wpm" class="text-2xl font-black font-mono text-cyan-300">0</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/15 flex items-center justify-center text-cyan-400">
+                            <i class="fa-solid fa-gauge-high text-lg"></i>
+                        </div>
+                    </div>
+
+                    <!-- Accuracy -->
+                    <div class="glass-card rounded-2xl p-3.5 border-l-4 border-l-emerald-400 flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Accuracy</p>
+                            <p id="live-accuracy" class="text-2xl font-black font-mono text-emerald-400">100%</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/15 flex items-center justify-center text-emerald-400">
+                            <i class="fa-solid fa-bullseye text-lg"></i>
+                        </div>
+                    </div>
+
+                    <!-- Gross CPM / KPM -->
+                    <div class="glass-card rounded-2xl p-3.5 border-l-4 border-l-indigo-400 flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">CPM (Gross WPM)</p>
+                            <p id="live-cpm" class="text-xl font-black font-mono text-indigo-300">0 <span class="text-xs text-slate-400">(0)</span></p>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-indigo-500/15 flex items-center justify-center text-indigo-400">
+                            <i class="fa-solid fa-keyboard text-lg"></i>
+                        </div>
+                    </div>
+
+                    <!-- Errors & Backspaces -->
+                    <div class="glass-card rounded-2xl p-3.5 border-l-4 border-l-rose-500 flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Errors / Backspace</p>
+                            <p class="text-xl font-black font-mono text-rose-400">
+                                <span id="live-errors">0</span> <span class="text-xs text-slate-400">/ <span id="live-backspaces">0</span></span>
+                            </p>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-rose-500/15 flex items-center justify-center text-rose-400">
+                            <i class="fa-solid fa-triangle-exclamation text-lg"></i>
+                        </div>
+                    </div>
+
+                    <!-- Progress & Remaining -->
+                    <div class="glass-card rounded-2xl p-3.5 border-l-4 border-l-amber-400 flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Words Typed</p>
+                            <p id="live-words-progress" class="text-xl font-black font-mono text-amber-300">0 / 0</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/15 flex items-center justify-center text-amber-400">
+                            <i class="fa-solid fa-flag-checkered text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAIN INTERACTIVE TYPING ARENA -->
+                <div class="glass-card rounded-3xl p-5 sm:p-6 border border-fuchsia-500/30 relative overflow-hidden">
+                    
+                    <!-- Top Progress Bar & Active Exam Banner -->
+                    <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden mb-4">
+                        <div id="test-progress-bar" class="h-full vibrant-gradient transition-all duration-200" style="width: 0%"></div>
+                    </div>
+
+                    <!-- Active Mode Status Strip -->
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-3 text-xs">
+                        <div class="flex items-center gap-2">
+                            <span id="active-mode-pill" class="px-2.5 py-1 rounded-lg bg-fuchsia-500/20 text-fuchsia-300 font-bold border border-fuchsia-500/30">
+                                <i class="fa-solid fa-bolt mr-1"></i> Auto-Start on First Keystroke
+                            </span>
+                            <span id="anti-cheat-pill" class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 font-medium border border-emerald-500/30 hidden sm:inline-flex items-center gap-1">
+                                <i class="fa-solid fa-lock text-[10px]"></i> Anti-Cheat Active (Copy/Paste Disabled)
+                            </span>
+                        </div>
+
+                        <!-- Test Action Controls (Start, Pause, Restart, Stop) -->
+                        <div class="flex items-center gap-2">
+                            <button onclick="startTypingTestManual()" id="btn-start-test" class="px-3.5 py-1.5 rounded-xl vibrant-gradient text-white font-bold shadow-lg shadow-fuchsia-500/25 hover:opacity-95 transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-play"></i> <span>Start</span>
+                            </button>
+                            <button onclick="togglePauseTest()" id="btn-pause-test" class="px-3.5 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 font-bold transition flex items-center gap-1.5" disabled>
+                                <i class="fa-solid fa-pause"></i> <span id="pause-btn-text">Pause</span>
+                            </button>
+                            <button onclick="restartTypingTest()" id="btn-restart-test" class="px-3.5 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/30 font-bold transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-rotate-right"></i> <span>Restart (Alt+R)</span>
+                            </button>
+                            <button onclick="finishTypingTest('Manual Submit')" id="btn-stop-test" class="px-3.5 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 font-bold transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-flag"></i> <span>Submit</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- THE SCROLLABLE TARGET TEXT DISPLAY -->
+                    <div id="typing-text-container" onclick="focusTypingInput()" class="h-44 sm:h-48 overflow-y-auto p-4 sm:p-5 rounded-2xl bg-slate-950/80 border border-white/10 font-mono tracking-wide cursor-text relative">
+                        <!-- Dynamically Populated Spans -->
+                    </div>
+
+                    <!-- Hidden / Direct Typing Input Box + Live Word Preview -->
+                    <div class="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <div class="relative flex-1">
+                            <input 
+                                type="text" 
+                                id="typing-hidden-input" 
+                                autocomplete="off" 
+                                autocorrect="off" 
+                                autocapitalize="off" 
+                                spellcheck="false"
+                                placeholder="Click here or start typing immediately to begin..."
+                                class="w-full bg-slate-900/90 text-white font-mono text-base px-4 py-3 rounded-xl border-2 border-fuchsia-500/50 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-500/20 outline-none transition"
+                            />
+                            <span id="caps-lock-warning" class="hidden absolute right-3 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 font-black text-xs">
+                                <i class="fa-solid fa-triangle-exclamation mr-1"></i> CAPS LOCK ON
+                            </span>
+                        </div>
+
+                        <!-- Next Required Key & Finger Indicator Badge -->
+                        <div class="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-slate-900/90 border border-white/10 shrink-0">
+                            <div class="text-xs">
+                                <span class="text-slate-400 block text-[10px] uppercase font-bold">Next Key</span>
+                                <strong id="next-key-badge" class="text-fuchsia-400 font-mono text-base">Space</strong>
+                            </div>
+                            <div class="h-7 w-[1px] bg-white/10"></div>
+                            <div class="text-xs">
+                                <span class="text-slate-400 block text-[10px] uppercase font-bold">Finger Guide</span>
+                                <strong id="finger-guide-badge" class="text-cyan-300 text-xs">Right Index</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ON-SCREEN VIRTUAL KEYBOARD & HAND GUIDE -->
+                <div id="virtual-keyboard-wrapper" class="glass-card rounded-3xl p-4 sm:p-5 border border-white/10 hidden md:block">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                                <i class="fa-regular fa-keyboard text-cyan-400 mr-1.5"></i> Interactive Virtual Keyboard & Finger Position Guide
+                            </span>
+                        </div>
+                        <!-- Finger Color Legend -->
+                        <div class="flex flex-wrap items-center gap-2 text-[10px] font-semibold">
+                            <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border-b-2 border-rose-500">L-Pinky</span>
+                            <span class="px-2 py-0.5 rounded bg-orange-500/20 text-orange-300 border-b-2 border-orange-400">L-Ring</span>
+                            <span class="px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-300 border-b-2 border-yellow-400">L-Middle</span>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border-b-2 border-emerald-400">L-Index</span>
+                            <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border-b-2 border-purple-400">Thumbs</span>
+                            <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border-b-2 border-cyan-400">R-Index</span>
+                            <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border-b-2 border-blue-400">R-Middle</span>
+                            <span class="px-2 py-0.5 rounded bg-violet-500/20 text-violet-300 border-b-2 border-violet-400">R-Ring</span>
+                            <span class="px-2 py-0.5 rounded bg-pink-500/20 text-pink-300 border-b-2 border-pink-400">R-Pinky</span>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Keyboard Rows Container -->
+                    <div id="virtual-keyboard-rows" class="space-y-1.5 font-mono text-xs select-none max-w-4xl mx-auto">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 MODULE 2: DASHBOARD & ANALYTICS OVERVIEW
+                 ========================================== -->
+            <section id="tab-dashboard" class="tab-section hidden space-y-6">
+                <!-- Hero Welcome Banner -->
+                <div class="rounded-3xl p-6 vibrant-gradient text-white shadow-xl relative overflow-hidden">
+                    <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <span class="px-3 py-1 rounded-full bg-black/25 text-xs font-bold uppercase tracking-wider">Personal Performance Command Center</span>
+                            <h1 class="text-2xl sm:text-3xl font-black mt-2">Welcome back, <span id="dash-username">Gautam sachdev</span>!</h1>
+                            <p class="text-sm text-white/90 mt-1 max-w-xl">
+                                Track your daily WPM progression, inspect your keystroke error heatmap, and let the AI Coach target your weakest keys.
+                            </p>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="switchTab('typing-test')" class="px-5 py-3 rounded-2xl bg-white text-slate-900 font-black text-sm shadow-lg hover:scale-105 transition">
+                                <i class="fa-solid fa-bolt text-fuchsia-600 mr-1.5"></i> Start Instant Test
+                            </button>
+                            <button onclick="launchWeakKeyPractice()" class="px-5 py-3 rounded-2xl bg-black/30 hover:bg-black/45 border border-white/30 text-white font-bold text-sm transition">
+                                <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Practice Weak Keys
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4 Key Lifetime Metric Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="glass-card rounded-2xl p-5 border border-white/10">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs uppercase font-bold text-slate-400">Personal Best WPM</p>
+                                <h3 id="dash-best-wpm" class="text-3xl font-black text-cyan-400 mt-1">68 WPM</h3>
+                                <p class="text-xs text-emerald-400 mt-1"><i class="fa-solid fa-arrow-trend-up mr-1"></i>Top 12% Global</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-2xl bg-cyan-500/15 flex items-center justify-center text-cyan-400 text-xl">
+                                <i class="fa-solid fa-trophy"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 border border-white/10">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs uppercase font-bold text-slate-400">Average Speed</p>
+                                <h3 id="dash-avg-wpm" class="text-3xl font-black text-fuchsia-400 mt-1">54 WPM</h3>
+                                <p class="text-xs text-slate-400 mt-1">Consistency Score: 92%</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-2xl bg-fuchsia-500/15 flex items-center justify-center text-fuchsia-400 text-xl">
+                                <i class="fa-solid fa-gauge-Simple-high"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 border border-white/10">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs uppercase font-bold text-slate-400">Mean Accuracy</p>
+                                <h3 id="dash-avg-acc" class="text-3xl font-black text-emerald-400 mt-1">96.4%</h3>
+                                <p class="text-xs text-emerald-400 mt-1">SSC / CPCT Qualified</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 flex items-center justify-center text-emerald-400 text-xl">
+                                <i class="fa-solid fa-bullseye"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 border border-white/10">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs uppercase font-bold text-slate-400">Tests Completed</p>
+                                <h3 id="dash-total-tests" class="text-3xl font-black text-amber-400 mt-1">14</h3>
+                                <p id="dash-total-time" class="text-xs text-slate-400 mt-1">Practice Time: 42 mins</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-2xl bg-amber-500/15 flex items-center justify-center text-amber-400 text-xl">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Speed & Accuracy History Chart + AI Weak Key Detector -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                    <!-- WPM Progression Graph -->
+                    <div class="lg:col-span-2 glass-card rounded-2xl p-5 border border-white/10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="font-bold text-base">Speed (WPM) & Accuracy Progression</h3>
+                                <p class="text-xs text-slate-400">Visual history across your recent typing sessions</p>
+                            </div>
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 font-semibold">Live Telemetry</span>
+                        </div>
+                        <canvas id="dashboard-history-chart" class="w-full h-56 bg-slate-950/60 rounded-xl p-2"></canvas>
+                    </div>
+
+                    <!-- AI Weak Key Detector & Goal Tracker -->
+                    <div class="glass-card rounded-2xl p-5 border border-white/10 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-bold text-base flex items-center gap-2">
+                                    <i class="fa-solid fa-microchip text-rose-400"></i>
+                                    <span>AI Weak Key Detector</span>
+                                </h3>
+                                <span class="text-[10px] uppercase px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">Heatmap</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mb-4">Keys where you frequently make errors or hesitate:</p>
+                            
+                            <div id="dash-weak-keys-list" class="flex flex-wrap gap-2 mb-5">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Daily Goal Progress -->
+                        <div class="p-4 rounded-xl bg-slate-900/80 border border-white/10">
+                            <div class="flex justify-between text-xs font-bold mb-1.5">
+                                <span class="text-cyan-300"><i class="fa-solid fa-flag mr-1"></i> Daily Practice Goal</span>
+                                <span id="dash-goal-label">80% Complete</span>
+                            </div>
+                            <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden mb-3">
+                                <div class="h-full vibrant-gradient-emerald" style="width: 80%"></div>
+                            </div>
+                            <button onclick="launchWeakKeyPractice()" class="w-full py-2.5 rounded-xl vibrant-gradient text-white text-xs font-bold shadow-md hover:opacity-95 transition">
+                                Generate Personalized Weak-Key Lesson
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 MODULE 3: PRACTICE MODULES & AI LESSONS
+                 ========================================== -->
+            <section id="tab-practice" class="tab-section hidden space-y-6">
+                <div class="glass-card rounded-2xl p-5 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-xl font-black vibrant-text">Structured Typing Practice Curriculum</h2>
+                        <p class="text-xs text-slate-400 mt-1">Master touch typing step-by-step from Home Row fundamentals to AI-generated weak key drills.</p>
+                    </div>
+                    <button onclick="launchWeakKeyPractice()" class="px-4 py-2.5 rounded-xl vibrant-gradient text-white text-xs font-bold shadow-lg flex items-center gap-2 self-start">
+                        <i class="fa-solid fa-brain"></i>
+                        <span>Start Smart AI Weak-Key Drill</span>
+                    </button>
+                </div>
+
+                <!-- Practice Categories Grid -->
+                <div id="practice-modules-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    <!-- Populated via JS -->
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 MODULE 4: GOVERNMENT & COMPETITIVE EXAM MODE
+                 ========================================== -->
+            <section id="tab-exam-mode" class="tab-section hidden space-y-6">
+                <div class="glass-card rounded-3xl p-6 border border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-fuchsia-500/10 to-indigo-500/10">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-bold uppercase">
+                                Official Government Skill Test Simulator
+                            </span>
+                            <h2 class="text-2xl font-black text-white mt-2">SSC, CPCT, Railway, Banking & High Court Exams</h2>
+                            <p class="text-xs text-slate-300 mt-1 max-w-2xl">
+                                Simulate real examination hall pressure with Strict Mode (No Pause/Restart), exact keystroke depression calculation, negative marking formulas, and Instant Qualification Certificates.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="text-right hidden sm:block">
+                                <span class="text-[11px] text-slate-400 block">Strict Anti-Cheat</span>
+                                <strong class="text-xs text-emerald-400">Tab-Switch Lock Ready</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Government Exam Cards Grid -->
+                <div id="govt-exams-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    <!-- Populated via JS -->
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 MODULE 5: RESULTS, DNA REPORT & REPLAY
+                 ========================================== -->
+            <section id="tab-results" class="tab-section hidden space-y-6">
+                <!-- Result Summary Header Card -->
+                <div class="glass-card rounded-3xl p-6 border border-fuchsia-500/40 relative overflow-hidden">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                        <div>
+                            <span id="result-badge-status" class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-black uppercase">
+                                PASSED • EXCELLENT PERFORMANCE
+                            </span>
+                            <h2 class="text-2xl sm:text-3xl font-black mt-2" id="result-title-heading">Latest Typing Test Analysis</h2>
+                            <p class="text-xs text-slate-400" id="result-timestamp-sub">Completed just now • Standard 1 Minute Test</p>
+                        </div>
+
+                        <!-- Action Buttons: Retake, Certificate, Print, Export -->
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="switchTab('typing-test'); restartTypingTest();" class="px-4 py-2.5 rounded-xl vibrant-gradient text-white text-xs font-bold shadow-lg flex items-center gap-1.5">
+                                <i class="fa-solid fa-rotate-right"></i> Retake Test
+                            </button>
+                            <button onclick="generateCertificateFromLastResult()" class="px-4 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-300 text-xs font-bold flex items-center gap-1.5">
+                                <i class="fa-solid fa-award"></i> Get Certificate
+                            </button>
+                            <button onclick="copyResultSummary()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-bold flex items-center gap-1.5">
+                                <i class="fa-regular fa-copy"></i> Share Score
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Primary Score Metrics Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
+                        <div class="p-4 rounded-2xl bg-slate-900/90 border border-cyan-500/30 text-center">
+                            <span class="text-[11px] font-bold uppercase text-slate-400">Net Speed</span>
+                            <p id="res-net-wpm" class="text-3xl font-black text-cyan-400 mt-1">58</p>
+                            <span class="text-[11px] text-slate-400">Words / Min</span>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-slate-900/90 border border-emerald-500/30 text-center">
+                            <span class="text-[11px] font-bold uppercase text-slate-400">Accuracy</span>
+                            <p id="res-accuracy" class="text-3xl font-black text-emerald-400 mt-1">97.2%</p>
+                            <span id="res-stars" class="text-xs text-amber-400">★★★★★</span>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-slate-900/90 border border-fuchsia-500/30 text-center">
+                            <span class="text-[11px] font-bold uppercase text-slate-400">Gross WPM</span>
+                            <p id="res-gross-wpm" class="text-3xl font-black text-fuchsia-400 mt-1">61</p>
+                            <span class="text-[11px] text-slate-400">Raw Speed</span>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-slate-900/90 border border-indigo-500/30 text-center">
+                            <span class="text-[11px] font-bold uppercase text-slate-400">Keystrokes</span>
+                            <p id="res-cpm" class="text-3xl font-black text-indigo-400 mt-1">305</p>
+                            <span class="text-[11px] text-slate-400">CPM / KPM</span>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-slate-900/90 border border-rose-500/30 text-center">
+                            <span class="text-[11px] font-bold uppercase text-slate-400">Mistakes</span>
+                            <p id="res-errors" class="text-3xl font-black text-rose-400 mt-1">3</p>
+                            <span id="res-backspaces" class="text-[11px] text-slate-400">Backspaces: 4</span>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-slate-900/90 border border-amber-500/30 text-center">
+                            <span class="text-[11px] font-bold uppercase text-slate-400">Grade & DNA</span>
+                            <p id="res-grade" class="text-3xl font-black text-amber-400 mt-1">A+</p>
+                            <span id="res-rhythm" class="text-[11px] text-slate-400">Consistency: 94%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Second-by-Second Chart + AI Typing DNA Analysis -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                    <div class="lg:col-span-2 glass-card rounded-2xl p-5 border border-white/10">
+                        <h3 class="font-bold text-sm mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line text-cyan-400"></i>
+                            <span>Second-by-Second WPM & Burst Speed Graph</span>
+                        </h3>
+                        <canvas id="result-timeline-chart" class="w-full h-52 bg-slate-950/70 rounded-xl p-2"></canvas>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 border border-white/10 space-y-4">
+                        <h3 class="font-bold text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-dna text-fuchsia-400"></i>
+                            <span>AI Typing DNA & Fatigue Diagnosis</span>
+                        </h3>
+                        <div class="space-y-2.5 text-xs">
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-white/10 flex justify-between">
+                                <span class="text-slate-400">Peak Burst Speed:</span>
+                                <strong id="dna-burst-speed" class="text-cyan-300">72 WPM</strong>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-white/10 flex justify-between">
+                                <span class="text-slate-400">Pause / Hesitation Count:</span>
+                                <strong id="dna-pauses" class="text-amber-300">1 Hesitation</strong>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-white/10 flex justify-between">
+                                <span class="text-slate-400">Fatigue Drop-off:</span>
+                                <strong id="dna-fatigue" class="text-emerald-300">Minimal (Steady Rhythm)</strong>
+                            </div>
+                            <div class="p-3 rounded-xl bg-fuchsia-500/15 border border-fuchsia-500/30 text-fuchsia-200 leading-relaxed" id="dna-coach-advice">
+                                <strong>AI Coach Prescription:</strong> Your speed is strong on common words, but slows slightly on punctuation and capital transitions.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test History Table -->
+                <div class="glass-card rounded-2xl p-5 border border-white/10">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-base">Complete Test History Log</h3>
+                        <button onclick="exportHistoryCSV()" class="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold">
+                            <i class="fa-solid fa-file-csv mr-1"></i> Export CSV
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="border-b border-white/10 text-slate-400 uppercase">
+                                    <th class="py-2.5 px-3">Date & Time</th>
+                                    <th class="py-2.5 px-3">Mode / Category</th>
+                                    <th class="py-2.5 px-3">Net WPM</th>
+                                    <th class="py-2.5 px-3">Gross WPM</th>
+                                    <th class="py-2.5 px-3">Accuracy</th>
+                                    <th class="py-2.5 px-3">Errors</th>
+                                    <th class="py-2.5 px-3">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-history-tbody" class="divide-y divide-white/5">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 MODULE 6: MULTIPLAYER RACE & LEADERBOARD
+                 ========================================== -->
+            <section id="tab-leaderboard" class="tab-section hidden space-y-6">
+                <!-- Live Multiplayer Typing Race Simulator -->
+                <div class="glass-card rounded-3xl p-6 border border-cyan-500/40">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-5">
+                        <div>
+                            <span class="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-bold uppercase">
+                                <i class="fa-solid fa-satellite-dish mr-1 animate-pulse"></i> Live Multiplayer Typing Arena
+                            </span>
+                            <h2 class="text-2xl font-black mt-1">Real-Time Typing Battle & Room Race</h2>
+                            <p class="text-xs text-slate-400">Compete head-to-head against live AI Pro bots or share a room code with friends!</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="startMultiplayerRace()" class="px-4 py-2.5 rounded-xl vibrant-gradient text-white text-xs font-bold shadow-lg">
+                                <i class="fa-solid fa-flag-checkered mr-1.5"></i> Start Live Race Now
+                            </button>
+                            <button onclick="createPrivateRoomCode()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-bold">
+                                <i class="fa-solid fa-key mr-1.5"></i> Room Code: <span id="race-room-code" class="text-cyan-300 font-mono">KT-8842</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Race Lanes -->
+                    <div class="space-y-3 bg-slate-950/80 p-4 rounded-2xl border border-white/10 mb-4">
+                        <!-- Player Lane -->
+                        <div>
+                            <div class="flex justify-between text-xs font-bold mb-1">
+                                <span class="text-fuchsia-400"><i class="fa-solid fa-user-astronaut mr-1"></i> You (<span id="race-user-name">Arjun</span>)</span>
+                                <span id="race-user-wpm" class="font-mono text-white">0 WPM</span>
+                            </div>
+                            <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+                                <div id="race-bar-user" class="h-full vibrant-gradient transition-all duration-150" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Bot 1 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-bold mb-1">
+                                <span class="text-cyan-400"><i class="fa-solid fa-robot mr-1"></i> CyberHawk_IN (Pro Bot)</span>
+                                <span id="race-bot1-wpm" class="font-mono text-slate-300">58 WPM</span>
+                            </div>
+                            <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+                                <div id="race-bar-bot1" class="h-full vibrant-gradient-cyan transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Bot 2 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-bold mb-1">
+                                <span class="text-emerald-400"><i class="fa-solid fa-bolt mr-1"></i> Stenographer_Riya</span>
+                                <span id="race-bot2-wpm" class="font-mono text-slate-300">52 WPM</span>
+                            </div>
+                            <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+                                <div id="race-bar-bot2" class="h-full vibrant-gradient-emerald transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Race Prompt Input -->
+                    <div id="race-prompt-box" class="p-3.5 rounded-xl bg-slate-900 text-sm font-mono text-slate-200 mb-3 border border-white/10">
+                        Click "Start Live Race Now" above and type this sprint text faster than your opponents to claim +100 Bonus XP!
+                    </div>
+                    <input type="text" id="race-input" disabled placeholder="Press 'Start Live Race Now' to unlock race track..." class="w-full bg-slate-950 text-white font-mono text-sm px-4 py-3 rounded-xl border border-cyan-500/40 outline-none" />
+                </div>
+
+                <!-- Global Leaderboard Table -->
+                <div class="glass-card rounded-2xl p-5 border border-white/10">
+                    <h3 class="font-bold text-base mb-4"><i class="fa-solid fa-ranking-star text-amber-400 mr-2"></i>Global & National Hall of Fame</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="border-b border-white/10 text-slate-400 uppercase">
+                                    <th class="py-2.5 px-3">Rank</th>
+                                    <th class="py-2.5 px-3">Typist</th>
+                                    <th class="py-2.5 px-3">Exam / Mode</th>
+                                    <th class="py-2.5 px-3">Net WPM</th>
+                                    <th class="py-2.5 px-3">Accuracy</th>
+                                    <th class="py-2.5 px-3">Badge</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboard-tbody" class="divide-y divide-white/5">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 MODULE 7: CHALLENGES, STREAKS & BADGES
+                 ========================================== -->
+            <section id="tab-challenges" class="tab-section hidden space-y-6">
+                <div class="glass-card rounded-2xl p-5 border border-white/10">
+                    <h2 class="text-xl font-black vibrant-text">Daily Missions & Achievement Badges</h2>
+                    <p class="text-xs text-slate-400 mt-1">Complete typing missions to earn XP, unlock Cyber Ranks, and collect milestone badges.</p>
+                </div>
+
+                <!-- Daily Challenges -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="glass-card rounded-2xl p-5 border border-fuchsia-500/30">
+                        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-fuchsia-500/20 text-fuchsia-300">Daily Challenge #1</span>
+                        <h3 class="font-bold text-base mt-2">Zero-Mistake Sprint</h3>
+                        <p class="text-xs text-slate-400 mt-1">Complete a 1-Minute test with 99% or higher accuracy.</p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-xs font-bold text-amber-400">+150 XP Reward</span>
+                            <button onclick="switchTab('typing-test')" class="px-3 py-1.5 rounded-lg vibrant-gradient text-white text-xs font-bold">Accept</button>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 border border-cyan-500/30">
+                        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300">Daily Challenge #2</span>
+                        <h3 class="font-bold text-base mt-2">Bilingual Master</h3>
+                        <p class="text-xs text-slate-400 mt-1">Practice a session in Hindi (Devanagari) or any regional script.</p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-xs font-bold text-amber-400">+200 XP Reward</span>
+                            <button onclick="startHindiChallenge()" class="px-3 py-1.5 rounded-lg vibrant-gradient-cyan text-white text-xs font-bold">Start Hindi</button>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 border border-emerald-500/30">
+                        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Daily Challenge #3</span>
+                        <h3 class="font-bold text-base mt-2">SSC Skill Test Qualifier</h3>
+                        <p class="text-xs text-slate-400 mt-1">Hit 35+ Net WPM in Strict Government Exam Mode.</p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-xs font-bold text-amber-400">+250 XP Reward</span>
+                            <button onclick="switchTab('exam-mode')" class="px-3 py-1.5 rounded-lg vibrant-gradient-emerald text-white text-xs font-bold">Go to Exams</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unlockable Achievement Badges -->
+                <div class="glass-card rounded-2xl p-5 border border-white/10">
+                    <h3 class="font-bold text-base mb-4">Milestone Achievement Badges</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3" id="achievements-grid">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 MODULE 8: CERTIFICATE GENERATOR & VERIFIER
+                 ========================================== -->
+            <section id="tab-certificates" class="tab-section hidden space-y-6">
+                <div class="glass-card rounded-2xl p-5 border border-white/10 flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-xl font-black vibrant-text">Official Typing Proficiency Certificate</h2>
+                        <p class="text-xs text-slate-400">Customize candidate details, choose a template, and print/save as PDF.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <input type="text" id="cert-name-input" placeholder="Candidate Full Name" value="Gautam sachdev" oninput="updateCertificatePreview()" class="bg-slate-900 text-white text-xs px-3 py-2 rounded-xl border border-white/15" />
+                        <select id="cert-exam-input" onchange="updateCertificatePreview()" class="bg-slate-900 text-white text-xs px-3 py-2 rounded-xl border border-white/15">
+                            <option value="English Typing Proficiency (QWERTY)">English Typing Proficiency</option>
+                            <option value="SSC CGL / CHSL Skill Test Simulation">SSC CGL / CHSL Skill Test</option>
+                            <option value="CPCT Hindi & English Qualification">CPCT Qualification</option>
+                            <option value="High Court Data Entry Operator">High Court Typing Test</option>
+                        </select>
+                        <button onclick="window.print()" class="px-4 py-2 rounded-xl vibrant-gradient text-white text-xs font-bold shadow-lg">
+                            <i class="fa-solid fa-print mr-1.5"></i> Print / Save PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Printable Certificate Frame -->
+                <div id="certificate-print-area" class="max-w-4xl mx-auto rounded-3xl p-8 sm:p-12 bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 border-4 border-amber-400/80 shadow-2xl relative overflow-hidden text-center text-white">
+                    <div class="border-2 border-amber-400/30 rounded-2xl p-6 sm:p-10 relative z-10">
+                        <div class="w-16 h-16 rounded-2xl vibrant-gradient mx-auto flex items-center justify-center shadow-lg mb-4">
+                            <i class="fa-solid fa-award text-3xl text-white"></i>
+                        </div>
+                        <p class="text-xs font-bold uppercase tracking-[0.3em] text-amber-300">KeyType Pro Certification Authority</p>
+                        <h1 class="text-3xl sm:text-4xl font-black tracking-tight mt-2 text-white">CERTIFICATE OF PROFICIENCY</h1>
+                        <p class="text-xs text-slate-300 mt-3">This is to officially certify that</p>
+                        
+                        <h2 id="cert-display-name" class="text-2xl sm:text-4xl font-black vibrant-text my-4 border-b border-white/20 pb-2 inline-block px-8">
+                            Gautam sachdev
+                        </h2>
+
+                        <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+                            has successfully completed the <strong id="cert-display-exam" class="text-amber-300">English Typing Proficiency (QWERTY)</strong> examination under strict evaluation guidelines with the following verified performance metrics:
+                        </p>
+
+                        <div class="grid grid-cols-3 gap-4 max-w-lg mx-auto my-6">
+                            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                                <span class="text-[10px] uppercase text-slate-400 block">Net Typing Speed</span>
+                                <strong id="cert-display-wpm" class="text-xl font-black text-cyan-300">58 WPM</strong>
+                            </div>
+                            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                                <span class="text-[10px] uppercase text-slate-400 block">Accuracy Rate</span>
+                                <strong id="cert-display-acc" class="text-xl font-black text-emerald-300">97.2%</strong>
+                            </div>
+                            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                                <span class="text-[10px] uppercase text-slate-400 block">Grade / Status</span>
+                                <strong class="text-xl font-black text-amber-300">A+ (PASSED)</strong>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap items-center justify-between text-xs text-slate-400 pt-6 border-t border-white/10 mt-6">
+                            <div class="text-left">
+                                <p>Certificate ID: <strong id="cert-display-id" class="text-white font-mono">KTP-2026-89412</strong></p>
+                                <p>Issue Date: <strong id="cert-display-date" class="text-white">05 Nov 2026</strong></p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-amber-300">Digitally Verified</p>
+                                <p>KeyType Pro Examination Board</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 MODULE 9: SETTINGS, THEMES & ACCESSIBILITY
+                 ========================================== -->
+            <section id="tab-settings" class="tab-section hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <h2 class="text-xl font-black vibrant-text mb-1">Customization, Audio & Accessibility Settings</h2>
+                    <p class="text-xs text-slate-400 mb-6">Tailor the visual surface, typography, caret style, and mechanical keyboard acoustics.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Visual Theme & Surface -->
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-300 mb-2">Surface Color Theme</label>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <button onclick="setTheme('dark')" class="p-3 rounded-xl bg-slate-900 border border-fuchsia-500 text-xs font-bold text-white">Neon Dark</button>
+                                    <button onclick="setTheme('light')" class="p-3 rounded-xl bg-slate-100 border border-slate-300 text-xs font-bold text-slate-900">Aurora Light</button>
+                                    <button onclick="setTheme('contrast')" class="p-3 rounded-xl bg-black border border-yellow-400 text-xs font-bold text-yellow-300">High Contrast</button>
+                                </div>
+                            </div>
+
+                            <!-- Font Size Slider -->
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-300 mb-2">
+                                    Typing Box Font Size: <span id="font-size-label" class="text-cyan-400">24px</span>
+                                </label>
+                                <input type="range" min="18" max="34" value="24" oninput="updateTypingFontSize(this.value)" class="w-full accent-fuchsia-500" />
+                            </div>
+
+                            <!-- Caret Style -->
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-300 mb-2">Typing Cursor / Caret Style</label>
+                                <select id="setting-caret-style" onchange="updateCaretStyle(this.value)" class="w-full bg-slate-900 text-white text-xs rounded-xl p-3 border border-white/15">
+                                    <option value="caret-block" selected>Glowing Neon Block</option>
+                                    <option value="caret-line">Smooth Vertical Beam</option>
+                                    <option value="caret-underline">Cyber Underline</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Sound & Accessibility -->
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-300 mb-2">Mechanical Keyboard Sound Profile</label>
+                                <select id="setting-sound-profile" onchange="appState.soundProfile = this.value; playKeySound('a')" class="w-full bg-slate-900 text-white text-xs rounded-xl p-3 border border-white/15">
+                                    <option value="clicky" selected>Cherry MX Blue (Crisp Clicky)</option>
+                                    <option value="tactile">Tactile Brown (Soft Thock)</option>
+                                    <option value="typewriter">Vintage Typewriter</option>
+                                    <option value="mute">Silent / Muted</option>
+                                </select>
+                            </div>
+
+                            <!-- Accessibility Checkboxes -->
+                            <div class="space-y-2 pt-2">
+                                <label class="flex items-center justify-between p-3 rounded-xl bg-slate-900/70 border border-white/10 cursor-pointer">
+                                    <span class="text-xs font-semibold">Show On-Screen Virtual Keyboard</span>
+                                    <input type="checkbox" checked onchange="toggleVirtualKeyboardVisibility(this.checked)" class="accent-fuchsia-500 w-4 h-4" />
+                                </label>
+                                <label class="flex items-center justify-between p-3 rounded-xl bg-slate-900/70 border border-white/10 cursor-pointer">
+                                    <span class="text-xs font-semibold">Dyslexia-Friendly Font (Lexend)</span>
+                                    <input type="checkbox" onchange="toggleDyslexicFont(this.checked)" class="accent-fuchsia-500 w-4 h-4" />
+                                </label>
+                                <label class="flex items-center justify-between p-3 rounded-xl bg-slate-900/70 border border-white/10 cursor-pointer">
+                                    <span class="text-xs font-semibold">Voice Audio Alert on Final 10 Seconds</span>
+                                    <input type="checkbox" checked onchange="appState.voiceAlerts = this.checked" class="accent-fuchsia-500 w-4 h-4" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 MODULE 10: ADMIN PANEL & INSTITUTE BUILDER
+                 ========================================== -->
+            <section id="tab-admin" class="tab-section hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-teal-500/30">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                        <div>
+                            <span class="px-2.5 py-1 rounded-full bg-teal-500/20 text-teal-300 text-[10px] font-bold uppercase">Institute & Coaching Control Center</span>
+                            <h2 class="text-xl font-black text-white mt-1">Admin Panel & Custom Exam Builder</h2>
+                            <p class="text-xs text-slate-400">Add new paragraphs to the library, build custom exam patterns for students, or export batch reports.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Add Custom Paragraph to Database -->
+                        <div class="p-4 rounded-2xl bg-slate-900/80 border border-white/10 space-y-3">
+                            <h3 class="font-bold text-sm text-cyan-300"><i class="fa-solid fa-plus-circle mr-1.5"></i>Add New Typing Passage to Library</h3>
+                            <input type="text" id="admin-para-title" placeholder="Passage Title (e.g., SSC CHSL 2026 Shift-1)" class="w-full bg-slate-950 text-white text-xs px-3 py-2.5 rounded-xl border border-white/15" />
+                            <textarea id="admin-para-text" rows="4" placeholder="Paste paragraph content here (English or Hindi Unicode)..." class="w-full bg-slate-950 text-white text-xs p-3 rounded-xl border border-white/15"></textarea>
+                            <button onclick="adminSaveParagraph()" class="w-full py-2.5 rounded-xl vibrant-gradient text-white text-xs font-bold">
+                                Save & Activate Passage Immediately
+                            </button>
+                        </div>
+
+                        <!-- Custom Exam Pattern Builder -->
+                        <div class="p-4 rounded-2xl bg-slate-900/80 border border-white/10 space-y-3">
+                            <h3 class="font-bold text-sm text-fuchsia-300"><i class="fa-solid fa-sliders mr-1.5"></i>Create Custom Coaching Exam Pattern</h3>
+                            <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="admin-exam-name" placeholder="Exam Name (e.g. Batch-A Test)" class="bg-slate-950 text-white text-xs px-3 py-2.5 rounded-xl border border-white/15" />
+                                <input type="number" id="admin-exam-wpm" placeholder="Min Qualifying WPM (e.g. 35)" value="35" class="bg-slate-950 text-white text-xs px-3 py-2.5 rounded-xl border border-white/15" />
+                                <input type="number" id="admin-exam-acc" placeholder="Min Accuracy % (e.g. 95)" value="95" class="bg-slate-950 text-white text-xs px-3 py-2.5 rounded-xl border border-white/15" />
+                                <input type="number" id="admin-exam-time" placeholder="Duration Minutes (e.g. 10)" value="10" class="bg-slate-950 text-white text-xs px-3 py-2.5 rounded-xl border border-white/15" />
+                            </div>
+                            <button onclick="adminCreateCustomExam()" class="w-full py-2.5 rounded-xl vibrant-gradient-cyan text-white text-xs font-bold">
+                                Publish Exam to Exam Mode Tab
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ==========================================
+         MODALS: CUSTOM TEXT UPLOAD, PROFILE, TOAST
+         ========================================== -->
+    <!-- Custom Text / File Upload Modal -->
+    <div id="custom-text-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="glass-card rounded-3xl max-w-lg w-full p-6 border border-fuchsia-500/40 space-y-4">
+            <div class="flex items-center justify-between">
+                <h3 class="font-black text-lg vibrant-text">Import or Paste Custom Text</h3>
+                <button onclick="closeCustomTextModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <p class="text-xs text-slate-300">Paste any article, code snippet, or Hindi paragraph below, or upload a <code class="text-cyan-300">.txt</code> file.</p>
+            
+            <textarea id="custom-text-area" rows="5" placeholder="Paste your custom typing text here..." class="w-full bg-slate-950 text-white text-xs font-mono p-3.5 rounded-xl border border-white/15 outline-none focus:border-fuchsia-500"></textarea>
+            
+            <div class="flex items-center justify-between gap-3">
+                <label class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-bold cursor-pointer">
+                    <i class="fa-solid fa-upload mr-1.5 text-cyan-400"></i> Upload .TXT File
+                    <input type="file" accept=".txt" onchange="handleTxtFileUpload(event)" class="hidden" />
+                </label>
+                <div class="flex gap-2">
+                    <button onclick="closeCustomTextModal()" class="px-4 py-2 rounded-xl bg-white/5 text-xs font-semibold">Cancel</button>
+                    <button onclick="applyCustomText()" class="px-5 py-2 rounded-xl vibrant-gradient text-white text-xs font-bold">Load Text into Test</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Profile Modal -->
+    <div id="profile-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="glass-card rounded-3xl max-w-md w-full p-6 border border-cyan-500/40 space-y-4">
+            <div class="flex items-center justify-between">
+                <h3 class="font-black text-lg text-white">Candidate Profile & Preferences</h3>
+                <button onclick="closeProfileModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1">Full Name (Used on Certificates & Leaderboard)</label>
+                    <input type="text" id="profile-name-input" value="Gautam sachdev" class="w-full bg-slate-950 text-white px-3.5 py-2.5 rounded-xl border border-white/15" />
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">Target Government Exam</label>
+                    <select id="profile-target-exam" class="w-full bg-slate-950 text-white px-3.5 py-2.5 rounded-xl border border-white/15">
+                        <option>SSC CGL / CHSL Skill Test</option>
+                        <option>CPCT Hindi & English</option>
+                        <option>RRB NTPC Railway Typing</option>
+                        <option>High Court Data Entry</option>
+                        <option>Software Engineering Speed</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="saveUserProfile()" class="w-full py-2.5 rounded-xl vibrant-gradient text-white text-xs font-bold">Save Profile</button>
+        </div>
+    </div>
+
+    <!-- Non-blocking Notification Toast -->
+    <div id="toast-notification" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="glass-card px-4 py-3 rounded-2xl border border-fuchsia-500/50 shadow-2xl flex items-center gap-3">
+            <div class="w-8 h-8 rounded-xl vibrant-gradient flex items-center justify-center text-white">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+            <div>
+                <p id="toast-title" class="text-xs font-bold text-white">Notification</p>
+                <p id="toast-msg" class="text-[11px] text-slate-300">Action completed.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         COMPLETE JAVASCRIPT APPLICATION ENGINE
+         ========================================== -->
+    <script>
+        /**************************************************************
+         * 1. RICH CONTENT REPOSITORY (English, Hindi, Regional, Code)
+         **************************************************************/
+        const CONTENT_LIBRARY = {
+            "para-simple": [
+                "Consistent practice is the secret to achieving extraordinary typing speed and effortless accuracy. When your fingers memorize the exact location of every key on the home row, your mind is free to focus entirely on creative thoughts rather than searching for letters.",
+                "Modern digital workplaces demand rapid and accurate communication across every department. Developing strong touch typing habits reduces physical fatigue, prevents repetitive strain, and boosts daily productivity by nearly forty percent.",
+                "Every master typist began by learning the fundamental posture of keeping wrists elevated and eyes fixed on the screen. Resist the temptation to glance down at the keyboard labels, and trust muscle memory to guide each keystroke."
+            ],
+            "para-long": [
+                "India has witnessed a remarkable transformation in public digital infrastructure over the past decade. From seamless instant payments to automated examination portals, technology bridges geographical divides and empowers millions of citizens across urban and rural landscapes alike. Aspiring civil servants and data entry professionals must cultivate exceptional keyboard proficiency to process official documentation with zero typographical errors under strict time constraints."
+            ],
+            "para-tech": [
+                "Artificial intelligence and machine learning algorithms analyze keystroke dynamics by measuring flight time and dwell time between consecutive characters. By identifying subtle hesitation patterns on specific bigrams, an adaptive typing coach generates personalized drills that eliminate bottlenecks and accelerate neural motor pathways."
+            ],
+            "words-common": [
+                "time person year way day thing man world life hand part child eye woman place work week case point government company number group problem fact havecelerate develop system program questiongeneral state নিচে"
+                    .replace(" নিচে", "") + " through betweenangsaan".replace("angsaan", "") + " under neveralways систему".replace(" систему", "") + " house service friend father power hour game line end member law car city community name president team minute idea kid body information back parent face others level office door health person art war history party result change morning reason research girl guy moment air teacher force education"
+            ],
+            "words-difficult": [
+                "accommodate bureaucracy conscientiousness entrepreneur idiosyncratic jurisprudence kaleidoscope luminescence metamorphosis nomenclature onomatopoeia paraphernalia quintessential reconnaissance surveillance thermodynamics ubiquitous强".replace("强", "") + " verisimilitude xylophone zephyr"
+            ],
+            "words-misspelled": [
+                "definitely separate occurrence embarrass maintenance privilegeliaison millennium persevere supersede questionnaire conscientious indispensable calendar accommodateភិ".replace("ភិ", "") + " recommend pronunciation vacuum weird"
+            ],
+            "special-numbers": [
+                "4829 1094 5582 9031 7462 2026 8841 3950 6172 9405 1284 7739 5061 3392 8471 9002 6453 1928 3746 5501 7823 4190"
+            ],
+            "special-symbols": [
+                "const calcWPM = (chars, time) => { return Math.round((chars / 5) / (time / 60)); }; if (acc >= 98.5 && errors === 0) { awardBadge('Flawless_Pro #1!'); }"
+            ],
+            "special-mixed": [
+                "Order #INV-9042A dispatched on 15/11/2026 at 09:45 AM! Verify GSTIN: 27AAACP1234F1Z5 & AuthCode: @KeyType_Ultra$99."
+            ],
+            // Multilingual Passages
+            "hi-unicode": [
+                "नियमित अभ्यास से टाइपिंग की गति और सटीकता दोनों में अद्भुत सुधार होता है। सरकारी परीक्षाओं जैसे एसएससी, सीपीसीटी और हाई कोर्ट में सफलता प्राप्त करने के लिए अपनी उंगलियों को होम रो पर संतुलित रखें और स्क्रीन से नज़र न हटाएं।"
+            ],
+            "hi-krutidev": [
+                "भारत में प्रतियोगी परीक्षाओं के लिए हिंदी और अंग्रेजी टाइपिंग एक अत्यंत महत्वपूर्ण कौशल है। प्रतिदिन तीस मिनट का केंद्रित अभ्यास आपको एक कुशल स्टेनोग्राफर और डेटा एंट्री ऑपरेटर बना सकता है।"
+            ],
+            "mr-marathi": [
+                "सातत्यपूर्ण सराव केल्याने टायपिंगचा वेग आणि अचूकता नक्कीच वाढते. संगणकावर काम करताना योग्य पद्धतीने बोटांचा वापर करणे अत्यंत गरजेचे आहे."
+            ],
+            "sa-sanskrit": [
+                "उद्यमेन हि सिध्यन्ति कार्याणि न मनोरथैः। न हि सुप्तस्य सिंहस्य प्रविशन्ति मुखे मृगाः। अभ्यासेन विद्या वर्धते।"
+            ],
+            "bn-bengali": [
+                "নিয়মিত অনুশীলনের মাধ্যমে টাইপিং গতি এবং নির্ভুলতা উভয়ই বৃদ্ধি পায়। মনোযোগ সহকারে প্রতিদিন অনুশীলন করলে সাফল্য নিশ্চিত।"
+            ],
+            "ta-tamil": [
+                "தொடர்ச்சியான பயிற்சியின் மூலம் தட்டச்சு வேகத்தையும் துல்லியத்தையும் எளிதாக மேம்படுத்த முடியும். விடாமுயற்சியே வெற்றியின் அடிப்படை."
+            ],
+            "te-telugu": [
+                "నిరంతర సాధన ద్వారా టైపింగ్ వేగం మరియు ఖచ్చితత్వం మెరుగుపడతాయి. ప్రభుత్వ ఉద్యోగ పరీక్షలలో ఇది ఎంతో కీలకం."
+            ],
+            "pa-punjabi": [
+                "ਲਗਾਤਾਰ ਅਭਿਆਸ ਨਾਲ ਟਾਈਪਿੰਗ ਦੀ ਗਤੀ ਅਤੇ ਸ਼ੁੱਧਤਾ ਵਿੱਚ ਬਹੁਤ ਸੁਧਾਰ ਹੁੰਦਾ ਹੈ। ਮਿਹਨਤ ਹਮੇਸ਼ਾ ਰੰਗ ਲਿਆਉਂਦੀ ਹੈ।"
+            ],
+            "gu-gujarati": [
+                "નियमित મહાવરો કરવાથી ટાઇપિંગની ઝડપ અને ચોકસાઈ બંનેમાં વધારો થાય છે. એકાગ્રતા રાખવી ખૂબ જરૂરી છે."
+            ]
+        };
+
+        /**************************************************************
+         * 2. GOVERNMENT EXAM PRESETS & PRACTICE LESSONS
+         **************************************************************/
+        const GOVT_EXAMS = [
+            {
+                id: "ssc-chsl",
+                title: "SSC CHSL / CGL Skill Test",
+                agency: "Staff Selection Commission",
+                duration: 600, // 10 mins
+                minWpm: 35,
+                minAcc: 93,
+                lang: "en-qwerty",
+                strict: true,
+                badge: "1750 Key Depressions"
+            },
+            {
+                id: "cpct-mp",
+                title: "CPCT Exam (English + Hindi)",
+                agency: "MP Agency for Promotion of IT",
+                duration: 900, // 15 mins
+                minWpm: 30,
+                minAcc: 90,
+                lang: "hi-unicode",
+                strict: true,
+                badge: "Bilingual Mandatory"
+            },
+            {
+                id: "rrb-ntpc",
+                title: "Railway RRB NTPC Skill Test",
+                agency: "Railway Recruitment Board",
+                duration: 600,
+                minWpm: 30,
+                minAcc: 95,
+                lang: "en-qwerty",
+                strict: true,
+                badge: "5% Error Margin"
+            },
+            {
+                id: "high-court",
+                title: "High Court Clerk / Stenographer",
+                agency: "Judicial Recruitment Cell",
+                duration: 600,
+                minWpm: 40,
+                minAcc: 95,
+                lang: "en-qwerty",
+                strict: true,
+                badge: "High Speed Tier"
+            },
+            {
+                id: "bssc-bihar",
+                title: "Bihar SSC (BSSC) Inter Level",
+                agency: "BSSC Patna",
+                duration: 600,
+                minWpm: 35,
+                minAcc: 92,
+                lang: "hi-krutidev",
+                strict: true,
+                badge: "Remington / Unicode"
+            },
+            {
+                id: "banking-deo",
+                title: "Banking & Tax Assistant DEO",
+                agency: "IBPS / Financial Dept",
+                duration: 300,
+                minWpm: 45,
+                minAcc: 96,
+                lang: "special-mixed",
+                strict: false,
+                badge: "Alphanumeric"
+            }
+        ];
+
+        const PRACTICE_MODULES = [
+            { title: "1. Home Row Mastery", level: "Beginner", desc: "ASDF JKL; — Build core muscle memory without looking down.", text: "asdf jkl; asdf jkl; fjdk slaf jfkd ls;a sad ladjak flask fall dad salad ask" },
+            { title: "2. Top Row Reach", level: "Beginner", desc: "QWERTY UIOP — Smooth upward finger extension drills.", text: "qwer uiop qwer uiopert yuio quote power writeetti route quietripe" },
+            { title: "3. Bottom Row Agility", level: "Beginner", desc: "ZXCV BNM,./ — Strengthen lower row ring and pinky accuracy.", text: "zxcv bnm, zxcv bnm, zoom cave bank mint zebraoxylophone calm" },
+            { title: "4. Capital Letters & Shift", level: "Intermediate", desc: "Opposite-hand Shift key coordination for proper nouns.", text: "India Mumbai Delhi Gautam sachdev KeyType Pro Supreme Court Parliament" },
+            { title: "5. Number Row & Data Entry", level: "Intermediate", desc: "Top row numeric drills for banking and DEO aspirants.", text: "1947 2026 88420 560001 98450 110001 400001 75839 302001 600001" },
+            { title: "6. Symbols & Developer Syntax", level: "Advanced", desc: "Brackets, quotes, operators, and punctuation fluency.", text: "function test(a, b) { return a !== b ? [a, b] : { status: 'OK' }; }" }
+        ];
+
+        /**************************************************************
+         * 3. VIRTUAL KEYBOARD LAYOUT & FINGER MAPPING
+         **************************************************************/
+        const KEYBOARD_ROWS = [
+            [
+                { label: "`", code: "`", finger: "finger-l-pinky", hand: "Left Pinky" },
+                { label: "1", code: "1", finger: "finger-l-pinky", hand: "Left Pinky" },
+                { label: "2", code: "2", finger: "finger-l-ring", hand: "Left Ring" },
+                { label: "3", code: "3", finger: "finger-l-mid", hand: "Left Middle" },
+                { label: "4", code: "4", finger: "finger-l-index", hand: "Left Index" },
+                { label: "5", code: "5", finger: "finger-l-index", hand: "Left Index" },
+                { label: "6", code: "6", finger: "finger-r-index", hand: "Right Index" },
+                { label: "7", code: "7", finger: "finger-r-index", hand: "Right Index" },
+                { label: "8", code: "8", finger: "finger-r-mid", hand: "Right Middle" },
+                { label: "9", code: "9", finger: "finger-r-ring", hand: "Right Ring" },
+                { label: "0", code: "0", finger: "finger-r-pinky", hand: "Right Pinky" },
+                { label: "-", code: "-", finger: "finger-r-pinky", hand: "Right Pinky" },
+                { label: "=", code: "=", finger: "finger-r-pinky", hand: "Right Pinky" },
+                { label: "⌫ Back", code: "Backspace", finger: "finger-r-pinky", hand: "Right Pinky", width: "w-20" }
+            ],
+            [
+                { label: "Tab", code: "Tab", finger: "finger-l-pinky", hand: "Left Pinky", width: "w-14" },
+                { label: "Q", code: "q", finger: "finger-l-pinky", hand: "Left Pinky" },
+                { label: "W", code: "w", finger: "finger-l-ring", hand: "Left Ring" },
+                { label: "E", code: "e", finger: "finger-l-mid", hand: "Left Middle" },
+                { label: "R", code: "r", finger: "finger-l-index", hand: "Left Index" },
+                { label: "T", code: "t", finger: "finger-l-index", hand: "Left Index" },
+                { label: "Y", code: "y", finger: "finger-r-index", hand: "Right Index" },
+                { label: "U", code: "u", finger: "finger-r-index", hand: "Right Index" },
+                { label: "I", code: "i", finger: "finger-r-mid", hand: "Right Middle" },
+                { label: "O", code: "o", finger: "finger-r-ring", hand: "Right Ring" },
+                { label: "P", code: "p", finger: "finger-r-pinky", hand: "Right Pinky" },
+                { label: "[", code: "[", finger: "finger-r-pinky", hand: "Right Pinky" },
+                { label: "]", code: "]", finger: "finger-r-pinky", hand: "Right Pinky" },
+                { label: "\\", code: "\\", finger: "finger-r-pinky", hand: "Right Pinky", width: "w-14" }
+            ],
+            [
+                { label: "Caps", code: "CapsLock", finger: "finger-l-pinky", hand: "Left Pinky", width: "w-16" },
+                { label: "A", code: "a", finger: "finger-l-pinky", hand: "Left Pinky", home: true },
+                { label: "S", code: "s", finger: "finger-l-ring", hand: "Left Ring", home: true },
+                { label: "D", code: "d", finger: "finger-l-mid", hand: "Left Middle", home: true },
+                { label: "F", code: "f", finger: "finger-l-index", hand: "Left Index", home: true },
+                { label: "G", code: "g", finger: "finger-l-index", hand: "Left Index" },
+                { label: "H", code: "h", finger: "finger-r-index", hand: "Right Index" },
+                { label: "J", code: "j", finger: "finger-r-index", hand: "Right Index", home: true },
+                { label: "K", code: "k", finger: "finger-r-mid", hand: "Right Middle", home: true },
+                { label: "L", code: "l", finger: "finger-r-ring", hand: "Right Ring", home: true },
+                { label: ";", code: ";", finger: "finger-r-pinky", hand: "Right Pinky", home: true },
+                { label: "'", code: "'", finger: "finger-r-pinky", hand: "Right Pinky" },
+                { label: "Enter ↵", code: "Enter", finger: "finger-r-pinky", hand: "Right Pinky", width: "w-20" }
+            ],
+            [
+                { label: "Shift ⇧", code: "Shift", finger: "finger-l-pinky", hand: "Left Pinky", width: "w-24" },
+                { label: "Z", code: "z", finger: "finger-l-pinky", hand: "Left Pinky" },
+                { label: "X", code: "x", finger: "finger-l-ring", hand: "Left Ring" },
+                { label: "C", code: "c", finger: "finger-l-mid", hand: "Left Middle" },
+                { label: "V", code: "v", finger: "finger-l-index", hand: "Left Index" },
+                { label: "B", code: "b", finger: "finger-l-index", hand: "Left Index" },
+                { label: "N", code: "n", finger: "finger-r-index", hand: "Right Index" },
+                { label: "M", code: "m", finger: "finger-r-index", hand: "Right Index" },
+                { label: ",", code: ",", finger: "finger-r-mid", hand: "Right Middle" },
+                { label: ".", code: ".", finger: "finger-r-ring", hand: "Right Ring" },
+                { label: "/", code: "/", finger: "finger-r-pinky", hand: "Right Pinky" },
+                { label: "Shift ⇧", code: "Shift", finger: "finger-r-pinky", hand: "Right Pinky", width: "w-24" }
+            ],
+            [
+                { label: "SPACEBAR (Thumbs)", code: " ", finger: "finger-thumb", hand: "Left/Right Thumb", width: "w-80 sm:w-96" }
+            ]
+        ];
+
+        const FINGER_LOOKUP = {};
+        KEYBOARD_ROWS.forEach(row => {
+            row.forEach(k => {
+                FINGER_LOOKUP[k.code.toLowerCase()] = k.hand;
+            });
+        });
+
+        /**************************************************************
+         * 4. GLOBAL APPLICATION STATE
+         **************************************************************/
+        const appState = {
+            username: localStorage.getItem("ktp_username") || "Gautam sachdev",
+            xp: parseInt(localStorage.getItem("ktp_xp") || "450", 10),
+            streak: parseInt(localStorage.getItem("ktp_streak") || "5", 10),
+            soundEnabled: true,
+            soundProfile: "clicky",
+            voiceAlerts: true,
+            caretStyle: "caret-block",
+            theme: "dark",
+
+            // Active Test Session State
+            targetText: "",
+            typedText: "",
+            isRunning: false,
+            isPaused: false,
+            durationSeconds: 60,
+            timeRemaining: 60,
+            elapsedSeconds: 0,
+            timerInterval: null,
+            rulesMode: "standard", // standard | strict | word-lock
+            activeCategoryLabel: "Standard 1 Min Test",
+            minPassWpm: 30,
+            minPassAcc: 90,
+
+            // Telemetry Counters
+            backspaces: 0,
+            totalKeystrokes: 0,
+            timelineWpm: [],
+            weakKeyMap: JSON.parse(localStorage.getItem("ktp_weak_keys") || '{"p":4,"q":3,"z":5,";":3,"b":2}'),
+            history: JSON.parse(localStorage.getItem("ktp_history") || "[]")
+        };
+
+        // Seed initial sample history if empty
+        if (appState.history.length === 0) {
+            appState.history = [
+                { date: "04 Nov, 06:30 PM", mode: "1 Min Standard", netWpm: 52, grossWpm: 55, acc: 95.8, errors: 3, status: "PASSED" },
+                { date: "04 Nov, 08:15 PM", mode: "SSC CHSL Mock", netWpm: 56, grossWpm: 58, acc: 96.5, errors: 2, status: "PASSED" },
+                { date: "05 Nov, 09:10 AM", mode: "Simple Paragraph", netWpm: 61, grossWpm: 63, acc: 97.4, errors: 1, status: "PASSED" }
+            ];
+            localStorage.setItem("ktp_history", JSON.stringify(appState.history));
+        }
+
+        /**************************************************************
+         * 5. WEB AUDIO API MECHANICAL KEYSTROKE SYNTHESIZER
+         **************************************************************/
+        let audioCtx = null;
+        function playKeySound(type = "char") {
+            if (!appState.soundEnabled || appState.soundProfile === "mute") return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === "suspended") audioCtx.resume();
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+                if (type === "error") {
+                    osc.type = "sawtooth";
+                    osc.frequency.setValueAtTime(170, now);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+                    osc.start(now);
+                    osc.stop(now + 0.09);
+                } else if (appState.soundProfile === "clicky") {
+                    osc.type = "triangle";
+                    osc.frequency.setValueAtTime(type === "space" ? 420 : 680, now);
+                    osc.frequency.exponentialRampToValueAtTime(140, now + 0.035);
+                    gain.gain.setValueAtTime(0.07, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+                    osc.start(now);
+                    osc.stop(now + 0.035);
+                } else if (appState.soundProfile === "tactile") {
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(280, now);
+                    osc.frequency.exponentialRampToValueAtTime(90, now + 0.04);
+                    gain.gain.setValueAtTime(0.09, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                    osc.start(now);
+                    osc.stop(now + 0.04);
+                } else {
+                    osc.type = "square";
+                    osc.frequency.setValueAtTime(520, now);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
+                    osc.start(now);
+                    osc.stop(now + 0.025);
+                }
+            } catch (e) {
+                // Ignore audio context restrictions
+            }
+        }
+
+        function toggleQuickSound() {
+            appState.soundEnabled = !appState.soundEnabled;
+            const icon = document.getElementById("quick-sound-icon");
+            icon.className = appState.soundEnabled ? "fa-solid fa-volume-high" : "fa-solid fa-volume-xmark text-rose-400";
+            showToast("Audio Acoustics", appState.soundEnabled ? "Mechanical keystroke sound enabled" : "Keyboard sound muted");
+        }
+
+        /**************************************************************
+         * 6. VIRTUAL KEYBOARD RENDERER & HIGHLIGHTER
+         **************************************************************/
+        function renderVirtualKeyboard() {
+            const container = document.getElementById("virtual-keyboard-rows");
+            container.innerHTML = "";
+
+            KEYBOARD_ROWS.forEach(row => {
+                const rowDiv = document.createElement("div");
+                rowDiv.className = "flex justify-center gap-1.5";
+
+                row.forEach(k => {
+                    const keyEl = document.createElement("div");
+                    const widthClass = k.width || "w-10 sm:w-11";
+                    const homeBump = k.home ? "ring-1 ring-white/25" : "";
+                    keyEl.className = `vk-key ${widthClass} h-10 rounded-xl bg-slate-900/95 border border-white/10 ${k.finger} ${homeBump} flex items-center justify-center font-bold text-slate-200 text-xs`;
+                    keyEl.dataset.key = k.code.toLowerCase();
+                    keyEl.textContent = k.label;
+                    rowDiv.appendChild(keyEl);
+                });
+
+                container.appendChild(rowDiv);
+            });
+        }
+
+        function highlightTargetKeyOnKeyboard(nextChar) {
+            document.querySelectorAll(".vk-key").forEach(el => el.classList.remove("next-target"));
+            if (!nextChar) return;
+
+            const lookupKey = nextChar === " " ? " " : nextChar.toLowerCase();
+            const targetEl = document.querySelector(`.vk-key[data-key="${CSS.escape(lookupKey)}"]`);
+            if (targetEl) {
+                targetEl.classList.add("next-target");
+            }
+
+            // Update Next Key & Finger Guide Badges
+            document.getElementById("next-key-badge").textContent = nextChar === " " ? "SPACE" : nextChar;
+            document.getElementById("finger-guide-badge").textContent = FINGER_LOOKUP[lookupKey] || "Right Pinky";
+        }
+
+        /**************************************************************
+         * 7. CORE TYPING TEST ENGINE
+         **************************************************************/
+        function loadTargetPassage(customString = null) {
+            const lang = document.getElementById("test-language-select").value;
+            const contentCat = document.getElementById("test-content-select").value;
+
+            if (customString) {
+                appState.targetText = customString.trim();
+            } else if (contentCat === "ai-weak-keys") {
+                appState.targetText = generateWeakKeyPassage();
+            } else if (lang !== "en-qwerty" && CONTENT_LIBRARY[lang]) {
+                // Repeat passage so long timers have plenty of content
+                const base = CONTENT_LIBRARY[lang][0];
+                appState.targetText = `${base} ${base}`;
+            } else {
+                const pool = CONTENT_LIBRARY[contentCat] || CONTENT_LIBRARY["para-simple"];
+                const picked = pool[Math.floor(Math.random() * pool.length)];
+                appState.targetText = `${picked} ${pool[0]}`;
+            }
+
+            renderTargetCharacters();
+        }
+
+        function renderTargetCharacters() {
+            const container = document.getElementById("typing-text-container");
+            container.innerHTML = "";
+            const chars = appState.targetText.split("");
+
+            chars.forEach((ch, idx) => {
+                const span = document.createElement("span");
+                span.className = `char-item char-pending ${idx === 0 ? `char-current ${appState.caretStyle}` : ""}`;
+                span.textContent = ch;
+                container.appendChild(span);
+            });
+
+            container.scrollTop = 0;
+            highlightTargetKeyOnKeyboard(chars[0]);
+            updateWordsProgressUI();
+        }
+
+        function handleConfigChange() {
+            const durVal = document.getElementById("test-duration-select").value;
+            if (durVal === "free") {
+                appState.durationSeconds = 0; // Free mode
+                appState.timeRemaining = 0;
+            } else if (durVal === "custom-time") {
+                appState.durationSeconds = 240; // 4 mins default custom
+                appState.timeRemaining = 240;
+            } else {
+                appState.durationSeconds = parseInt(durVal, 10);
+                appState.timeRemaining = appState.durationSeconds;
+            }
+
+            const contentSelect = document.getElementById("test-content-select");
+            appState.activeCategoryLabel = contentSelect.options[contentSelect.selectedIndex].text;
+            resetTypingSession(true);
+        }
+
+        function handleRulesChange() {
+            appState.rulesMode = document.getElementById("test-rules-select").value;
+            const pill = document.getElementById("active-mode-pill");
+            if (appState.rulesMode === "strict") {
+                pill.innerHTML = `<i class="fa-solid fa-lock mr-1"></i> Strict Exam Mode (Backspace & Pause Disabled)`;
+                showToast("Strict Mode Enabled", "Backspace and Pause are locked to simulate official exams.");
+            } else if (appState.rulesMode === "word-lock") {
+                pill.innerHTML = `<i class="fa-solid fa-shield mr-1"></i> Word Lock Mode (Fix typos to continue)`;
+            } else {
+                pill.innerHTML = `<i class="fa-solid fa-bolt mr-1"></i> Auto-Start on First Keystroke`;
+            }
+        }
+
+        function resetTypingSession(reloadText = false) {
+            clearInterval(appState.timerInterval);
+            appState.isRunning = false;
+            appState.isPaused = false;
+            appState.typedText = "";
+            appState.elapsedSeconds = 0;
+            appState.backspaces = 0;
+            appState.totalKeystrokes = 0;
+            appState.timelineWpm = [];
+            appState.timeRemaining = appState.durationSeconds;
+
+            const input = document.getElementById("typing-hidden-input");
+            input.value = "";
+            input.disabled = false;
+
+            document.getElementById("btn-pause-test").disabled = true;
+            document.getElementById("pause-btn-text").textContent = "Pause";
+            document.getElementById("test-progress-bar").style.width = "0%";
+
+            if (reloadText || !appState.targetText) {
+                loadTargetPassage();
+            } else {
+                renderTargetCharacters();
+            }
+
+            updateLiveTelemetryUI();
+        }
+
+        function restartTypingTest() {
+            resetTypingSession(true);
+            focusTypingInput();
+            showToast("Test Reset", "Fresh paragraph loaded. Start typing whenever ready!");
+        }
+
+        function startTypingTestManual() {
+            focusTypingInput();
+            if (!appState.isRunning) {
+                beginTestTimer();
+            }
+        }
+
+        function beginTestTimer() {
+            if (appState.isRunning) return;
+            appState.isRunning = true;
+            appState.isPaused = false;
+            document.getElementById("btn-pause-test").disabled = appState.rulesMode === "strict";
+
+            appState.timerInterval = setInterval(() => {
+                if (appState.isPaused) return;
+                appState.elapsedSeconds++;
+
+                if (appState.durationSeconds > 0) {
+                    appState.timeRemaining = Math.max(0, appState.durationSeconds - appState.elapsedSeconds);
+                    const pct = Math.min(100, (appState.elapsedSeconds / appState.durationSeconds) * 100);
+                    document.getElementById("test-progress-bar").style.width = `${pct}%`;
+
+                    if (appState.timeRemaining === 0) {
+                        finishTypingTest("Timer Completed");
+                        return;
+                    }
+                }
+
+                // Record second-by-second WPM for the Results graph
+                const stats = calculateCurrentMetrics();
+                appState.timelineWpm.push(stats.netWpm);
+
+                updateLiveTelemetryUI();
+            }, 1000);
+        }
+
+        function togglePauseTest() {
+            if (!appState.isRunning || appState.rulesMode === "strict") return;
+            appState.isPaused = !appState.isPaused;
+            document.getElementById("pause-btn-text").textContent = appState.isPaused ? "Resume" : "Pause";
+            showToast(appState.isPaused ? "Test Paused" : "Test Resumed", appState.isPaused ? "Timer halted." : "Keep typing!");
+            if (!appState.isPaused) focusTypingInput();
+        }
+
+        function calculateCurrentMetrics() {
+            const typed = appState.typedText;
+            const target = appState.targetText;
+            const minutes = Math.max(appState.elapsedSeconds, 1) / 60;
+
+            let correctChars = 0;
+            let errorChars = 0;
+
+            for (let i = 0; i < typed.length; i++) {
+                if (typed[i] === target[i]) {
+                    correctChars++;
+                } else {
+                    errorChars++;
+                }
+            }
+
+            const grossWpm = Math.round((typed.length / 5) / minutes);
+            const netWpm = Math.max(0, Math.round(((typed.length / 5) - errorChars) / minutes));
+            const cpm = Math.round(typed.length / minutes);
+            const accuracy = typed.length > 0 ? Math.max(0, ((correctChars / typed.length) * 100)) : 100;
+
+            return {
+                correctChars,
+                errorChars,
+                grossWpm,
+                netWpm,
+                cpm,
+                accuracy: accuracy.toFixed(1)
+            };
+        }
+
+        function formatSecondsMMSS(sec) {
+            const m = Math.floor(sec / 60).toString().padStart(2, "0");
+            const s = (sec % 60).toString().padStart(2, "0");
+            return `${m}:${s}`;
+        }
+
+        function updateLiveTelemetryUI() {
+            const stats = calculateCurrentMetrics();
+            const timerEl = document.getElementById("live-timer");
+            if (appState.durationSeconds === 0) {
+                timerEl.textContent = formatSecondsMMSS(appState.elapsedSeconds);
+            } else {
+                timerEl.textContent = formatSecondsMMSS(appState.timeRemaining);
+            }
+
+            document.getElementById("live-wpm").textContent = stats.netWpm;
+            document.getElementById("live-accuracy").textContent = `${stats.accuracy}%`;
+            document.getElementById("live-cpm").innerHTML = `${stats.cpm} <span class="text-xs text-slate-400">(${stats.grossWpm})</span>`;
+            document.getElementById("live-errors").textContent = stats.errorChars;
+            document.getElementById("live-backspaces").textContent = appState.backspaces;
+
+            updateWordsProgressUI();
+        }
+
+        function updateWordsProgressUI() {
+            const totalWords = appState.targetText.trim().split(/\s+/).length;
+            const typedWords = appState.typedText.trim() ? appState.typedText.trim().split(/\s+/).length : 0;
+            document.getElementById("live-words-progress").textContent = `${typedWords} / ${totalWords}`;
+        }
+
+        function focusTypingInput() {
+            const input = document.getElementById("typing-hidden-input");
+            if (input && !input.disabled) input.focus();
+        }
+
+        /**************************************************************
+         * 8. REAL-TIME KEYSTROKE LISTENER & ANTI-CHEAT
+         **************************************************************/
+        function setupTypingListeners() {
+            const input = document.getElementById("typing-hidden-input");
+
+            // Prevent Copy, Paste, Cut inside Typing Input
+            ["paste", "copy", "cut", "drop"].forEach(evt => {
+                input.addEventListener(evt, e => {
+                    e.preventDefault();
+                    showToast("Anti-Cheat Protection", "Copy/Paste is restricted during typing tests.");
+                });
+            });
+
+            input.addEventListener("keydown", e => {
+                // Caps Lock detector
+                if (e.getModifierState && e.getModifierState("CapsLock")) {
+                    document.getElementById("caps-lock-warning").classList.remove("hidden");
+                } else {
+                    document.getElementById("caps-lock-warning").classList.add("hidden");
+                }
+
+                // Alt+R quick restart
+                if (e.altKey && e.key.toLowerCase() === "r") {
+                    e.preventDefault();
+                    restartTypingTest();
+                    return;
+                }
+
+                // Strict Mode Backspace Block
+                if (e.key === "Backspace") {
+                    if (appState.rulesMode === "strict") {
+                        e.preventDefault();
+                        showToast("Strict Exam Mode", "Backspace key is disabled in this exam mode!");
+                        return;
+                    }
+                    appState.backspaces++;
+                }
+
+                // Animate Virtual Key Press
+                const keyEl = document.querySelector(`.vk-key[data-key="${CSS.escape(e.key.toLowerCase())}"]`);
+                if (keyEl) {
+                    keyEl.classList.add("active-press");
+                    setTimeout(() => keyEl.classList.remove("active-press"), 110);
+                }
+            });
+
+            input.addEventListener("input", e => {
+                if (appState.isPaused) {
+                    input.value = appState.typedText;
+                    return;
+                }
+
+                if (!appState.isRunning && input.value.length > 0) {
+                    beginTestTimer();
+                }
+
+                const newTyped = input.value;
+                const prevLen = appState.typedText.length;
+
+                // Sound & Weak Key Tracking on forward character entry
+                if (newTyped.length > prevLen) {
+                    appState.totalKeystrokes++;
+                    const idx = newTyped.length - 1;
+                    const typedChar = newTyped[idx];
+                    const expectedChar = appState.targetText[idx];
+
+                    if (typedChar === expectedChar) {
+                        playKeySound(typedChar === " " ? "space" : "char");
+                    } else {
+                        playKeySound("error");
+                        if (expectedChar && expectedChar.trim()) {
+                            const k = expectedChar.toLowerCase();
+                            appState.weakKeyMap[k] = (appState.weakKeyMap[k] || 0) + 1;
+                            localStorage.setItem("ktp_weak_keys", JSON.stringify(appState.weakKeyMap));
+                        }
+                    }
+                }
+
+                appState.typedText = newTyped;
+                syncCharacterHighlights();
+                updateLiveTelemetryUI();
+
+                // Auto-submit if user finishes entire passage
+                if (appState.typedText.length >= appState.targetText.length) {
+                    finishTypingTest("Passage Completed");
+                }
+            });
+
+            // Tab Switch Anti-Cheat Warning in Strict Mode
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden && appState.isRunning && appState.rulesMode === "strict") {
+                    showToast("Anti-Cheat Warning!", "Tab switch detected during Strict Exam Simulation!");
+                }
+            });
+        }
+
+        function syncCharacterHighlights() {
+            const container = document.getElementById("typing-text-container");
+            const spans = container.querySelectorAll(".char-item");
+            const typed = appState.typedText;
+            const len = typed.length;
+
+            spans.forEach((span, i) => {
+                span.className = "char-item";
+                if (i < len) {
+                    if (typed[i] === appState.targetText[i]) {
+                        span.classList.add("char-correct");
+                    } else {
+                        span.classList.add("char-incorrect");
+                    }
+                } else if (i === len) {
+                    span.classList.add("char-current", appState.caretStyle);
+                    // Smooth Auto-Scroll if cursor moves down
+                    const spanTop = span.offsetTop;
+                    const containerScroll = container.scrollTop;
+                    if (spanTop - containerScroll > 105) {
+                        container.scrollTop = spanTop - 55;
+                    }
+                } else {
+                    span.classList.add("char-pending");
+                }
+            });
+
+            highlightTargetKeyOnKeyboard(appState.targetText[len]);
+        }
+
+        /**************************************************************
+         * 9. FINISH TEST, XP REWARDS & DEEP ANALYTICS REPORT
+         **************************************************************/
+        function finishTypingTest(reason = "Completed") {
+            clearInterval(appState.timerInterval);
+            appState.isRunning = false;
+            document.getElementById("typing-hidden-input").disabled = true;
+
+            const stats = calculateCurrentMetrics();
+            const passed = stats.netWpm >= appState.minPassWpm && parseFloat(stats.accuracy) >= appState.minPassAcc;
+
+            // Award XP
+            const earnedXp = Math.max(15, Math.round(stats.netWpm * 1.5));
+            appState.xp += earnedXp;
+            localStorage.setItem("ktp_xp", appState.xp);
+            updateHeaderGamificationUI();
+
+            // Save to History
+            const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const record = {
+                date: `Today, ${nowStr}`,
+                mode: appState.activeCategoryLabel,
+                netWpm: stats.netWpm,
+                grossWpm: stats.grossWpm,
+                acc: stats.accuracy,
+                errors: stats.errorChars,
+                status: passed ? "PASSED" : "NEEDS PRACTICE"
+            };
+            appState.history.unshift(record);
+            localStorage.setItem("ktp_history", JSON.stringify(appState.history.slice(0, 30)));
+
+            // Populate Results View
+            document.getElementById("res-net-wpm").textContent = stats.netWpm;
+            document.getElementById("res-gross-wpm").textContent = stats.grossWpm;
+            document.getElementById("res-accuracy").textContent = `${stats.accuracy}%`;
+            document.getElementById("res-cpm").textContent = stats.cpm;
+            document.getElementById("res-errors").textContent = stats.errorChars;
+            document.getElementById("res-backspaces").textContent = `Backspaces: ${appState.backspaces}`;
+
+            const grade = stats.netWpm >= 60 ? "S+" : stats.netWpm >= 45 ? "A+" : stats.netWpm >= 35 ? "A" : "B";
+            document.getElementById("res-grade").textContent = grade;
+
+            const badgeEl = document.getElementById("result-badge-status");
+            if (passed) {
+                badgeEl.className = "px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-black uppercase";
+                badgeEl.textContent = `QUALIFIED • +${earnedXp} XP EARNED (${reason})`;
+            } else {
+                badgeEl.className = "px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs font-black uppercase";
+                badgeEl.textContent = `BELOW CUTOFF (Target: ${appState.minPassWpm} WPM / ${appState.minPassAcc}%) • +${earnedXp} XP`;
+            }
+
+            // DNA Metrics
+            const burst = appState.timelineWpm.length > 0 ? Math.max(...appState.timelineWpm) : stats.grossWpm;
+            document.getElementById("dna-burst-speed").textContent = `${burst} WPM`;
+
+            renderHistoryTable();
+            renderDashboardMetrics();
+            switchTab("results");
+            setTimeout(() => drawTimelineChart("result-timeline-chart", appState.timelineWpm.length ? appState.timelineWpm : [stats.netWpm - 4, stats.netWpm, stats.netWpm + 2]), 80);
+            showToast("Test Report Ready!", `You achieved ${stats.netWpm} Net WPM with ${stats.accuracy}% accuracy!`);
+        }
+
+        /**************************************************************
+         * 10. CANVAS CHARTS (DASHBOARD & RESULTS)
+         **************************************************************/
+        function drawTimelineChart(canvasId, dataPoints) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+            const w = canvas.width = canvas.clientWidth || 600;
+            const h = canvas.height = canvas.clientHeight || 200;
+
+            ctx.clearRect(0, 0, w, h);
+
+            if (!dataPoints || dataPoints.length === 0) dataPoints = [40, 48, 52, 55, 58];
+            if (dataPoints.length === 1) dataPoints = [dataPoints[0], dataPoints[0]];
+
+            const maxVal = Math.max(...dataPoints, 70) + 10;
+            const padL = 38, padR = 20, padT = 20, padB = 28;
+            const plotW = w - padL - padR;
+            const plotH = h - padT - padB;
+
+            // Grid lines
+            ctx.strokeStyle = "rgba(255,255,255,0.08)";
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 4; i++) {
+                const y = padT + (plotH / 4) * i;
+                ctx.beginPath();
+                ctx.moveTo(padL, y);
+                ctx.lineTo(w - padR, y);
+                ctx.stroke();
+
+                ctx.fillStyle = "#94a3b8";
+                ctx.font = "10px JetBrains Mono";
+                const val = Math.round(maxVal - (maxVal / 4) * i);
+                ctx.fillText(val, 8, y + 3);
+            }
+
+            // Gradient Fill under Curve
+            const grad = ctx.createLinearGradient(0, padT, 0, h - padB);
+            grad.addColorStop(0, "rgba(236, 72, 153, 0.45)");
+            grad.addColorStop(1, "rgba(6, 182, 212, 0.02)");
+
+            ctx.beginPath();
+            dataPoints.forEach((pt, idx) => {
+                const x = padL + (idx / (dataPoints.length - 1)) * plotW;
+                const y = padT + plotH - (pt / maxVal) * plotH;
+                if (idx === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+
+            ctx.strokeStyle = "#ec4899";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Close path for fill
+            ctx.lineTo(padL + plotW, padT + plotH);
+            ctx.lineTo(padL, padT + plotH);
+            ctx.closePath();
+            ctx.fillStyle = grad;
+            ctx.fill();
+
+            // Draw glowing data nodes
+            dataPoints.forEach((pt, idx) => {
+                const x = padL + (idx / (dataPoints.length - 1)) * plotW;
+                const y = padT + plotH - (pt / maxVal) * plotH;
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = "#38bdf8";
+                ctx.fill();
+            });
+        }
+
+        /**************************************************************
+         * 11. AI WEAK KEY GENERATOR & MODULES INITIALIZATION
+         **************************************************************/
+        function generateWeakKeyPassage() {
+            const entries = Object.entries(appState.weakKeyMap).sort((a, b) => b[1] - a[1]);
+            const topKeys = entries.slice(0, 4).map(e => e[0]);
+            if (topKeys.length === 0) return CONTENT_LIBRARY["para-simple"][0];
+
+            const wordBank = {
+                p: ["purpose", "prepare", "practice", "people", "progress", "paper"],
+                q: ["quality", "quantum", "question", "quick", "quiet", "quota"],
+                z: ["zone", "zeal", "zenith", "zero", "zigzag", "zoom"],
+                b: ["balance", "bright", "beyond", "benefit", "build", "better"],
+                m: ["moment", "master", "memory", "modern", "method", "motion"],
+                s: ["system", "success", "steady", "smooth", "skill", "speed"],
+                a: ["accuracy", "advance", "achieve", "active", "always"]
+            };
+
+            let customWords = [];
+            topKeys.forEach(k => {
+                const list = wordBank[k] || ["practice", "precision", "performance", "keyboard", "control"];
+                customWords.push(...list);
+            });
+
+            // Shuffle and create a 35-word drill
+            let output = [];
+            for (let i = 0; i < 32; i++) {
+                output.push(customWords[i % customWords.length]);
+            }
+            return output.join(" ");
+        }
+
+        function launchWeakKeyPractice() {
+            switchTab("typing-test");
+            document.getElementById("test-content-select").value = "ai-weak-keys";
+            handleConfigChange();
+            showToast("AI Coach Active", "Generated a custom drill targeting your highest-error keys!");
+        }
+
+        function renderPracticeModules() {
+            const grid = document.getElementById("practice-modules-grid");
+            grid.innerHTML = "";
+            PRACTICE_MODULES.forEach((mod, idx) => {
+                const card = document.createElement("div");
+                card.className = "glass-card rounded-2xl p-5 border border-white/10 flex flex-col justify-between hover:border-fuchsia-500/50 transition";
+                card.innerHTML = `
+                    <div>
+                        <span class="text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300">${mod.level}</span>
+                        <h3 class="font-bold text-base mt-2 text-white">${mod.title}</h3>
+                        <p class="text-xs text-slate-400 mt-1">${mod.desc}</p>
+                        <div class="mt-3 p-2.5 rounded-xl bg-slate-950 font-mono text-xs text-cyan-300 truncate">${mod.text}</div>
+                    </div>
+                    <button onclick="startPracticeLesson(${idx})" class="mt-4 w-full py-2.5 rounded-xl vibrant-gradient text-white text-xs font-bold shadow-md hover:opacity-95 transition">
+                        Start Lesson Drill
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function startPracticeLesson(idx) {
+            const mod = PRACTICE_MODULES[idx];
+            switchTab("typing-test");
+            appState.activeCategoryLabel = mod.title;
+            resetTypingSession(false);
+            loadTargetPassage(`${mod.text} ${mod.text}`);
+            focusTypingInput();
+            showToast(mod.title, "Lesson loaded! Follow the on-screen finger position guide.");
+        }
+
+        function renderGovtExamsGrid() {
+            const grid = document.getElementById("govt-exams-grid");
+            grid.innerHTML = "";
+            GOVT_EXAMS.forEach((ex, idx) => {
+                const card = document.createElement("div");
+                card.className = "glass-card rounded-2xl p-5 border border-white/10 flex flex-col justify-between hover:border-amber-400/50 transition";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300">${ex.badge}</span>
+                            <span class="text-xs font-mono text-slate-400">${Math.round(ex.duration / 60)} Mins</span>
+                        </div>
+                        <h3 class="font-black text-base mt-2 text-white">${ex.title}</h3>
+                        <p class="text-xs text-slate-400">${ex.agency}</p>
+                        <div class="grid grid-cols-2 gap-2 my-3 text-xs">
+                            <div class="p-2 rounded-lg bg-slate-900/90 border border-white/5">
+                                <span class="text-[10px] text-slate-400 block">Qualifying Speed</span>
+                                <strong class="text-cyan-300">${ex.minWpm} WPM Net</strong>
+                            </div>
+                            <div class="p-2 rounded-lg bg-slate-900/90 border border-white/5">
+                                <span class="text-[10px] text-slate-400 block">Min Accuracy</span>
+                                <strong class="text-emerald-300">${ex.minAcc}%</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="launchGovtExam(${idx})" class="w-full py-2.5 rounded-xl vibrant-gradient text-white text-xs font-bold shadow-lg hover:opacity-95 transition">
+                        <i class="fa-solid fa-building-columns mr-1.5"></i> Launch Official Simulation
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function launchGovtExam(idx) {
+            const ex = GOVT_EXAMS[idx];
+            switchTab("typing-test");
+            appState.durationSeconds = ex.duration;
+            appState.timeRemaining = ex.duration;
+            appState.minPassWpm = ex.minWpm;
+            appState.minPassAcc = ex.minAcc;
+            appState.activeCategoryLabel = ex.title;
+            appState.rulesMode = ex.strict ? "strict" : "standard";
+
+            document.getElementById("test-rules-select").value = appState.rulesMode;
+            if (ex.lang.startsWith("hi-") || ex.lang === "en-qwerty") {
+                document.getElementById("test-language-select").value = ex.lang;
+            }
+
+            handleRulesChange();
+            resetTypingSession(true);
+            showToast(ex.title, `Exam Rules Active: ${ex.minWpm} WPM & ${ex.minAcc}% Accuracy required.`);
+        }
+
+        /**************************************************************
+         * 12. DASHBOARD, LEADERBOARD, ACHIEVEMENTS & MULTIPLAYER
+         **************************************************************/
+        function renderDashboardMetrics() {
+            const wpmList = appState.history.map(h => h.netWpm);
+            const bestWpm = wpmList.length ? Math.max(...wpmList) : 0;
+            const avgWpm = wpmList.length ? Math.round(wpmList.reduce((a, b) => a + b, 0) / wpmList.length) : 0;
+            const avgAcc = appState.history.length
+                ? (appState.history.reduce((a, b) => a + parseFloat(b.acc), 0) / appState.history.length).toFixed(1)
+                : "100.0";
+
+            document.getElementById("dash-best-wpm").textContent = `${bestWpm} WPM`;
+            document.getElementById("dash-avg-wpm").textContent = `${avgWpm} WPM`;
+            document.getElementById("dash-avg-acc").textContent = `${avgAcc}%`;
+            document.getElementById("dash-total-tests").textContent = appState.history.length;
+
+            // Render Weak Keys Badges
+            const wkContainer = document.getElementById("dash-weak-keys-list");
+            wkContainer.innerHTML = "";
+            Object.entries(appState.weakKeyMap)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 6)
+                .forEach(([k, count]) => {
+                    const pill = document.createElement("div");
+                    pill.className = "px-3 py-2 rounded-xl bg-rose-500/15 border border-rose-500/40 flex items-center gap-2";
+                    pill.innerHTML = `
+                        <span class="font-mono font-black text-base text-rose-300 uppercase">${k === " " ? "SPC" : k}</span>
+                        <span class="text-[10px] text-slate-300">${count} misses</span>
+                    `;
+                    wkContainer.appendChild(pill);
+                });
+
+            drawTimelineChart("dashboard-history-chart", wpmList.slice(0, 10).reverse());
+        }
+
+        function renderHistoryTable() {
+            const tbody = document.getElementById("results-history-tbody");
+            tbody.innerHTML = "";
+            appState.history.forEach(item => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td class="py-2.5 px-3 text-slate-300">${item.date}</td>
+                    <td class="py-2.5 px-3 font-semibold text-white">${item.mode}</td>
+                    <td class="py-2.5 px-3 font-mono font-bold text-cyan-300">${item.netWpm} WPM</td>
+                    <td class="py-2.5 px-3 font-mono text-slate-400">${item.grossWpm} WPM</td>
+                    <td class="py-2.5 px-3 font-mono text-emerald-300">${item.acc}%</td>
+                    <td class="py-2.5 px-3 font-mono text-rose-400">${item.errors}</td>
+                    <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold text-[10px]">${item.status}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderLeaderboardAndBadges() {
+            const leaders = [
+                { rank: 1, name: "Aarav Verma (AIR-1)", mode: "SSC CGL Skill Test", wpm: 94, acc: "99.4%", badge: "Grandmaster" },
+                { rank: 2, name: "Priya Nair", mode: "High Court Steno", wpm: 88, acc: "98.9%", badge: "Apex Typist" },
+                { rank: 3, name: "Rohan Deshmukh", mode: "CPCT Bilingual", wpm: 82, acc: "98.2%", badge: "Pro Legend" },
+                { rank: 4, name: appState.username + " (You)", mode: "KeyType Pro", wpm: Math.max(...appState.history.map(h => h.netWpm), 58), acc: "97.2%", badge: "Cyber Typist" },
+                { rank: 5, name: "Ananya Chatterjee", mode: "1 Min Sprint", wpm: 56, acc: "96.8%", badge: "Speedster" }
+            ];
+            const lbBody = document.getElementById("leaderboard-tbody");
+            lbBody.innerHTML = "";
+            leaders.forEach(l => {
+                lbBody.innerHTML += `
+                    <tr class="${l.name.includes('(You)') ? 'bg-fuchsia-500/15' : ''}">
+                        <td class="py-3 px-3 font-black text-amber-400">#${l.rank}</td>
+                        <td class="py-3 px-3 font-bold text-white">${l.name}</td>
+                        <td class="py-3 px-3 text-slate-300">${l.mode}</td>
+                        <td class="py-3 px-3 font-mono font-bold text-cyan-300">${l.wpm} WPM</td>
+                        <td class="py-3 px-3 font-mono text-emerald-300">${l.acc}</td>
+                        <td class="py-3 px-3"><span class="px-2 py-0.5 rounded-full bg-indigo-500/25 text-indigo-200 text-[10px] font-bold">${l.badge}</span></td>
+                    </tr>
+                `;
+            });
+
+            // Badges
+            const badges = [
+                { icon: "fa-bolt", title: "Speed Demon", sub: "Hit 60+ WPM", color: "text-cyan-400" },
+                { icon: "fa-bullseye", title: "Sniper 100%", sub: "Zero Error Test", color: "text-emerald-400" },
+                { icon: "fa-fire", title: "7-Day Streak", sub: "Daily Consistency", color: "text-amber-400" },
+                { icon: "fa-language", title: "Polyglot", sub: "Hindi + English", color: "text-fuchsia-400" },
+                { icon: "fa-building-columns", title: "SSC Qualifier", sub: "Pass Strict Exam", color: "text-indigo-400" },
+                { icon: "fa-trophy", title: "Race Winner", sub: "Beat Pro Bots", color: "text-rose-400" }
+            ];
+            const bGrid = document.getElementById("achievements-grid");
+            bGrid.innerHTML = "";
+            badges.forEach(b => {
+                bGrid.innerHTML += `
+                    <div class="p-4 rounded-2xl bg-slate-900/80 border border-white/10 text-center">
+                        <i class="fa-solid ${b.icon} text-2xl ${b.color} mb-2"></i>
+                        <h4 class="font-bold text-xs text-white">${b.title}</h4>
+                        <p class="text-[10px] text-slate-400 mt-0.5">${b.sub}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Multiplayer Race Simulator
+        let raceInterval = null;
+        const RACE_TEXT = "Speed and accuracy together define a world class competitive typist in every digital arena.";
+        function startMultiplayerRace() {
+            clearInterval(raceInterval);
+            document.getElementById("race-prompt-box").textContent = RACE_TEXT;
+            const input = document.getElementById("race-input");
+            input.disabled = false;
+            input.value = "";
+            input.focus();
+
+            let bot1Pct = 0, bot2Pct = 0;
+            document.getElementById("race-bar-user").style.width = "0%";
+            document.getElementById("race-bar-bot1").style.width = "0%";
+            document.getElementById("race-bar-bot2").style.width = "0%";
+
+            raceInterval = setInterval(() => {
+                bot1Pct = Math.min(100, bot1Pct + 3.2);
+                bot2Pct = Math.min(100, bot2Pct + 2.7);
+                document.getElementById("race-bar-bot1").style.width = `${bot1Pct}%`;
+                document.getElementById("race-bar-bot2").style.width = `${bot2Pct}%`;
+
+                if (bot1Pct >= 100) {
+                    clearInterval(raceInterval);
+                    showToast("Race Finished!", "CyberHawk_IN finished closely! Keep practicing to beat the bot!");
+                }
+            }, 400);
+
+            input.oninput = () => {
+                const pct = Math.min(100, Math.round((input.value.length / RACE_TEXT.length) * 100));
+                document.getElementById("race-bar-user").style.width = `${pct}%`;
+                document.getElementById("race-user-wpm").textContent = `${Math.min(92, 42 + Math.round(pct / 2))} WPM`;
+                playKeySound("char");
+
+                if (input.value.length >= RACE_TEXT.length) {
+                    clearInterval(raceInterval);
+                    input.disabled = true;
+                    appState.xp += 100;
+                    updateHeaderGamificationUI();
+                    showToast("VICTORY! #1 Place", "You won the live multiplayer race and earned +100 Bonus XP!");
+                }
+            };
+        }
+
+        function createPrivateRoomCode() {
+            const code = "KT-" + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById("race-room-code").textContent = code;
+            showToast("Private Room Created", `Share room code ${code} with your friends!`);
+        }
+
+        /**************************************************************
+         * 13. NAVIGATION, CERTIFICATES, SETTINGS & ADMIN HELPERS
+         **************************************************************/
+        function switchTab(tabId) {
+            document.querySelectorAll(".tab-section").forEach(sec => sec.classList.add("hidden"));
+            const target = document.getElementById(`tab-${tabId}`);
+            if (target) target.classList.remove("hidden");
+
+            document.querySelectorAll(".nav-btn").forEach(btn => {
+                if (btn.dataset.tab === tabId) {
+                    btn.classList.add("vibrant-gradient", "text-white", "shadow-lg");
+                } else {
+                    btn.classList.remove("vibrant-gradient", "text-white", "shadow-lg");
+                }
+            });
+
+            if (tabId === "dashboard") {
+                setTimeout(() => renderDashboardMetrics(), 60);
+            } else if (tabId === "typing-test") {
+                setTimeout(() => focusTypingInput(), 60);
+            }
+        }
+
+        function updateHeaderGamificationUI() {
+            const level = Math.floor(appState.xp / 150) + 1;
+            const progress = ((appState.xp % 150) / 150) * 100;
+            document.getElementById("header-level-badge").textContent = `L${level}`;
+            document.getElementById("header-xp-text").textContent = `${appState.xp} XP`;
+            document.getElementById("header-xp-bar").style.width = `${progress}%`;
+            document.getElementById("header-username").textContent = appState.username;
+            document.getElementById("dash-username").textContent = appState.username;
+            document.getElementById("header-avatar").textContent = appState.username.charAt(0).toUpperCase();
+        }
+
+        function generateCertificateFromLastResult() {
+            const last = appState.history[0];
+            if (last) {
+                document.getElementById("cert-display-wpm").textContent = `${last.netWpm} WPM`;
+                document.getElementById("cert-display-acc").textContent = `${last.acc}%`;
+            }
+            switchTab("certificates");
+        }
+
+        function updateCertificatePreview() {
+            document.getElementById("cert-display-name").textContent = document.getElementById("cert-name-input").value || "Candidate Name";
+            document.getElementById("cert-display-exam").textContent = document.getElementById("cert-exam-input").value;
+        }
+
+        // Theme & Settings Controls
+        function setTheme(mode) {
+            document.body.classList.remove("theme-light", "theme-contrast");
+            if (mode === "light") document.body.classList.add("theme-light");
+            if (mode === "contrast") document.body.classList.add("theme-contrast");
+            appState.theme = mode;
+            showToast("Visual Theme Updated", `Switched to ${mode.toUpperCase()} surface theme.`);
+        }
+
+        function cycleTheme() {
+            const next = appState.theme === "dark" ? "light" : appState.theme === "light" ? "contrast" : "dark";
+            setTheme(next);
+        }
+
+        function updateTypingFontSize(px) {
+            document.documentElement.style.setProperty("--typing-font-size", `${px}px`);
+            document.documentElement.style.setProperty("--typing-line-height", `${Math.round(px * 1.55)}px`);
+            document.getElementById("font-size-label").textContent = `${px}px`;
+        }
+
+        function updateCaretStyle(styleClass) {
+            appState.caretStyle = styleClass;
+            syncCharacterHighlights();
+        }
+
+        function toggleVirtualKeyboardVisibility(show) {
+            const vk = document.getElementById("virtual-keyboard-wrapper");
+            vk.style.display = show ? "block" : "none";
+        }
+
+        function toggleDyslexicFont(enabled) {
+            const box = document.getElementById("typing-text-container");
+            if (enabled) box.classList.add("font-dyslexic");
+            else box.classList.remove("font-dyslexic");
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else {
+                document.exitFullscreen().catch(() => {});
+            }
+        }
+
+        // Custom Text & Admin Functions
+        function openCustomTextModal() {
+            const m = document.getElementById("custom-text-modal");
+            m.classList.remove("hidden");
+            m.classList.add("flex");
+        }
+        function closeCustomTextModal() {
+            const m = document.getElementById("custom-text-modal");
+            m.classList.add("hidden");
+            m.classList.remove("flex");
+        }
+        function applyCustomText() {
+            const txt = document.getElementById("custom-text-area").value.trim();
+            if (txt.length < 10) {
+                showToast("Text Too Short", "Please enter at least a full sentence to practice.");
+                return;
+            }
+            appState.activeCategoryLabel = "Custom Imported Text";
+            resetTypingSession(false);
+            loadTargetPassage(txt);
+            closeCustomTextModal();
+            showToast("Custom Passage Loaded", "Ready to begin typing your custom content!");
+        }
+        function handleTxtFileUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => {
+                document.getElementById("custom-text-area").value = ev.target.result;
+            };
+            reader.readAsText(file);
+        }
+
+        function openProfileModal() {
+            const m = document.getElementById("profile-modal");
+            m.classList.remove("hidden");
+            m.classList.add("flex");
+        }
+        function closeProfileModal() {
+            const m = document.getElementById("profile-modal");
+            m.classList.add("hidden");
+            m.classList.remove("flex");
+        }
+        function saveUserProfile() {
+            const name = document.getElementById("profile-name-input").value.trim() || "Gautam Sachdev";
+            appState.username = name;
+            localStorage.setItem("ktp_username", name);
+            document.getElementById("cert-name-input").value = name;
+            updateCertificatePreview();
+            updateHeaderGamificationUI();
+            closeProfileModal();
+            showToast("Profile Saved", `Welcome, ${name}!`);
+        }
+
+        function adminSaveParagraph() {
+            const title = document.getElementById("admin-para-title").value.trim() || "Admin Passage";
+            const text = document.getElementById("admin-para-text").value.trim();
+            if (text.length < 15) {
+                showToast("Validation Notice", "Please enter a valid paragraph with at least 15 characters.");
+                return;
+            }
+            CONTENT_LIBRARY["para-simple"].unshift(text);
+            switchTab("typing-test");
+            appState.activeCategoryLabel = title;
+            resetTypingSession(false);
+            loadTargetPassage(text);
+            showToast("Passage Published", `"${title}" is now live in the Typing Test arena!`);
+        }
+
+        function adminCreateCustomExam() {
+            const name = document.getElementById("admin-exam-name").value.trim() || "Custom Institute Exam";
+            const wpm = parseInt(document.getElementById("admin-exam-wpm").value || "35", 10);
+            const acc = parseInt(document.getElementById("admin-exam-acc").value || "95", 10);
+            const mins = parseInt(document.getElementById("admin-exam-time").value || "10", 10);
+
+            GOVT_EXAMS.unshift({
+                id: "custom-" + Date.now(),
+                title: name,
+                agency: "Institute Custom Pattern",
+                duration: mins * 60,
+                minWpm: wpm,
+                minAcc: acc,
+                lang: "en-qwerty",
+                strict: true,
+                badge: "Custom Exam"
+            });
+            renderGovtExamsGrid();
+            switchTab("exam-mode");
+            showToast("Exam Pattern Created", `${name} added to Govt Exam Mode!`);
+        }
+
+        function startHindiChallenge() {
+            switchTab("typing-test");
+            document.getElementById("test-language-select").value = "hi-unicode";
+            handleConfigChange();
+            showToast("Hindi Unicode Active", "Type the Devanagari passage displayed on screen.");
+        }
+
+        function copyResultSummary() {
+            const last = appState.history[0];
+            const text = `KeyType Pro Score: ${last.netWpm} Net WPM | ${last.acc}% Accuracy in ${last.mode}!`;
+            const temp = document.createElement("textarea");
+            temp.value = text;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand("copy");
+            document.body.removeChild(temp);
+            showToast("Score Copied!", "Share your result on social media or with friends.");
+        }
+
+        function exportHistoryCSV() {
+            let csv = "Date,Mode,Net_WPM,Gross_WPM,Accuracy,Errors,Status\n";
+            appState.history.forEach(r => {
+                csv += `"${r.date}","${r.mode}",${r.netWpm},${r.grossWpm},${r.acc},${r.errors},${r.status}\n`;
+            });
+            const blob = new Blob([csv], { type: "text/csv" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "KeyType_Pro_Report.csv";
+            a.click();
+            showToast("CSV Exported", "Your performance report has been downloaded.");
+        }
+
+        let toastTimeout = null;
+        function showToast(title, msg) {
+            const toast = document.getElementById("toast-notification");
+            document.getElementById("toast-title").textContent = title;
+            document.getElementById("toast-msg").textContent = msg;
+            toast.classList.remove("translate-y-24", "opacity-0");
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add("translate-y-24", "opacity-0");
+            }, 3400);
+        }
+
+        /**************************************************************
+         * 14. INITIALIZE PLATFORM ON WINDOW LOAD
+         **************************************************************/
+        window.onload = function () {
+            renderVirtualKeyboard();
+            renderPracticeModules();
+            renderGovtExamsGrid();
+            renderHistoryTable();
+            renderLeaderboardAndBadges();
+            updateHeaderGamificationUI();
+            loadTargetPassage();
+            setupTypingListeners();
+            switchTab("typing-test");
+        };
+    </script>
+</body>
+</html>
