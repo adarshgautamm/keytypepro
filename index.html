@@ -50,19 +50,40 @@
 
     <style>
         :root {
-            --bg-primary: #090b14;
-            --bg-card: rgba(19, 23, 40, 0.78);
+            --bg-primary: #070812;
+            --bg-card: rgba(16, 20, 38, 0.76);
             --text-main: #f8fafc;
-            --accent-glow: rgba(139, 92, 246, 0.45);
+            --accent-glow: rgba(217, 70, 239, 0.45);
+            --grad-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 45%, #ec4899 100%);
+            --grad-secondary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
             --typing-font-size: 1.5rem;
             --typing-line-height: 2.35rem;
         }
 
+        body.theme-sunset {
+            --bg-primary: #120612;
+            --bg-card: rgba(36, 12, 32, 0.78);
+            --text-main: #fff1f2;
+            --accent-glow: rgba(244, 63, 94, 0.55);
+            --grad-primary: linear-gradient(135deg, #f43f5e 0%, #fb923c 50%, #facc15 100%);
+            --grad-secondary: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+        }
+
+        body.theme-ocean {
+            --bg-primary: #041019;
+            --bg-card: rgba(10, 29, 44, 0.80);
+            --text-main: #ecfeff;
+            --accent-glow: rgba(6, 182, 212, 0.55);
+            --grad-primary: linear-gradient(135deg, #06b6d4 0%, #10b981 50%, #3b82f6 100%);
+            --grad-secondary: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+        }
+
         body.theme-light {
             --bg-primary: #f1f5f9;
-            --bg-card: rgba(255, 255, 255, 0.88);
+            --bg-card: rgba(255, 255, 255, 0.90);
             --text-main: #0f172a;
             --accent-glow: rgba(99, 102, 241, 0.25);
+            --grad-primary: linear-gradient(135deg, #4f46e5 0%, #9333ea 50%, #db2777 100%);
         }
 
         body.theme-contrast {
@@ -76,50 +97,63 @@
             background-color: var(--bg-primary);
             color: var(--text-main);
             overflow-x: hidden;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.35s ease, color 0.35s ease;
         }
 
-        /* Vibrant Background Mesh */
+        /* Ultra-Vibrant Animated Aurora Mesh Background */
         .bg-vibrant-mesh {
             background-image: 
-                radial-gradient(at 12% 15%, rgba(124, 58, 237, 0.26) 0px, transparent 50%),
-                radial-gradient(at 88% 12%, rgba(236, 72, 153, 0.22) 0px, transparent 50%),
-                radial-gradient(at 50% 85%, rgba(6, 182, 212, 0.20) 0px, transparent 50%),
-                radial-gradient(at 85% 80%, rgba(16, 185, 129, 0.16) 0px, transparent 50%);
+                radial-gradient(at 8% 12%, rgba(139, 92, 246, 0.36) 0px, transparent 48%),
+                radial-gradient(at 92% 10%, rgba(236, 72, 153, 0.34) 0px, transparent 48%),
+                radial-gradient(at 50% 50%, rgba(6, 182, 212, 0.22) 0px, transparent 55%),
+                radial-gradient(at 15% 88%, rgba(244, 63, 94, 0.25) 0px, transparent 48%),
+                radial-gradient(at 88% 85%, rgba(16, 185, 129, 0.26) 0px, transparent 50%);
             background-attachment: fixed;
         }
 
-        /* Glassmorphism Cards */
+        /* Glassmorphism Cards with Vibrant Glow */
         .glass-card {
             background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.45), 0 0 25px -10px var(--accent-glow);
         }
 
         .theme-light .glass-card {
-            border: 1px solid rgba(99, 102, 241, 0.18);
-            box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.22);
+            box-shadow: 0 12px 32px -6px rgba(99, 102, 241, 0.14);
         }
 
         /* Gradient Borders & Buttons */
         .vibrant-gradient {
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            background: var(--grad-primary);
         }
 
         .vibrant-gradient-cyan {
-            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+            background: var(--grad-secondary);
         }
 
         .vibrant-gradient-emerald {
-            background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            background: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #3b82f6 100%);
+        }
+
+        .vibrant-ribbon-border {
+            background: linear-gradient(90deg, rgba(99,102,241,0.18) 0%, rgba(168,85,247,0.22) 35%, rgba(236,72,153,0.22) 70%, rgba(6,182,212,0.18) 100%);
+            border: 1px solid rgba(236, 72, 153, 0.38);
+            box-shadow: 0 8px 30px -6px rgba(217, 70, 239, 0.28);
         }
 
         .vibrant-text {
-            background: linear-gradient(135deg, #38bdf8 0%, #a855f7 50%, #f43f5e 100%);
+            background: linear-gradient(135deg, #38bdf8 0%, #c084fc 45%, #f43f5e 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .avatar-glow-ring {
+            padding: 2px;
+            background: linear-gradient(135deg, #06b6d4, #a855f7, #ec4899, #facc15);
+            box-shadow: 0 0 18px rgba(236, 72, 153, 0.55);
         }
 
         /* Typing Display Box Styling */
@@ -235,18 +269,33 @@
 
         /* Print Certificate Styles */
         @media print {
+            @page {
+                size: landscape;
+                margin: 8mm;
+            }
+            html, body {
+                background: #070812 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
             body * {
                 visibility: hidden;
             }
             #certificate-print-area, #certificate-print-area * {
                 visibility: visible;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
             #certificate-print-area {
                 position: fixed;
                 left: 0;
                 top: 0;
                 width: 100%;
-                height: auto;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 24px !important;
+                background: linear-gradient(135deg, #090d1f 0%, #1e1b4b 50%, #3b0764 100%) !important;
+                border: 4px solid #f59e0b !important;
                 box-shadow: none !important;
             }
         }
@@ -258,14 +307,14 @@
     <header class="sticky top-0 z-40 glass-card border-b border-white/10 px-4 py-2.5">
         <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-3">
             <!-- Brand Logo -->
-            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('typing-test')">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('dashboard')">
                 <div class="w-11 h-11 rounded-2xl vibrant-gradient flex items-center justify-center shadow-lg shadow-fuchsia-500/30 animate-float">
                     <i class="fa-solid fa-keyboard text-white text-xl"></i>
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
                         <span class="font-black text-xl tracking-tight vibrant-text">KEYTYPE PRO</span>
-                        <span class="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30">Ultra v4.0</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30">Ultra v5.0</span>
                     </div>
                     <p class="text-xs text-slate-400 hidden sm:block">AI Typing Coach • Govt Exam Simulator • Multilingual</p>
                 </div>
@@ -276,41 +325,50 @@
                 <!-- Streak Counter -->
                 <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold" title="Daily Typing Streak">
                     <i class="fa-solid fa-fire-flame-curved text-amber-400 animate-bounce"></i>
-                    <span>Streak: <strong id="header-streak">5</strong> Days</span>
+                    <span>Streak: <strong id="header-streak">Day 1</strong></span>
                 </div>
 
                 <!-- XP & Level Pill -->
                 <div class="flex items-center gap-2.5 bg-slate-900/70 border border-white/10 px-3.5 py-1.5 rounded-xl">
                     <div class="w-7 h-7 rounded-lg vibrant-gradient-cyan flex items-center justify-center font-bold text-xs text-white" id="header-level-badge">
-                        L4
+                        L1
                     </div>
                     <div class="w-24 sm:w-32">
                         <div class="flex justify-between text-[11px] font-semibold mb-1">
-                            <span id="header-rank-title" class="text-cyan-300">Cyber Typist</span>
-                            <span id="header-xp-text" class="text-slate-400">450 XP</span>
+                            <span class="text-cyan-300" id="header-rank-title">Rising Aspirant</span>
+                            <span class="text-slate-400" id="header-xp-text">0 XP</span>
                         </div>
                         <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                            <div id="header-xp-bar" class="h-full vibrant-gradient transition-all duration-500" style="width: 65%"></div>
+                            <div id="header-xp-bar" class="h-full vibrant-gradient transition-all duration-500" style="width: 10%"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Sound Toggle Quick Button -->
+                <!-- Sound Toggle -->
                 <button onclick="toggleQuickSound()" id="quick-sound-btn" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-cyan-300 transition" title="Toggle Mechanical Keyboard Sound">
                     <i class="fa-solid fa-volume-high" id="quick-sound-icon"></i>
                 </button>
 
                 <!-- Theme Quick Switch -->
-                <button onclick="cycleTheme()" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-fuchsia-300 transition" title="Switch Visual Theme">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <button onclick="cycleTheme()" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-fuchsia-300 transition" title="Cycle Vibrant Gradient Theme">
+                    <i class="fa-solid fa-palette"></i>
                 </button>
 
-                <!-- User Profile Button -->
-                <button onclick="openProfileModal()" class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600/30 to-fuchsia-600/30 border border-fuchsia-400/30 hover:border-fuchsia-400 transition">
-                    <div class="w-7 h-7 rounded-lg vibrant-gradient flex items-center justify-center text-white font-bold text-xs" id="header-avatar">
-                        A
+                <!-- Quick Register / Login Button -->
+                <button onclick="switchTab('profile')" class="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl vibrant-gradient text-white text-xs font-bold shadow-lg shadow-fuchsia-500/30 hover:opacity-95 transition">
+                    <i class="fa-solid fa-user-lock"></i>
+                    <span>Register / Login</span>
+                </button>
+
+                <!-- Active User Identity Pill -->
+                <button onclick="openProfileModal()" class="flex items-center gap-2.5 pl-1.5 pr-3.5 py-1 rounded-2xl bg-gradient-to-r from-indigo-600/30 via-purple-600/30 to-fuchsia-600/30 border border-fuchsia-400/40 hover:border-cyan-400 transition">
+                    <div class="w-8 h-8 rounded-xl avatar-glow-ring overflow-hidden shrink-0">
+                        <img id="header-avatar-img" src="" alt="User Avatar" class="w-full h-full object-cover rounded-[10px]" />
                     </div>
-                    <span class="text-xs font-bold hidden md:inline" id="header-username">Gautam sachdev</span>
+                    <div class="text-left">
+                        <span class="text-xs font-black block leading-tight text-white" id="header-username">New Candidate</span>
+                        <span class="text-[10px] font-semibold text-cyan-300 block leading-tight" id="header-userhandle">@aspirant</span>
+                    </div>
                 </button>
             </div>
         </div>
@@ -319,14 +377,19 @@
     <!-- MAIN WORKSPACE: SIDEBAR NAVIGATION + DYNAMIC MODULE VIEW -->
     <div class="max-w-[1600px] w-full mx-auto flex-1 flex flex-col lg:flex-row gap-5 p-4 sm:p-6">
 
-        <!-- LEFT NAVIGATION SIDEBAR (10 Structured Modules) -->
+        <!-- LEFT NAVIGATION SIDEBAR (12 Structured Modules) -->
         <aside class="w-full lg:w-64 shrink-0">
             <nav class="glass-card rounded-2xl p-3 sticky top-20 flex lg:flex-col gap-1.5 overflow-x-auto lg:overflow-x-visible">
-                <button onclick="switchTab('dashboard')" data-tab="dashboard" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
-                    <i class="fa-solid fa-chart-pie w-5 text-center text-indigo-400"></i>
-                    <span>Dashboard</span>
+                <button onclick="switchTab('profile')" data-tab="profile" class="nav-btn active-nav flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i class="fa-solid fa-id-card-clip w-5 text-center text-pink-400"></i>
+                    <span>Register & Login</span>
+                    <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-pink-500/25 text-pink-200 font-bold">START</span>
                 </button>
-                <button onclick="switchTab('typing-test')" data-tab="typing-test" class="nav-btn active-nav flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                <button onclick="switchTab('dashboard')" data-tab="dashboard" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i class="fa-solid fa-house-user w-5 text-center text-indigo-400"></i>
+                    <span>Home & My Profile</span>
+                </button>
+                <button onclick="switchTab('typing-test')" data-tab="typing-test" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
                     <i class="fa-solid fa-bolt w-5 text-center text-fuchsia-400"></i>
                     <span>Typing Test</span>
                     <span class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-white/20 text-white">LIVE</span>
@@ -364,6 +427,10 @@
                     <i class="fa-solid fa-user-shield w-5 text-center text-teal-400"></i>
                     <span>Admin & Institute</span>
                 </button>
+                <button onclick="switchTab('about')" data-tab="about" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i class="fa-solid fa-heart-pulse w-5 text-center text-rose-400"></i>
+                    <span>About Us & Creator</span>
+                </button>
 
                 <!-- Quick AI Tip Card inside Sidebar (Desktop) -->
                 <div class="hidden lg:block mt-4 p-3.5 rounded-xl bg-gradient-to-br from-indigo-900/50 via-purple-900/40 to-fuchsia-900/40 border border-fuchsia-500/30">
@@ -379,7 +446,268 @@
         </aside>
 
         <!-- RIGHT MAIN CONTENT AREA -->
-        <main class="flex-1 min-w-0">
+        <main class="flex-1 min-w-0 space-y-5">
+
+            <!-- ==========================================================
+                 PERSISTENT GLOBAL USER IDENTITY BANNER (SHOWN ON EVERY PAGE)
+                 ========================================================== -->
+            <div id="global-user-identity-ribbon" class="vibrant-ribbon-border rounded-2xl p-3.5 sm:px-5 flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5">
+                    <div class="relative cursor-pointer" onclick="switchTab('profile')" title="Click to change Profile Picture">
+                        <div class="w-12 h-12 rounded-2xl avatar-glow-ring overflow-hidden">
+                            <img id="ribbon-avatar-img" src="" alt="User Profile" class="w-full h-full object-cover rounded-[14px]" />
+                        </div>
+                        <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-400 border-2 border-slate-950" title="Online & Registered"></span>
+                    </div>
+                    <div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span id="ribbon-status-pill" class="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md vibrant-gradient text-white">
+                                <i class="fa-solid fa-circle-check mr-1"></i>Active Candidate
+                            </span>
+                            <h2 class="text-sm sm:text-base font-black text-white" id="ribbon-fullname">New Candidate</h2>
+                            <span class="text-xs font-mono text-cyan-300" id="ribbon-handle">@aspirant</span>
+                            <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                <i class="fa-solid fa-fire mr-1"></i>Streak: <span id="ribbon-streak">Day 1</span>
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-300 mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1">
+                            <span><i class="fa-solid fa-bullseye text-fuchsia-400 mr-1"></i>Target: <strong id="ribbon-target-exam" class="text-white">SSC CGL / CHSL Skill Test</strong></span>
+                            <span><i class="fa-solid fa-gauge-high text-emerald-400 mr-1"></i>Best Speed: <strong id="ribbon-best-wpm" class="text-emerald-300">0 WPM</strong></span>
+                            <span><i class="fa-solid fa-list-check text-cyan-400 mr-1"></i>Tests Taken: <strong id="ribbon-tests-count" class="text-cyan-300">0</strong></span>
+                            <span class="hidden md:inline"><i class="fa-solid fa-compass text-amber-400 mr-1"></i>Page: <strong id="ribbon-active-page" class="text-amber-300">Registration & Login</strong></span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button onclick="switchTab('dashboard')" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-id-badge text-cyan-400"></i>
+                        <span>My Home Profile</span>
+                    </button>
+                    <button onclick="switchTab('certificates')" class="px-3.5 py-2 rounded-xl vibrant-gradient-cyan text-white text-xs font-bold shadow-md hover:opacity-95 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-award"></i>
+                        <span class="hidden sm:inline">My Certificate</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 MODULE 0: CANDIDATE REGISTRATION & LOGIN GATEWAY (LAUNCH PAGE)
+                 ========================================== -->
+            <section id="tab-profile" class="tab-section space-y-6">
+                <!-- Vibrant Hero Welcome & Auth Card -->
+                <div class="rounded-3xl p-6 sm:p-8 vibrant-gradient text-white shadow-2xl relative overflow-hidden">
+                    <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+                            <div class="relative group">
+                                <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl p-1 bg-white/30 backdrop-blur-md shadow-2xl overflow-hidden">
+                                    <img id="profile-hero-avatar" src="" alt="Profile Avatar" class="w-full h-full object-cover rounded-[20px]" />
+                                </div>
+                                <label class="absolute -bottom-2 -right-2 w-9 h-9 rounded-xl bg-slate-950 text-cyan-300 border border-cyan-400/50 flex items-center justify-center cursor-pointer shadow-lg hover:scale-110 transition" title="Upload New Photo">
+                                    <i class="fa-solid fa-camera"></i>
+                                    <input type="file" accept="image/*" onchange="handleProfilePhotoUpload(event)" class="hidden" />
+                                </label>
+                            </div>
+                            <div>
+                                <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                                    <span id="profile-hero-status" class="px-3 py-0.5 rounded-full bg-black/30 text-[11px] font-black uppercase tracking-wider border border-white/25">
+                                        Welcome to KeyType Pro Portal
+                                    </span>
+                                    <span id="profile-hero-id" class="px-2.5 py-0.5 rounded-full bg-white/20 text-[11px] font-mono font-bold">
+                                        Streak: Day 1
+                                    </span>
+                                </div>
+                                <h1 id="profile-hero-name" class="text-2xl sm:text-4xl font-black mt-2 tracking-tight">Register or Login to Begin</h1>
+                                <p id="profile-hero-bio" class="text-xs sm:text-sm text-white/90 mt-1 max-w-xl">
+                                    Create your candidate profile with a custom photo or login with your saved credentials to resume your exact test count, highest WPM record, and certificates!
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap items-center justify-center gap-2.5">
+                            <button onclick="switchAuthMode('login')" class="px-4 py-2.5 rounded-2xl bg-black/40 hover:bg-black/60 border border-white/30 text-white text-xs font-bold transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-right-to-bracket text-cyan-300"></i>
+                                <span>Existing User Login</span>
+                            </button>
+                            <button onclick="switchAuthMode('register')" class="px-4 py-2.5 rounded-2xl bg-white text-slate-950 hover:scale-105 text-xs font-black shadow-xl transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-user-plus text-fuchsia-600"></i>
+                                <span>New Registration</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Registration / Login Studio + Avatar Uploader -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Left Column: Profile Picture Uploader & Saved Accounts Login List -->
+                    <div class="glass-card rounded-3xl p-6 border border-fuchsia-500/30 flex flex-col justify-between space-y-5">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="font-black text-base vibrant-text">
+                                    <i class="fa-solid fa-camera-retro mr-1.5"></i>Candidate Photo Studio
+                                </h3>
+                                <span class="text-[10px] px-2 py-0.5 rounded bg-fuchsia-500/20 text-fuchsia-300 font-bold uppercase">Used on Certificate</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mb-4">
+                                Upload your passport/profile photo before or after registering. It automatically appears on your Home Profile and official Certificate.
+                            </p>
+
+                            <!-- Large Live Preview -->
+                            <div class="flex flex-col items-center p-5 rounded-2xl bg-slate-950/70 border border-white/10 mb-4">
+                                <div class="w-28 h-28 rounded-full avatar-glow-ring overflow-hidden mb-3">
+                                    <img id="studio-avatar-preview" src="" alt="Studio Preview" class="w-full h-full object-cover rounded-full" />
+                                </div>
+                                <label class="w-full py-2.5 px-4 rounded-xl vibrant-gradient text-white text-xs font-bold text-center cursor-pointer shadow-lg hover:opacity-95 transition flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <span>Upload Custom Photo (JPG / PNG)</span>
+                                    <input type="file" accept="image/*" onchange="handleProfilePhotoUpload(event)" class="hidden" />
+                                </label>
+                            </div>
+
+                            <!-- Built-in Vibrant Gradient Avatar Presets -->
+                            <label class="block text-[11px] font-bold uppercase text-slate-400 mb-2">Or Select a Cyber Avatar Preset:</label>
+                            <div id="avatar-presets-grid" class="grid grid-cols-5 gap-2.5">
+                                <!-- Populated via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Saved Accounts Quick Login Switcher -->
+                        <div class="p-4 rounded-2xl bg-slate-900/80 border border-white/10">
+                            <div class="flex items-center justify-between mb-2">
+                                <label class="block text-[11px] font-bold uppercase text-cyan-300">
+                                    <i class="fa-solid fa-users-gear mr-1"></i>Saved Candidate Accounts
+                                </label>
+                                <span class="text-[10px] text-slate-400">Click to Resume</span>
+                            </div>
+                            <div id="registered-users-list" class="space-y-2 max-h-44 overflow-y-auto pr-1">
+                                <!-- Populated via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right 2 Columns: Toggleable New Registration Form OR Returning User Login Form -->
+                    <div class="lg:col-span-2 glass-card rounded-3xl p-6 border border-cyan-500/30">
+                        <!-- Mode Tabs -->
+                        <div class="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-950/80 border border-white/10 mb-5">
+                            <button type="button" id="tab-btn-register" onclick="switchAuthMode('register')" class="flex-1 py-2.5 rounded-xl vibrant-gradient text-white text-xs font-black transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <span>1. New Candidate Registration (Starts at Streak Day 1)</span>
+                            </button>
+                            <button type="button" id="tab-btn-login" onclick="switchAuthMode('login')" class="flex-1 py-2.5 rounded-xl text-slate-300 hover:text-white text-xs font-bold transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-key"></i>
+                                <span>2. Login with Saved Credentials (Resume Progress)</span>
+                            </button>
+                        </div>
+
+                        <!-- FORM A: NEW REGISTRATION / EDIT PROFILE FORM -->
+                        <form id="user-registration-form" onsubmit="handleRegisterOrUpdateUser(event)" class="space-y-4 text-xs">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                <div>
+                                    <h3 id="reg-form-heading" class="text-lg font-black text-white">
+                                        <i class="fa-solid fa-id-card text-fuchsia-400 mr-1.5"></i>Create Your Candidate Account
+                                    </h3>
+                                    <p class="text-xs text-slate-400">Upon registration, your Streak starts at <strong>Day 1</strong> and you will be launched directly to your Home Profile Dashboard.</p>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold">
+                                    <i class="fa-solid fa-fire mr-1"></i>Day 1 Streak Initialized
+                                </span>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block font-bold uppercase text-slate-300 mb-1.5">Candidate Full Name (For Website & Certificate) *</label>
+                                    <input type="text" id="reg-fullname" required placeholder="Enter your full name" class="w-full bg-slate-950/90 text-white px-4 py-3 rounded-xl border border-white/15 focus:border-fuchsia-500 outline-none font-semibold" />
+                                </div>
+                                <div>
+                                    <label class="block font-bold uppercase text-slate-300 mb-1.5">Username / Login Handle *</label>
+                                    <input type="text" id="reg-handle" required placeholder="e.g. @rohit_ssc" class="w-full bg-slate-950/90 text-cyan-300 font-mono px-4 py-3 rounded-xl border border-white/15 focus:border-cyan-400 outline-none" />
+                                </div>
+                                <div>
+                                    <label class="block font-bold uppercase text-slate-300 mb-1.5">Email Address (Login ID) *</label>
+                                    <input type="email" id="reg-email" required placeholder="e.g. candidate@example.com" class="w-full bg-slate-950/90 text-white px-4 py-3 rounded-xl border border-white/15 focus:border-fuchsia-500 outline-none" />
+                                </div>
+                                <div>
+                                    <label class="block font-bold uppercase text-slate-300 mb-1.5">Create Password (To Resume Progress Later) *</label>
+                                    <input type="password" id="reg-password" required placeholder="Create a secure password" class="w-full bg-slate-950/90 text-white px-4 py-3 rounded-xl border border-white/15 focus:border-cyan-400 outline-none" />
+                                </div>
+                                <div>
+                                    <label class="block font-bold uppercase text-slate-300 mb-1.5">Target Exam / Career Goal</label>
+                                    <select id="reg-exam" class="w-full bg-slate-950/90 text-white px-4 py-3 rounded-xl border border-white/15 focus:border-cyan-400 outline-none font-semibold">
+                                        <option value="SSC CGL / CHSL Skill Test">SSC CGL / CHSL Skill Test</option>
+                                        <option value="CPCT Bilingual Qualification">CPCT Bilingual (Hindi + English)</option>
+                                        <option value="RRB NTPC Railway Typing">RRB NTPC Railway Skill Test</option>
+                                        <option value="High Court Clerk / Stenographer">High Court Clerk / Stenographer</option>
+                                        <option value="Bihar SSC (BSSC) Typing">Bihar SSC (BSSC) Inter Level</option>
+                                        <option value="Software Engineer / Pro Coder">Software Engineer / Pro Coder</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block font-bold uppercase text-slate-300 mb-1.5">City & State</label>
+                                    <input type="text" id="reg-location" placeholder="e.g. Patna, Bihar / New Delhi" class="w-full bg-slate-950/90 text-white px-4 py-3 rounded-xl border border-white/15 focus:border-fuchsia-500 outline-none" />
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block font-bold uppercase text-slate-300 mb-1.5">Preferred Typing Language</label>
+                                    <select id="reg-lang-pref" class="w-full bg-slate-950/90 text-white px-4 py-3 rounded-xl border border-white/15 focus:border-emerald-400 outline-none">
+                                        <option value="en-qwerty">English (QWERTY Standard)</option>
+                                        <option value="hi-unicode">Hindi Unicode (Mangal / InScript)</option>
+                                        <option value="hi-krutidev">Hindi Kruti Dev / Remington</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block font-bold uppercase text-slate-300 mb-1.5">Aspirant Motto / Bio</label>
+                                    <input type="text" id="reg-bio" placeholder="e.g. Determined to clear SSC Skill Test with 60+ WPM!" class="w-full bg-slate-950/90 text-white px-4 py-3 rounded-xl border border-white/15 focus:border-fuchsia-500 outline-none" />
+                                </div>
+                            </div>
+
+                            <div class="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-white/10">
+                                <button type="button" onclick="switchToGuestMode()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-slate-200 font-bold transition">
+                                    <i class="fa-solid fa-user-secret mr-1.5"></i>Continue as Guest
+                                </button>
+                                <button type="submit" class="px-6 py-3.5 rounded-xl vibrant-gradient text-white font-black text-sm shadow-xl shadow-fuchsia-500/30 hover:scale-[1.02] transition flex items-center gap-2">
+                                    <i class="fa-solid fa-rocket"></i>
+                                    <span>Complete Registration & Launch Home Profile</span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- FORM B: RETURNING CANDIDATE LOGIN FORM -->
+                        <form id="user-login-form" onsubmit="handleUserLogin(event)" class="hidden space-y-4 text-xs">
+                            <div class="p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 mb-2">
+                                <h3 class="text-base font-black text-white">
+                                    <i class="fa-solid fa-unlock-keyhole text-cyan-400 mr-1.5"></i>Welcome Back! Login to Your Candidate Account
+                                </h3>
+                                <p class="text-xs text-slate-300 mt-0.5">
+                                    Enter your registered Email or Username (@handle) and Password. All your previous tests, highest speed record, category breakdown, and profile picture will be restored immediately.
+                                </p>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block font-bold uppercase text-slate-300 mb-1.5">Registered Email or Username (@handle) *</label>
+                                    <input type="text" id="login-identifier" required placeholder="e.g. candidate@example.com or @handle" class="w-full bg-slate-950/90 text-white px-4 py-3 rounded-xl border border-white/15 focus:border-cyan-400 outline-none font-semibold" />
+                                </div>
+                                <div>
+                                    <label class="block font-bold uppercase text-slate-300 mb-1.5">Password *</label>
+                                    <input type="password" id="login-password" required placeholder="Enter your saved password" class="w-full bg-slate-950/90 text-white px-4 py-3 rounded-xl border border-white/15 focus:border-cyan-400 outline-none" />
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+                                <span class="text-[11px] text-slate-400">
+                                    <i class="fa-solid fa-circle-info text-cyan-400 mr-1"></i>Tip: You can also click any saved account card on the left panel to switch.
+                                </span>
+                                <button type="submit" class="px-6 py-3.5 rounded-xl vibrant-gradient-cyan text-white font-black text-sm shadow-xl hover:scale-[1.02] transition flex items-center gap-2">
+                                    <i class="fa-solid fa-right-to-bracket"></i>
+                                    <span>Login & Resume My Progress</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
 
             <!-- ==========================================
                  MODULE 1: TYPING TEST (CORE ENGINE)
@@ -656,38 +984,60 @@
             </section>
 
             <!-- ==========================================
-                 MODULE 2: DASHBOARD & ANALYTICS OVERVIEW
+                 MODULE 2: HOME DASHBOARD, LIVE USER PROFILE & ANALYTICS
                  ========================================== -->
             <section id="tab-dashboard" class="tab-section hidden space-y-6">
-                <!-- Hero Welcome Banner -->
-                <div class="rounded-3xl p-6 vibrant-gradient text-white shadow-xl relative overflow-hidden">
-                    <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div>
-                            <span class="px-3 py-1 rounded-full bg-black/25 text-xs font-bold uppercase tracking-wider">Personal Performance Command Center</span>
-                            <h1 class="text-2xl sm:text-3xl font-black mt-2">Welcome back, <span id="dash-username">Gautam sachdev</span>!</h1>
-                            <p class="text-sm text-white/90 mt-1 max-w-xl">
-                                Track your daily WPM progression, inspect your keystroke error heatmap, and let the AI Coach target your weakest keys.
-                            </p>
+                <!-- Candidate Home Profile Showcase Card (Launched right after Registration/Login) -->
+                <div class="rounded-3xl p-6 sm:p-7 vibrant-gradient text-white shadow-2xl relative overflow-hidden">
+                    <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                        <div class="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+                            <div class="w-24 h-24 rounded-3xl p-1 bg-white/30 backdrop-blur-md shadow-2xl overflow-hidden shrink-0">
+                                <img id="dash-profile-avatar" src="" alt="Candidate Photo" class="w-full h-full object-cover rounded-[20px]" />
+                            </div>
+                            <div>
+                                <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                                    <span class="px-3 py-1 rounded-full bg-black/30 text-[11px] font-black uppercase tracking-wider">
+                                        <i class="fa-solid fa-id-badge mr-1 text-cyan-300"></i>Official Candidate Home Profile
+                                    </span>
+                                    <span class="px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-[11px] font-black uppercase">
+                                        <i class="fa-solid fa-fire mr-1"></i>Streak: <span id="dash-streak-badge">Day 1</span>
+                                    </span>
+                                    <span id="dash-handle-badge" class="px-2.5 py-1 rounded-full bg-white/20 text-[11px] font-mono font-bold">
+                                        @aspirant
+                                    </span>
+                                </div>
+                                <h1 class="text-2xl sm:text-4xl font-black mt-2">Welcome, <span id="dash-username">Candidate</span>!</h1>
+                                <p id="dash-user-meta" class="text-xs sm:text-sm text-white/90 mt-1">
+                                    Target Exam: <strong>SSC CGL / CHSL Skill Test</strong> • Location: <strong>India</strong>
+                                </p>
+                                <p id="dash-user-bio" class="text-xs text-white/80 mt-1 italic">
+                                    "Consistent practice is the key to clearing every government skill examination."
+                                </p>
+                            </div>
                         </div>
-                        <div class="flex gap-3">
+
+                        <div class="flex flex-wrap items-center justify-center gap-3">
                             <button onclick="switchTab('typing-test')" class="px-5 py-3 rounded-2xl bg-white text-slate-900 font-black text-sm shadow-lg hover:scale-105 transition">
-                                <i class="fa-solid fa-bolt text-fuchsia-600 mr-1.5"></i> Start Instant Test
+                                <i class="fa-solid fa-bolt text-fuchsia-600 mr-1.5"></i> Start Typing Test
                             </button>
-                            <button onclick="launchWeakKeyPractice()" class="px-5 py-3 rounded-2xl bg-black/30 hover:bg-black/45 border border-white/30 text-white font-bold text-sm transition">
-                                <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Practice Weak Keys
+                            <button onclick="switchTab('certificates')" class="px-4 py-3 rounded-2xl bg-black/35 hover:bg-black/50 border border-white/30 text-white font-bold text-xs transition">
+                                <i class="fa-solid fa-award text-amber-300 mr-1.5"></i> View My Certificate
+                            </button>
+                            <button onclick="switchTab('profile')" class="px-4 py-3 rounded-2xl bg-black/25 hover:bg-black/40 border border-white/20 text-white font-bold text-xs transition">
+                                <i class="fa-solid fa-user-pen mr-1"></i> Switch / Edit User
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 4 Key Lifetime Metric Cards -->
+                <!-- 4 Key Lifetime Metric Cards (Resumed from Saved User Account) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="glass-card rounded-2xl p-5 border border-white/10">
                         <div class="flex justify-between items-start">
                             <div>
-                                <p class="text-xs uppercase font-bold text-slate-400">Personal Best WPM</p>
-                                <h3 id="dash-best-wpm" class="text-3xl font-black text-cyan-400 mt-1">68 WPM</h3>
-                                <p class="text-xs text-emerald-400 mt-1"><i class="fa-solid fa-arrow-trend-up mr-1"></i>Top 12% Global</p>
+                                <p class="text-xs uppercase font-bold text-slate-400">Highest Speed Ever</p>
+                                <h3 id="dash-best-wpm" class="text-3xl font-black text-cyan-400 mt-1">0 WPM</h3>
+                                <p class="text-xs text-emerald-400 mt-1"><i class="fa-solid fa-trophy mr-1"></i>All-Time Personal Record</p>
                             </div>
                             <div class="w-12 h-12 rounded-2xl bg-cyan-500/15 flex items-center justify-center text-cyan-400 text-xl">
                                 <i class="fa-solid fa-trophy"></i>
@@ -698,12 +1048,12 @@
                     <div class="glass-card rounded-2xl p-5 border border-white/10">
                         <div class="flex justify-between items-start">
                             <div>
-                                <p class="text-xs uppercase font-bold text-slate-400">Average Speed</p>
-                                <h3 id="dash-avg-wpm" class="text-3xl font-black text-fuchsia-400 mt-1">54 WPM</h3>
-                                <p class="text-xs text-slate-400 mt-1">Consistency Score: 92%</p>
+                                <p class="text-xs uppercase font-bold text-slate-400">Average Net Speed</p>
+                                <h3 id="dash-avg-wpm" class="text-3xl font-black text-fuchsia-400 mt-1">0 WPM</h3>
+                                <p class="text-xs text-slate-400 mt-1">Across All Saved Sessions</p>
                             </div>
                             <div class="w-12 h-12 rounded-2xl bg-fuchsia-500/15 flex items-center justify-center text-fuchsia-400 text-xl">
-                                <i class="fa-solid fa-gauge-Simple-high"></i>
+                                <i class="fa-solid fa-gauge-high"></i>
                             </div>
                         </div>
                     </div>
@@ -712,8 +1062,8 @@
                         <div class="flex justify-between items-start">
                             <div>
                                 <p class="text-xs uppercase font-bold text-slate-400">Mean Accuracy</p>
-                                <h3 id="dash-avg-acc" class="text-3xl font-black text-emerald-400 mt-1">96.4%</h3>
-                                <p class="text-xs text-emerald-400 mt-1">SSC / CPCT Qualified</p>
+                                <h3 id="dash-avg-acc" class="text-3xl font-black text-emerald-400 mt-1">100%</h3>
+                                <p class="text-xs text-emerald-400 mt-1">Precision Rating</p>
                             </div>
                             <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 flex items-center justify-center text-emerald-400 text-xl">
                                 <i class="fa-solid fa-bullseye"></i>
@@ -724,9 +1074,9 @@
                     <div class="glass-card rounded-2xl p-5 border border-white/10">
                         <div class="flex justify-between items-start">
                             <div>
-                                <p class="text-xs uppercase font-bold text-slate-400">Tests Completed</p>
-                                <h3 id="dash-total-tests" class="text-3xl font-black text-amber-400 mt-1">14</h3>
-                                <p id="dash-total-time" class="text-xs text-slate-400 mt-1">Practice Time: 42 mins</p>
+                                <p class="text-xs uppercase font-bold text-slate-400">Total Tests Taken</p>
+                                <h3 id="dash-total-tests" class="text-3xl font-black text-amber-400 mt-1">0</h3>
+                                <p id="dash-total-time" class="text-xs text-slate-400 mt-1">Saved Across All Categories</p>
                             </div>
                             <div class="w-12 h-12 rounded-2xl bg-amber-500/15 flex items-center justify-center text-amber-400 text-xl">
                                 <i class="fa-solid fa-clock-rotate-left"></i>
@@ -735,18 +1085,28 @@
                     </div>
                 </div>
 
-                <!-- Speed & Accuracy History Chart + AI Weak Key Detector -->
+                <!-- Category-Wise Tests Breakdown + Speed Progression Chart + AI Weak Key Detector -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
                     <!-- WPM Progression Graph -->
                     <div class="lg:col-span-2 glass-card rounded-2xl p-5 border border-white/10">
                         <div class="flex items-center justify-between mb-4">
                             <div>
                                 <h3 class="font-bold text-base">Speed (WPM) & Accuracy Progression</h3>
-                                <p class="text-xs text-slate-400">Visual history across your recent typing sessions</p>
+                                <p class="text-xs text-slate-400">Visual history across your saved typing sessions</p>
                             </div>
-                            <span class="text-xs px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 font-semibold">Live Telemetry</span>
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 font-semibold">Saved Telemetry</span>
                         </div>
                         <canvas id="dashboard-history-chart" class="w-full h-56 bg-slate-950/60 rounded-xl p-2"></canvas>
+
+                        <!-- Category-Wise Tests Breakdown Pills -->
+                        <div class="mt-4 pt-4 border-t border-white/10">
+                            <h4 class="text-xs font-bold uppercase text-cyan-300 mb-2.5">
+                                <i class="fa-solid fa-layer-group mr-1.5"></i>Tests Taken Across Categories (Saved Progress)
+                            </h4>
+                            <div id="dash-category-breakdown" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
                     </div>
 
                     <!-- AI Weak Key Detector & Goal Tracker -->
@@ -770,10 +1130,10 @@
                         <div class="p-4 rounded-xl bg-slate-900/80 border border-white/10">
                             <div class="flex justify-between text-xs font-bold mb-1.5">
                                 <span class="text-cyan-300"><i class="fa-solid fa-flag mr-1"></i> Daily Practice Goal</span>
-                                <span id="dash-goal-label">80% Complete</span>
+                                <span id="dash-goal-label">Day 1 Active</span>
                             </div>
                             <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden mb-3">
-                                <div class="h-full vibrant-gradient-emerald" style="width: 80%"></div>
+                                <div id="dash-goal-bar" class="h-full vibrant-gradient-emerald" style="width: 35%"></div>
                             </div>
                             <button onclick="launchWeakKeyPractice()" class="w-full py-2.5 rounded-xl vibrant-gradient text-white text-xs font-bold shadow-md hover:opacity-95 transition">
                                 Generate Personalized Weak-Key Lesson
@@ -1109,64 +1469,98 @@
             <section id="tab-certificates" class="tab-section hidden space-y-6">
                 <div class="glass-card rounded-2xl p-5 border border-white/10 flex flex-wrap items-center justify-between gap-4">
                     <div>
-                        <h2 class="text-xl font-black vibrant-text">Official Typing Proficiency Certificate</h2>
-                        <p class="text-xs text-slate-400">Customize candidate details, choose a template, and print/save as PDF.</p>
+                        <h2 class="text-xl font-black vibrant-text">Official Typing Proficiency Certificate (Print-Ready A4 Landscape)</h2>
+                        <p class="text-xs text-slate-400">Automatically fetches your registered Full Name, Profile Picture, Highest Speed, and Total Tests Completed.</p>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <input type="text" id="cert-name-input" placeholder="Candidate Full Name" value="Gautam sachdev" oninput="updateCertificatePreview()" class="bg-slate-900 text-white text-xs px-3 py-2 rounded-xl border border-white/15" />
+                    <div class="flex flex-wrap items-center gap-2">
+                        <input type="text" id="cert-name-input" placeholder="Candidate Full Name" value="" oninput="updateCertificatePreview()" class="bg-slate-900 text-white text-xs px-3 py-2 rounded-xl border border-white/15" />
                         <select id="cert-exam-input" onchange="updateCertificatePreview()" class="bg-slate-900 text-white text-xs px-3 py-2 rounded-xl border border-white/15">
                             <option value="English Typing Proficiency (QWERTY)">English Typing Proficiency</option>
                             <option value="SSC CGL / CHSL Skill Test Simulation">SSC CGL / CHSL Skill Test</option>
                             <option value="CPCT Hindi & English Qualification">CPCT Qualification</option>
+                            <option value="RRB NTPC Railway Typing Skill Test">RRB NTPC Railway Skill Test</option>
                             <option value="High Court Data Entry Operator">High Court Typing Test</option>
                         </select>
-                        <button onclick="window.print()" class="px-4 py-2 rounded-xl vibrant-gradient text-white text-xs font-bold shadow-lg">
-                            <i class="fa-solid fa-print mr-1.5"></i> Print / Save PDF
+                        <label class="px-3.5 py-2 rounded-xl bg-fuchsia-500/20 hover:bg-fuchsia-500/30 border border-fuchsia-400/40 text-fuchsia-200 text-xs font-bold cursor-pointer transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-camera"></i>
+                            <span>Update Photo</span>
+                            <input type="file" accept="image/*" onchange="handleProfilePhotoUpload(event)" class="hidden" />
+                        </label>
+                        <button onclick="printOfficialCertificate()" class="px-5 py-2.5 rounded-xl vibrant-gradient text-white text-xs font-black shadow-lg hover:scale-105 transition">
+                            <i class="fa-solid fa-print mr-1.5"></i> Print / Download PDF Certificate
                         </button>
                     </div>
                 </div>
 
-                <!-- Printable Certificate Frame -->
-                <div id="certificate-print-area" class="max-w-4xl mx-auto rounded-3xl p-8 sm:p-12 bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 border-4 border-amber-400/80 shadow-2xl relative overflow-hidden text-center text-white">
-                    <div class="border-2 border-amber-400/30 rounded-2xl p-6 sm:p-10 relative z-10">
-                        <div class="w-16 h-16 rounded-2xl vibrant-gradient mx-auto flex items-center justify-center shadow-lg mb-4">
-                            <i class="fa-solid fa-award text-3xl text-white"></i>
-                        </div>
-                        <p class="text-xs font-bold uppercase tracking-[0.3em] text-amber-300">KeyType Pro Certification Authority</p>
-                        <h1 class="text-3xl sm:text-4xl font-black tracking-tight mt-2 text-white">CERTIFICATE OF PROFICIENCY</h1>
-                        <p class="text-xs text-slate-300 mt-3">This is to officially certify that</p>
+                <!-- Printable Certificate Frame with Registered User Profile Picture -->
+                <div id="certificate-print-area" class="max-w-4xl mx-auto rounded-3xl p-8 sm:p-10 bg-gradient-to-br from-slate-950 via-indigo-950 to-fuchsia-950 border-4 border-amber-400/90 shadow-2xl relative overflow-hidden text-center text-white">
+                    <div class="border-2 border-amber-400/40 rounded-2xl p-6 sm:p-8 relative z-10">
                         
-                        <h2 id="cert-display-name" class="text-2xl sm:text-4xl font-black vibrant-text my-4 border-b border-white/20 pb-2 inline-block px-8">
-                            Gautam sachdev
+                        <!-- Top Header Row: Authority Seal + Registered User Profile Picture Frame -->
+                        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4 border-b border-white/15 pb-5">
+                            <div class="flex items-center gap-3 text-left">
+                                <div class="w-14 h-14 rounded-2xl vibrant-gradient flex items-center justify-center shadow-lg shrink-0">
+                                    <i class="fa-solid fa-award text-2xl text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[11px] font-black uppercase tracking-[0.25em] text-amber-300">KeyType Pro Examination Board</p>
+                                    <p class="text-xs text-slate-300">ISO-Standard Digital Skill Evaluation & Verification Authority</p>
+                                    <p class="text-[10px] text-cyan-300 font-mono mt-0.5">Portal Verification: VERIFIED-CANDIDATE-RECORD</p>
+                                </div>
+                            </div>
+
+                            <!-- Candidate Official Photo Passport Frame on Certificate -->
+                            <div class="flex items-center gap-3 bg-slate-900/90 border-2 border-amber-400/60 rounded-2xl p-2.5 pr-4 shadow-xl">
+                                <div class="w-16 h-16 rounded-xl p-0.5 bg-gradient-to-tr from-amber-400 via-fuchsia-500 to-cyan-400 overflow-hidden shrink-0 shadow-md">
+                                    <img id="cert-candidate-photo" src="" alt="Candidate Photo" class="w-full h-full object-cover rounded-[10px]" />
+                                </div>
+                                <div class="text-left">
+                                    <span class="text-[10px] font-black uppercase tracking-wider text-amber-300 block"><i class="fa-solid fa-circle-check mr-1"></i>Candidate ID</span>
+                                    <strong id="cert-photo-caption-name" class="text-xs font-black text-white block">Candidate Name</strong>
+                                    <span id="cert-photo-caption-handle" class="text-[10px] font-mono text-cyan-300 block">@aspirant</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h1 class="text-2xl sm:text-4xl font-black tracking-tight mt-2 text-amber-300">CERTIFICATE OF TYPING PROFICIENCY</h1>
+                        <p class="text-xs text-slate-300 mt-1.5">This is to officially certify that</p>
+                        
+                        <h2 id="cert-display-name" class="text-2xl sm:text-4xl font-black text-white my-2.5 border-b-2 border-amber-400/50 pb-2 inline-block px-8">
+                            Candidate Name
                         </h2>
 
-                        <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
-                            has successfully completed the <strong id="cert-display-exam" class="text-amber-300">English Typing Proficiency (QWERTY)</strong> examination under strict evaluation guidelines with the following verified performance metrics:
+                        <p class="text-xs sm:text-sm text-slate-200 max-w-2xl mx-auto leading-relaxed">
+                            has successfully completed the <strong id="cert-display-exam" class="text-amber-300">English Typing Proficiency (QWERTY)</strong> skill evaluation under strict competitive examination standards with the following verified telemetry record:
                         </p>
 
-                        <div class="grid grid-cols-3 gap-4 max-w-lg mx-auto my-6">
-                            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-                                <span class="text-[10px] uppercase text-slate-400 block">Net Typing Speed</span>
-                                <strong id="cert-display-wpm" class="text-xl font-black text-cyan-300">58 WPM</strong>
+                        <!-- 4 Verified Performance Boxes on Certificate -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto my-5">
+                            <div class="p-3 rounded-xl bg-slate-900/90 border border-cyan-400/40">
+                                <span class="text-[10px] uppercase text-slate-400 block">Verified Net Speed</span>
+                                <strong id="cert-display-wpm" class="text-lg sm:text-xl font-black text-cyan-300">0 WPM</strong>
                             </div>
-                            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                            <div class="p-3 rounded-xl bg-slate-900/90 border border-fuchsia-400/40">
+                                <span class="text-[10px] uppercase text-slate-400 block">Highest Speed Ever</span>
+                                <strong id="cert-display-best-wpm" class="text-lg sm:text-xl font-black text-fuchsia-300">0 WPM</strong>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/90 border border-emerald-400/40">
                                 <span class="text-[10px] uppercase text-slate-400 block">Accuracy Rate</span>
-                                <strong id="cert-display-acc" class="text-xl font-black text-emerald-300">97.2%</strong>
+                                <strong id="cert-display-acc" class="text-lg sm:text-xl font-black text-emerald-300">100%</strong>
                             </div>
-                            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-                                <span class="text-[10px] uppercase text-slate-400 block">Grade / Status</span>
-                                <strong class="text-xl font-black text-amber-300">A+ (PASSED)</strong>
+                            <div class="p-3 rounded-xl bg-slate-900/90 border border-amber-400/40">
+                                <span class="text-[10px] uppercase text-slate-400 block">Grade & Status</span>
+                                <strong id="cert-display-grade" class="text-lg sm:text-xl font-black text-amber-300">A+ (QUALIFIED)</strong>
                             </div>
                         </div>
 
-                        <div class="flex flex-wrap items-center justify-between text-xs text-slate-400 pt-6 border-t border-white/10 mt-6">
-                            <div class="text-left">
-                                <p>Certificate ID: <strong id="cert-display-id" class="text-white font-mono">KTP-2026-89412</strong></p>
-                                <p>Issue Date: <strong id="cert-display-date" class="text-white">05 Nov 2026</strong></p>
+                        <div class="flex flex-wrap items-center justify-between text-xs text-slate-300 pt-5 border-t border-white/15 mt-4 gap-4">
+                            <div class="text-left space-y-0.5">
+                                <p>Certificate Serial: <strong id="cert-display-id" class="text-white font-mono">KTP-2026-89412</strong></p>
+                                <p>Issue Date: <strong id="cert-display-date" class="text-white">06 Nov 2026</strong> • Tests Completed: <strong id="cert-display-tests" class="text-cyan-300">1</strong></p>
                             </div>
-                            <div class="text-right">
-                                <p class="font-bold text-amber-300">Digitally Verified</p>
-                                <p>KeyType Pro Examination Board</p>
+                            <div class="text-right space-y-0.5">
+                                <p class="font-black text-amber-300"><i class="fa-solid fa-stamp mr-1"></i>Digitally Signed & Photo Verified</p>
+                                <p>Developer & Chief Examination Controller: <strong class="text-white">Gautam Sachdev (Founder & Lead Developer)</strong></p>
                             </div>
                         </div>
                     </div>
@@ -1178,17 +1572,19 @@
                  ========================================== -->
             <section id="tab-settings" class="tab-section hidden space-y-6">
                 <div class="glass-card rounded-2xl p-6 border border-white/10">
-                    <h2 class="text-xl font-black vibrant-text mb-1">Customization, Audio & Accessibility Settings</h2>
-                    <p class="text-xs text-slate-400 mb-6">Tailor the visual surface, typography, caret style, and mechanical keyboard acoustics.</p>
+                    <h2 class="text-xl font-black vibrant-text mb-1">Customization, Vibrant Gradient Themes & Accessibility</h2>
+                    <p class="text-xs text-slate-400 mb-6">Tailor the vibrant color surface, typography, caret style, and mechanical keyboard acoustics.</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Visual Theme & Surface -->
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-xs font-bold uppercase text-slate-300 mb-2">Surface Color Theme</label>
-                                <div class="grid grid-cols-3 gap-2">
-                                    <button onclick="setTheme('dark')" class="p-3 rounded-xl bg-slate-900 border border-fuchsia-500 text-xs font-bold text-white">Neon Dark</button>
-                                    <button onclick="setTheme('light')" class="p-3 rounded-xl bg-slate-100 border border-slate-300 text-xs font-bold text-slate-900">Aurora Light</button>
+                                <label class="block text-xs font-bold uppercase text-slate-300 mb-2">Vibrant Gradient Surface Presets</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                                    <button onclick="setTheme('dark')" class="p-3 rounded-xl bg-gradient-to-r from-indigo-900 via-purple-900 to-fuchsia-900 border border-fuchsia-400 text-xs font-bold text-white shadow-md">Cyber Neon</button>
+                                    <button onclick="setTheme('sunset')" class="p-3 rounded-xl bg-gradient-to-r from-rose-900 via-orange-900 to-amber-900 border border-rose-400 text-xs font-bold text-white shadow-md">Sunset Hyper</button>
+                                    <button onclick="setTheme('ocean')" class="p-3 rounded-xl bg-gradient-to-r from-cyan-900 via-emerald-900 to-blue-900 border border-cyan-400 text-xs font-bold text-white shadow-md">Ocean Synth</button>
+                                    <button onclick="setTheme('light')" class="p-3 rounded-xl bg-slate-100 border border-indigo-300 text-xs font-bold text-slate-900">Aurora Light</button>
                                     <button onclick="setTheme('contrast')" class="p-3 rounded-xl bg-black border border-yellow-400 text-xs font-bold text-yellow-300">High Contrast</button>
                                 </div>
                             </div>
@@ -1285,8 +1681,145 @@
                 </div>
             </section>
 
+            <!-- ==========================================
+                 MODULE 11: ABOUT US, DEVELOPER VISION & COPYRIGHT
+                 ========================================== -->
+            <section id="tab-about" class="tab-section hidden space-y-6">
+                <!-- Vibrant Hero Story Banner -->
+                <div class="rounded-3xl p-6 sm:p-8 vibrant-gradient text-white shadow-2xl relative overflow-hidden">
+                    <div class="relative z-10 max-w-3xl space-y-3">
+                        <span class="px-3 py-1 rounded-full bg-black/30 text-xs font-black uppercase tracking-wider border border-white/25">
+                            <i class="fa-solid fa-heart text-rose-300 mr-1.5"></i>Our Mission & Creator Story
+                        </span>
+                        <h1 class="text-2xl sm:text-4xl font-black tracking-tight">
+                            Developed with Passion to Empower Every Competitive Exam Aspirant
+                        </h1>
+                        <p class="text-xs sm:text-sm text-white/90 leading-relaxed">
+                            KeyType Pro was envisioned, architected, and developed by <strong class="underline decoration-amber-300 decoration-2">Gautam Sachdev</strong> with a single noble mission: to provide hard-working Government Job Aspirants (SSC CGL, CHSL, CPCT, Railway RRB, High Court, and State Exams) with a world-class, zero-cost, AI-powered typing examination simulator.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Developer Vision & Dedicated Message Card -->
+                    <div class="lg:col-span-2 glass-card rounded-3xl p-6 border border-fuchsia-500/30 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl vibrant-gradient flex items-center justify-center text-white text-xl shadow-lg">
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-black text-white">About the Developer & Why KeyType Pro Exists</h2>
+                                <p class="text-xs text-cyan-300 font-semibold">Crafted for Students, Stenographers & Future Civil Servants</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                            <p>
+                                Every year, thousands of bright and dedicated candidates clear tough written prelims and mains examinations, only to face anxiety during the final qualifying <strong>Typing Skill Test (DEST / CPT)</strong> due to lack of realistic practice software.
+                            </p>
+                            <p>
+                                I developed <strong>KeyType Pro (Typing Master Ultra)</strong> to bridge this gap completely. Unlike basic typing websites that only show raw WPM, this platform combines <strong>Strict Exam Hall Simulation</strong>, <strong>Bilingual Hindi (Unicode/Kruti Dev) & English Support</strong>, <strong>AI Weak-Key Detection</strong>, <strong>Finger-Guided Virtual Keyboards</strong>, and <strong>Verifiable Photo Certificates</strong> in one seamless, inspiring workspace.
+                            </p>
+                            <div class="p-4 rounded-2xl bg-slate-900/90 border-l-4 border-l-amber-400 text-slate-200 italic text-xs">
+                                "May every keystroke you practice here bring you one step closer to your dream appointment letter. Stay consistent, trust your daily streak, and never give up!"
+                                <span class="block not-italic font-black text-amber-300 mt-1.5">— Gautam Sachdev, Creator & Lead Developer</span>
+                            </div>
+                        </div>
+
+                        <!-- Key Pillars Grid -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                            <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                                <i class="fa-solid fa-bullseye text-emerald-400 text-lg mb-1"></i>
+                                <h4 class="font-bold text-xs text-white">100% Exam Accurate</h4>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Designed around official SSC, CPCT, Railway & High Court skill test guidelines.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                                <i class="fa-solid fa-brain text-fuchsia-400 text-lg mb-1"></i>
+                                <h4 class="font-bold text-xs text-white">Smart AI Coaching</h4>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Pinpoints your exact weak fingers and generates adaptive drills automatically.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                                <i class="fa-solid fa-heart text-rose-400 text-lg mb-1"></i>
+                                <h4 class="font-bold text-xs text-white">Built for Aspirants</h4>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Saves your full test history, highest speed, and photo certificate locally.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Developer Official Copyright Card -->
+                    <div class="glass-card rounded-3xl p-6 border border-cyan-500/30 flex flex-col justify-between space-y-5">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                                    Official Copyright Ownership
+                                </span>
+                                <i class="fa-solid fa-certificate text-amber-400 text-xl"></i>
+                            </div>
+
+                            <div class="p-5 rounded-2xl bg-slate-950/80 border border-white/10 text-center space-y-2.5">
+                                <div class="w-16 h-16 rounded-2xl vibrant-gradient mx-auto flex items-center justify-center text-white text-2xl font-black shadow-lg">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <h3 class="font-black text-lg text-white">Gautam Sachdev</h3>
+                                <p class="text-xs text-fuchsia-300 font-semibold">Founder, Lead Architect & Developer</p>
+                                <p class="text-[11px] text-slate-300 leading-relaxed">
+                                    Dedicated to helping competitive exam aspirants master touch typing, build confidence, and qualify government skill tests with ease.
+                                </p>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-slate-900/90 border border-fuchsia-500/30 space-y-2 text-xs text-slate-300">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-400">Platform Architect:</span>
+                                    <strong class="text-white">Gautam Sachdev</strong>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-400">Edition:</span>
+                                    <strong class="text-cyan-300">KeyType Pro Ultra v5.0</strong>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-400">License & Rights:</span>
+                                    <strong class="text-emerald-300">Official Copyright Protected</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-[11px] text-slate-400 text-center border-t border-white/10 pt-3">
+                            © 2026 <strong class="text-white">Gautam Sachdev</strong>. All Rights Reserved. Built with pride for Competitive Exam Aspirants.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </main>
     </div>
+
+    <!-- ==========================================================
+         GLOBAL FOOTER WITH ABOUT SUMMARY & DEVELOPER COPYRIGHT
+         ========================================================== -->
+    <footer class="mt-auto border-t border-white/10 glass-card px-4 py-5">
+        <div class="max-w-[1600px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-xl vibrant-gradient flex items-center justify-center text-white font-bold">
+                    <i class="fa-solid fa-keyboard"></i>
+                </div>
+                <div>
+                    <p class="text-white font-bold">KeyType Pro — Complete Typing Test & Competitive Exam Simulator</p>
+                    <p class="text-[11px] text-slate-400">Developed passionately by <strong class="text-cyan-300">Gautam Sachdev</strong> to help SSC, CPCT, Railway & High Court aspirants succeed.</p>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-4">
+                <button onclick="switchTab('about')" class="text-fuchsia-300 hover:text-white font-bold transition">
+                    <i class="fa-solid fa-circle-info mr-1"></i>About Developer
+                </button>
+                <button onclick="switchTab('certificates')" class="text-amber-300 hover:text-white font-bold transition">
+                    <i class="fa-solid fa-award mr-1"></i>Verify Certificate
+                </button>
+                <span class="text-slate-300 font-semibold">
+                    © 2026 Copyright <strong class="text-white underline decoration-fuchsia-500">Gautam Sachdev</strong>. All Rights Reserved.
+                </span>
+            </div>
+        </div>
+    </footer>
 
     <!-- ==========================================
          MODALS: CUSTOM TEXT UPLOAD, PROFILE, TOAST
@@ -1298,47 +1831,63 @@
                 <h3 class="font-black text-lg vibrant-text">Import or Paste Custom Text</h3>
                 <button onclick="closeCustomTextModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <p class="text-xs text-slate-300">Paste any article, code snippet, or Hindi paragraph below, or upload a <code class="text-cyan-300">.txt</code> file.</p>
-            
-            <textarea id="custom-text-area" rows="5" placeholder="Paste your custom typing text here..." class="w-full bg-slate-950 text-white text-xs font-mono p-3.5 rounded-xl border border-white/15 outline-none focus:border-fuchsia-500"></textarea>
-            
+            <p class="text-xs text-slate-300">Paste your own paragraph below or upload a <code>.txt</code> / <code>.csv</code> file to practice custom content.</p>
+            <textarea id="custom-text-area" rows="5" placeholder="Paste or type your custom paragraph here..." class="w-full bg-slate-950 text-white text-xs p-3.5 rounded-xl border border-white/15 font-mono"></textarea>
             <div class="flex items-center justify-between gap-3">
-                <label class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-bold cursor-pointer">
-                    <i class="fa-solid fa-upload mr-1.5 text-cyan-400"></i> Upload .TXT File
-                    <input type="file" accept=".txt" onchange="handleTxtFileUpload(event)" class="hidden" />
+                <label class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold cursor-pointer">
+                    <i class="fa-solid fa-upload mr-1.5"></i> Upload .TXT File
+                    <input type="file" accept=".txt,.csv" onchange="handleTxtFileUpload(event)" class="hidden" />
                 </label>
-                <div class="flex gap-2">
-                    <button onclick="closeCustomTextModal()" class="px-4 py-2 rounded-xl bg-white/5 text-xs font-semibold">Cancel</button>
-                    <button onclick="applyCustomText()" class="px-5 py-2 rounded-xl vibrant-gradient text-white text-xs font-bold">Load Text into Test</button>
-                </div>
+                <button onclick="applyCustomText()" class="px-5 py-2.5 rounded-xl vibrant-gradient text-white text-xs font-bold shadow-lg">
+                    Load into Typing Arena
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- User Profile Modal -->
+    <!-- User Profile Quick Modal -->
     <div id="profile-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="glass-card rounded-3xl max-w-md w-full p-6 border border-cyan-500/40 space-y-4">
             <div class="flex items-center justify-between">
-                <h3 class="font-black text-lg text-white">Candidate Profile & Preferences</h3>
+                <h3 class="font-black text-lg vibrant-text">Quick User Profile & Photo</h3>
                 <button onclick="closeProfileModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="flex items-center gap-4 p-3 rounded-2xl bg-slate-950/80 border border-white/10">
+                <div class="w-16 h-16 rounded-2xl avatar-glow-ring overflow-hidden shrink-0">
+                    <img id="modal-avatar-preview" src="" alt="Avatar" class="w-full h-full object-cover rounded-[14px]" />
+                </div>
+                <div class="flex-1">
+                    <p class="text-xs font-bold text-white mb-1">Update Profile Picture</p>
+                    <label class="inline-block px-3 py-1.5 rounded-xl vibrant-gradient text-white text-[11px] font-bold cursor-pointer">
+                        <i class="fa-solid fa-upload mr-1"></i> Upload Photo
+                        <input type="file" accept="image/*" onchange="handleProfilePhotoUpload(event)" class="hidden" />
+                    </label>
+                </div>
             </div>
             <div class="space-y-3 text-xs">
                 <div>
-                    <label class="block text-slate-400 mb-1">Full Name (Used on Certificates & Leaderboard)</label>
-                    <input type="text" id="profile-name-input" value="Gautam sachdev" class="w-full bg-slate-950 text-white px-3.5 py-2.5 rounded-xl border border-white/15" />
+                    <label class="block text-slate-400 mb-1">Full Name (Used on Website & Certificate)</label>
+                    <input type="text" id="profile-name-input" value="" placeholder="Enter your full name" class="w-full bg-slate-950 text-white px-3.5 py-2.5 rounded-xl border border-white/15" />
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">Username (@handle)</label>
+                    <input type="text" id="profile-handle-input" value="" placeholder="@username" class="w-full bg-slate-950 text-cyan-300 font-mono px-3.5 py-2.5 rounded-xl border border-white/15" />
                 </div>
                 <div>
                     <label class="block text-slate-400 mb-1">Target Government Exam</label>
                     <select id="profile-target-exam" class="w-full bg-slate-950 text-white px-3.5 py-2.5 rounded-xl border border-white/15">
                         <option>SSC CGL / CHSL Skill Test</option>
-                        <option>CPCT Hindi & English</option>
+                        <option>CPCT Bilingual Qualification</option>
                         <option>RRB NTPC Railway Typing</option>
-                        <option>High Court Data Entry</option>
-                        <option>Software Engineering Speed</option>
+                        <option>High Court Clerk / Stenographer</option>
+                        <option>Software Engineer / Pro Coder</option>
                     </select>
                 </div>
             </div>
-            <button onclick="saveUserProfile()" class="w-full py-2.5 rounded-xl vibrant-gradient text-white text-xs font-bold">Save Profile</button>
+            <div class="flex gap-2">
+                <button onclick="closeProfileModal(); switchTab('profile');" class="flex-1 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold">Registration / Login Page</button>
+                <button onclick="saveUserProfile()" class="flex-1 py-2.5 rounded-xl vibrant-gradient text-white text-xs font-bold">Save Changes</button>
+            </div>
         </div>
     </div>
 
@@ -1499,7 +2048,7 @@
             { title: "1. Home Row Mastery", level: "Beginner", desc: "ASDF JKL; — Build core muscle memory without looking down.", text: "asdf jkl; asdf jkl; fjdk slaf jfkd ls;a sad ladjak flask fall dad salad ask" },
             { title: "2. Top Row Reach", level: "Beginner", desc: "QWERTY UIOP — Smooth upward finger extension drills.", text: "qwer uiop qwer uiopert yuio quote power writeetti route quietripe" },
             { title: "3. Bottom Row Agility", level: "Beginner", desc: "ZXCV BNM,./ — Strengthen lower row ring and pinky accuracy.", text: "zxcv bnm, zxcv bnm, zoom cave bank mint zebraoxylophone calm" },
-            { title: "4. Capital Letters & Shift", level: "Intermediate", desc: "Opposite-hand Shift key coordination for proper nouns.", text: "India Mumbai Delhi Gautam sachdev KeyType Pro Supreme Court Parliament" },
+            { title: "4. Capital Letters & Shift", level: "Intermediate", desc: "Opposite-hand Shift key coordination for proper nouns.", text: "India Mumbai Delhi Kolkata Chennai KeyType Pro Supreme Court Parliament" },
             { title: "5. Number Row & Data Entry", level: "Intermediate", desc: "Top row numeric drills for banking and DEO aspirants.", text: "1947 2026 88420 560001 98450 110001 400001 75839 302001 600001" },
             { title: "6. Symbols & Developer Syntax", level: "Advanced", desc: "Brackets, quotes, operators, and punctuation fluency.", text: "function test(a, b) { return a !== b ? [a, b] : { status: 'OK' }; }" }
         ];
@@ -1582,12 +2131,55 @@
         });
 
         /**************************************************************
-         * 4. GLOBAL APPLICATION STATE
+         * 4. GLOBAL APPLICATION STATE & USER REGISTRATION ENGINE
          **************************************************************/
+        function createSvgAvatarDataUri(initials, c1, c2) {
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+                <defs>
+                    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="${c1}"/>
+                        <stop offset="100%" stop-color="${c2}"/>
+                    </linearGradient>
+                </defs>
+                <rect width="120" height="120" rx="28" fill="url(#g)"/>
+                <circle cx="60" cy="44" r="20" fill="rgba(255,255,255,0.22)"/>
+                <path d="M24 106 C24 80 96 80 96 106" fill="rgba(255,255,255,0.22)"/>
+                <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-family="Inter, sans-serif" font-weight="900" font-size="38">${initials}</text>
+            </svg>`;
+            return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+        }
+
+        const AVATAR_PRESETS = [
+            { name: "Cyber Pink", c1: "#6366f1", c2: "#ec4899", label: "CP" },
+            { name: "Neon Cyan", c1: "#06b6d4", c2: "#3b82f6", label: "NC" },
+            { name: "Sunset Gold", c1: "#f43f5e", c2: "#f59e0b", label: "SG" },
+            { name: "Emerald Matrix", c1: "#10b981", c2: "#059669", label: "EM" },
+            { name: "Royal Violet", c1: "#8b5cf6", c2: "#d946ef", label: "RV" }
+        ];
+
+        const DEFAULT_AVATAR = createSvgAvatarDataUri("KP", "#6366f1", "#ec4899");
+
+        // Clean any legacy hardcoded "Arjun Sharma" from previous version
+        if (localStorage.getItem("ktp_username") === "Arjun Sharma") {
+            localStorage.removeItem("ktp_username");
+            localStorage.removeItem("ktp_handle");
+            localStorage.removeItem("ktp_registered_users");
+        }
+
         const appState = {
-            username: localStorage.getItem("ktp_username") || "Gautam sachdev",
-            xp: parseInt(localStorage.getItem("ktp_xp") || "450", 10),
-            streak: parseInt(localStorage.getItem("ktp_streak") || "5", 10),
+            creatorName: "Gautam Sachdev",
+            username: localStorage.getItem("ktp_username") || "New Candidate",
+            userHandle: localStorage.getItem("ktp_handle") || "@aspirant",
+            userEmail: localStorage.getItem("ktp_email") || "",
+            userPassword: "",
+            userExam: localStorage.getItem("ktp_exam") || "SSC CGL / CHSL Skill Test",
+            userLocation: localStorage.getItem("ktp_location") || "India",
+            userBio: localStorage.getItem("ktp_bio") || "Focused on clearing my upcoming Government Typing Skill Test!",
+            userAvatar: localStorage.getItem("ktp_avatar") || DEFAULT_AVATAR,
+            registeredUsers: JSON.parse(localStorage.getItem("ktp_registered_users") || "[]"),
+
+            xp: parseInt(localStorage.getItem("ktp_xp") || "0", 10),
+            streak: parseInt(localStorage.getItem("ktp_streak") || "1", 10),
             soundEnabled: true,
             soundProfile: "clicky",
             voiceAlerts: true,
@@ -1608,22 +2200,46 @@
             minPassWpm: 30,
             minPassAcc: 90,
 
-            // Telemetry Counters
+            // Telemetry Counters (Isolated per logged-in user)
             backspaces: 0,
             totalKeystrokes: 0,
             timelineWpm: [],
-            weakKeyMap: JSON.parse(localStorage.getItem("ktp_weak_keys") || '{"p":4,"q":3,"z":5,";":3,"b":2}'),
+            weakKeyMap: JSON.parse(localStorage.getItem("ktp_weak_keys") || '{"p":2,"q":2,"z":3,";":2}'),
             history: JSON.parse(localStorage.getItem("ktp_history") || "[]")
         };
 
-        // Seed initial sample history if empty
-        if (appState.history.length === 0) {
-            appState.history = [
-                { date: "04 Nov, 06:30 PM", mode: "1 Min Standard", netWpm: 52, grossWpm: 55, acc: 95.8, errors: 3, status: "PASSED" },
-                { date: "04 Nov, 08:15 PM", mode: "SSC CHSL Mock", netWpm: 56, grossWpm: 58, acc: 96.5, errors: 2, status: "PASSED" },
-                { date: "05 Nov, 09:10 AM", mode: "Simple Paragraph", netWpm: 61, grossWpm: 63, acc: 97.4, errors: 1, status: "PASSED" }
-            ];
+        // Helper to sync active user's progress (history, streak, xp, weakKeyMap, bestWpm) back into registeredUsers array
+        function persistActiveUserRecord() {
+            localStorage.setItem("ktp_username", appState.username);
+            localStorage.setItem("ktp_handle", appState.userHandle);
+            localStorage.setItem("ktp_email", appState.userEmail);
+            localStorage.setItem("ktp_exam", appState.userExam);
+            localStorage.setItem("ktp_location", appState.userLocation);
+            localStorage.setItem("ktp_bio", appState.userBio);
+            localStorage.setItem("ktp_avatar", appState.userAvatar);
+            localStorage.setItem("ktp_xp", appState.xp);
+            localStorage.setItem("ktp_streak", appState.streak);
             localStorage.setItem("ktp_history", JSON.stringify(appState.history));
+            localStorage.setItem("ktp_weak_keys", JSON.stringify(appState.weakKeyMap));
+
+            const idx = appState.registeredUsers.findIndex(
+                u => (u.email && appState.userEmail && u.email.toLowerCase() === appState.userEmail.toLowerCase()) ||
+                     (u.handle && u.handle.toLowerCase() === appState.userHandle.toLowerCase())
+            );
+            if (idx > -1) {
+                appState.registeredUsers[idx].username = appState.username;
+                appState.registeredUsers[idx].handle = appState.userHandle;
+                appState.registeredUsers[idx].email = appState.userEmail;
+                appState.registeredUsers[idx].exam = appState.userExam;
+                appState.registeredUsers[idx].location = appState.userLocation;
+                appState.registeredUsers[idx].bio = appState.userBio;
+                appState.registeredUsers[idx].avatar = appState.userAvatar;
+                appState.registeredUsers[idx].xp = appState.xp;
+                appState.registeredUsers[idx].streak = appState.streak;
+                appState.registeredUsers[idx].history = appState.history;
+                appState.registeredUsers[idx].weakKeyMap = appState.weakKeyMap;
+                localStorage.setItem("ktp_registered_users", JSON.stringify(appState.registeredUsers));
+            }
         }
 
         /**************************************************************
@@ -2084,10 +2700,8 @@
             // Award XP
             const earnedXp = Math.max(15, Math.round(stats.netWpm * 1.5));
             appState.xp += earnedXp;
-            localStorage.setItem("ktp_xp", appState.xp);
-            updateHeaderGamificationUI();
 
-            // Save to History
+            // Save to User's Personal History
             const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             const record = {
                 date: `Today, ${nowStr}`,
@@ -2099,7 +2713,11 @@
                 status: passed ? "PASSED" : "NEEDS PRACTICE"
             };
             appState.history.unshift(record);
-            localStorage.setItem("ktp_history", JSON.stringify(appState.history.slice(0, 30)));
+            appState.history = appState.history.slice(0, 50);
+
+            // Persist all progress to the logged-in user's account
+            persistActiveUserRecord();
+            updateHeaderGamificationUI();
 
             // Populate Results View
             document.getElementById("res-net-wpm").textContent = stats.netWpm;
@@ -2129,7 +2747,7 @@
             renderDashboardMetrics();
             switchTab("results");
             setTimeout(() => drawTimelineChart("result-timeline-chart", appState.timelineWpm.length ? appState.timelineWpm : [stats.netWpm - 4, stats.netWpm, stats.netWpm + 2]), 80);
-            showToast("Test Report Ready!", `You achieved ${stats.netWpm} Net WPM with ${stats.accuracy}% accuracy!`);
+            showToast("Test Saved to Profile!", `You achieved ${stats.netWpm} Net WPM with ${stats.accuracy}% accuracy!`);
         }
 
         /**************************************************************
@@ -2342,6 +2960,45 @@
             document.getElementById("dash-avg-acc").textContent = `${avgAcc}%`;
             document.getElementById("dash-total-tests").textContent = appState.history.length;
 
+            // Render Category-Wise Tests Count Breakdown
+            const catBreakdownEl = document.getElementById("dash-category-breakdown");
+            if (catBreakdownEl) {
+                catBreakdownEl.innerHTML = "";
+                const catCounts = {};
+                appState.history.forEach(item => {
+                    const catName = item.mode || "Standard Test";
+                    if (!catCounts[catName]) {
+                        catCounts[catName] = { count: 0, best: 0 };
+                    }
+                    catCounts[catName].count++;
+                    if (item.netWpm > catCounts[catName].best) {
+                        catCounts[catName].best = item.netWpm;
+                    }
+                });
+
+                const entries = Object.entries(catCounts);
+                if (entries.length === 0) {
+                    catBreakdownEl.innerHTML = `
+                        <div class="col-span-full p-3 rounded-xl bg-slate-900/70 border border-white/10 text-slate-400 text-xs">
+                            No tests completed yet under this profile. Click <strong>"Start Typing Test"</strong> above to record your first session!
+                        </div>
+                    `;
+                } else {
+                    entries.forEach(([cat, info]) => {
+                        const card = document.createElement("div");
+                        card.className = "p-2.5 rounded-xl bg-slate-900/90 border border-white/10 flex flex-col justify-between";
+                        card.innerHTML = `
+                            <span class="text-[11px] font-bold text-white truncate" title="${cat}">${cat}</span>
+                            <div class="flex items-center justify-between mt-1.5">
+                                <span class="text-[10px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-bold">${info.count} Tests</span>
+                                <span class="text-[10px] font-mono text-emerald-300">Best: ${info.best} WPM</span>
+                            </div>
+                        `;
+                        catBreakdownEl.appendChild(card);
+                    });
+                }
+            }
+
             // Render Weak Keys Badges
             const wkContainer = document.getElementById("dash-weak-keys-list");
             wkContainer.innerHTML = "";
@@ -2358,12 +3015,20 @@
                     wkContainer.appendChild(pill);
                 });
 
-            drawTimelineChart("dashboard-history-chart", wpmList.slice(0, 10).reverse());
+            drawTimelineChart("dashboard-history-chart", wpmList.length ? wpmList.slice(0, 10).reverse() : [0, 0]);
         }
 
         function renderHistoryTable() {
             const tbody = document.getElementById("results-history-tbody");
             tbody.innerHTML = "";
+            if (appState.history.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="py-4 px-3 text-center text-slate-400">No tests recorded for ${appState.username} yet. Complete a test to view your history!</td>
+                    </tr>
+                `;
+                return;
+            }
             appState.history.forEach(item => {
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
@@ -2380,11 +3045,13 @@
         }
 
         function renderLeaderboardAndBadges() {
+            const userBestWpm = appState.history.length ? Math.max(...appState.history.map(h => h.netWpm)) : 0;
+            const userBestAcc = appState.history.length ? appState.history[0].acc + "%" : "100%";
             const leaders = [
                 { rank: 1, name: "Aarav Verma (AIR-1)", mode: "SSC CGL Skill Test", wpm: 94, acc: "99.4%", badge: "Grandmaster" },
                 { rank: 2, name: "Priya Nair", mode: "High Court Steno", wpm: 88, acc: "98.9%", badge: "Apex Typist" },
                 { rank: 3, name: "Rohan Deshmukh", mode: "CPCT Bilingual", wpm: 82, acc: "98.2%", badge: "Pro Legend" },
-                { rank: 4, name: appState.username + " (You)", mode: "KeyType Pro", wpm: Math.max(...appState.history.map(h => h.netWpm), 58), acc: "97.2%", badge: "Cyber Typist" },
+                { rank: 4, name: appState.username + " (You)", mode: appState.userExam, wpm: userBestWpm, acc: userBestAcc, badge: "Active Aspirant" },
                 { rank: 5, name: "Ananya Chatterjee", mode: "1 Min Sprint", wpm: 56, acc: "96.8%", badge: "Speedster" }
             ];
             const lbBody = document.getElementById("leaderboard-tbody");
@@ -2477,6 +3144,21 @@
         /**************************************************************
          * 13. NAVIGATION, CERTIFICATES, SETTINGS & ADMIN HELPERS
          **************************************************************/
+        const TAB_TITLES = {
+            "profile": "Registration & Login Gateway",
+            "dashboard": "Home Profile & Personal Analytics",
+            "typing-test": "Live Typing Test Arena",
+            "practice": "Structured Practice & AI Weak-Key Drills",
+            "exam-mode": "Official Government Exam Simulator",
+            "results": "Performance Report & Typing DNA",
+            "leaderboard": "Live Multiplayer Race & Global Ranks",
+            "challenges": "Daily Missions & Achievement Badges",
+            "certificates": "Official Certificate Generator",
+            "settings": "Vibrant Themes & Acoustics Settings",
+            "admin": "Institute & Coaching Admin Panel",
+            "about": "About Developer & Copyright"
+        };
+
         function switchTab(tabId) {
             document.querySelectorAll(".tab-section").forEach(sec => sec.classList.add("hidden"));
             const target = document.getElementById(`tab-${tabId}`);
@@ -2490,49 +3172,414 @@
                 }
             });
 
+            const activePageEl = document.getElementById("ribbon-active-page");
+            if (activePageEl) activePageEl.textContent = TAB_TITLES[tabId] || "KeyType Pro";
+
             if (tabId === "dashboard") {
                 setTimeout(() => renderDashboardMetrics(), 60);
             } else if (tabId === "typing-test") {
                 setTimeout(() => focusTypingInput(), 60);
+            } else if (tabId === "profile") {
+                populateRegistrationFormFromState();
+            } else if (tabId === "certificates") {
+                updateCertificatePreview();
+            }
+        }
+
+        function switchAuthMode(mode) {
+            const regForm = document.getElementById("user-registration-form");
+            const loginForm = document.getElementById("user-login-form");
+            const btnReg = document.getElementById("tab-btn-register");
+            const btnLogin = document.getElementById("tab-btn-login");
+
+            if (mode === "login") {
+                regForm.classList.add("hidden");
+                loginForm.classList.remove("hidden");
+                btnLogin.className = "flex-1 py-2.5 rounded-xl vibrant-gradient-cyan text-white text-xs font-black transition flex items-center justify-center gap-2";
+                btnReg.className = "flex-1 py-2.5 rounded-xl text-slate-300 hover:text-white text-xs font-bold transition flex items-center justify-center gap-2";
+                document.getElementById("login-identifier").focus();
+            } else {
+                loginForm.classList.add("hidden");
+                regForm.classList.remove("hidden");
+                btnReg.className = "flex-1 py-2.5 rounded-xl vibrant-gradient text-white text-xs font-black transition flex items-center justify-center gap-2";
+                btnLogin.className = "flex-1 py-2.5 rounded-xl text-slate-300 hover:text-white text-xs font-bold transition flex items-center justify-center gap-2";
+                document.getElementById("reg-fullname").focus();
             }
         }
 
         function updateHeaderGamificationUI() {
             const level = Math.floor(appState.xp / 150) + 1;
-            const progress = ((appState.xp % 150) / 150) * 100;
-            document.getElementById("header-level-badge").textContent = `L${level}`;
-            document.getElementById("header-xp-text").textContent = `${appState.xp} XP`;
-            document.getElementById("header-xp-bar").style.width = `${progress}%`;
-            document.getElementById("header-username").textContent = appState.username;
-            document.getElementById("dash-username").textContent = appState.username;
-            document.getElementById("header-avatar").textContent = appState.username.charAt(0).toUpperCase();
+            const progress = Math.max(8, ((appState.xp % 150) / 150) * 100);
+            const bestWpm = appState.history.length ? Math.max(...appState.history.map(h => h.netWpm)) : 0;
+            const totalTests = appState.history.length;
+            const streakText = `Day ${appState.streak || 1}`;
+
+            const setText = (id, val) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = val;
+            };
+            const setSrc = (id, val) => {
+                const el = document.getElementById(id);
+                if (el) el.src = val;
+            };
+
+            setText("header-level-badge", `L${level}`);
+            setText("header-xp-text", `${appState.xp} XP`);
+            setText("header-streak", streakText);
+            const xpBar = document.getElementById("header-xp-bar");
+            if (xpBar) xpBar.style.width = `${progress}%`;
+
+            // Sync User Name, Handle, Streak & Stats across Header, Global Ribbon, Home Dashboard, Race, Profile & Certificate
+            setText("header-username", appState.username);
+            setText("header-userhandle", appState.userHandle);
+            setSrc("header-avatar-img", appState.userAvatar);
+
+            setText("ribbon-fullname", appState.username);
+            setText("ribbon-handle", appState.userHandle);
+            setText("ribbon-streak", streakText);
+            setText("ribbon-target-exam", appState.userExam);
+            setText("ribbon-best-wpm", `${bestWpm} WPM`);
+            setText("ribbon-tests-count", totalTests);
+            setSrc("ribbon-avatar-img", appState.userAvatar);
+
+            // Home Dashboard Profile Showcase
+            setSrc("dash-profile-avatar", appState.userAvatar);
+            setText("dash-username", appState.username);
+            setText("dash-streak-badge", streakText);
+            setText("dash-handle-badge", appState.userHandle);
+            setText("dash-user-bio", `"${appState.userBio}"`);
+            const dashMeta = document.getElementById("dash-user-meta");
+            if (dashMeta) {
+                dashMeta.innerHTML = `Target Exam: <strong>${appState.userExam}</strong> • Location: <strong>${appState.userLocation}</strong> • Total Tests: <strong>${totalTests}</strong>`;
+            }
+
+            setText("race-user-name", appState.username);
+
+            // Profile Tab Hero & Studio Previews
+            setSrc("profile-hero-avatar", appState.userAvatar);
+            setSrc("studio-avatar-preview", appState.userAvatar);
+            setSrc("modal-avatar-preview", appState.userAvatar);
+
+            setText("profile-hero-name", appState.username);
+            setText("profile-hero-id", `Streak: ${streakText}`);
+            setText("profile-hero-bio", appState.userBio);
+
+            // Sync Certificate Name & Candidate Photo
+            const certNameInput = document.getElementById("cert-name-input");
+            if (certNameInput) certNameInput.value = appState.username;
+            updateCertificatePreview();
+            renderLeaderboardAndBadges();
         }
 
         function generateCertificateFromLastResult() {
-            const last = appState.history[0];
-            if (last) {
-                document.getElementById("cert-display-wpm").textContent = `${last.netWpm} WPM`;
-                document.getElementById("cert-display-acc").textContent = `${last.acc}%`;
-            }
+            updateCertificatePreview();
             switchTab("certificates");
         }
 
         function updateCertificatePreview() {
-            document.getElementById("cert-display-name").textContent = document.getElementById("cert-name-input").value || "Candidate Name";
-            document.getElementById("cert-display-exam").textContent = document.getElementById("cert-exam-input").value;
+            const nameInput = document.getElementById("cert-name-input");
+            const nameVal = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : appState.username;
+
+            const wpmList = appState.history.map(h => h.netWpm);
+            const bestWpm = wpmList.length ? Math.max(...wpmList) : 0;
+            const lastWpm = appState.history.length ? appState.history[0].netWpm : 0;
+            const lastAcc = appState.history.length ? appState.history[0].acc : "100.0";
+            const totalTests = appState.history.length;
+            const grade = bestWpm >= 60 ? "S+ (DISTINCTION)" : bestWpm >= 40 ? "A+ (QUALIFIED)" : bestWpm >= 30 ? "A (PASSED)" : "PRACTICE TIER";
+
+            const setText = (id, val) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = val;
+            };
+
+            setText("cert-display-name", nameVal);
+            const examSel = document.getElementById("cert-exam-input");
+            if (examSel) setText("cert-display-exam", examSel.value);
+
+            setText("cert-display-wpm", `${lastWpm} WPM`);
+            setText("cert-display-best-wpm", `${bestWpm} WPM`);
+            setText("cert-display-acc", `${lastAcc}%`);
+            setText("cert-display-grade", grade);
+            setText("cert-display-tests", totalTests);
+
+            const todayStr = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+            setText("cert-display-date", todayStr);
+
+            // Sync Candidate Profile Picture & Caption onto Official Certificate
+            const certPhoto = document.getElementById("cert-candidate-photo");
+            if (certPhoto) certPhoto.src = appState.userAvatar;
+            setText("cert-photo-caption-name", nameVal);
+            setText("cert-photo-caption-handle", appState.userHandle);
+        }
+
+        function printOfficialCertificate() {
+            updateCertificatePreview();
+            window.print();
+        }
+
+        // Profile Picture Upload & Preset Avatar Studio
+        function handleProfilePhotoUpload(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const dataUrl = ev.target.result;
+                applyUserAvatar(dataUrl);
+                showToast("Profile Photo Updated!", "Your photo is now active across the website and on your Certificate!");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function applyUserAvatar(dataUrl) {
+            appState.userAvatar = dataUrl;
+            persistActiveUserRecord();
+            updateHeaderGamificationUI();
+            renderRegisteredUsersList();
+        }
+
+        function renderAvatarPresets() {
+            const grid = document.getElementById("avatar-presets-grid");
+            if (!grid) return;
+            grid.innerHTML = "";
+            const initials = appState.username
+                .split(" ")
+                .map(p => p[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase() || "KP";
+
+            AVATAR_PRESETS.forEach(p => {
+                const uri = createSvgAvatarDataUri(initials, p.c1, p.c2);
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "w-11 h-11 rounded-xl overflow-hidden border-2 border-white/20 hover:border-cyan-400 hover:scale-110 transition shadow-md";
+                btn.title = p.name;
+                btn.onclick = () => {
+                    applyUserAvatar(uri);
+                    showToast("Avatar Preset Applied", `Switched to ${p.name} avatar.`);
+                };
+                btn.innerHTML = `<img src="${uri}" alt="${p.name}" class="w-full h-full object-cover" />`;
+                grid.appendChild(btn);
+            });
+        }
+
+        function populateRegistrationFormFromState() {
+            const nameInput = document.getElementById("reg-fullname");
+            if (nameInput) nameInput.value = appState.username === "New Candidate" ? "" : appState.username;
+            const handleInput = document.getElementById("reg-handle");
+            if (handleInput) handleInput.value = appState.userHandle === "@aspirant" ? "" : appState.userHandle;
+            const emailInput = document.getElementById("reg-email");
+            if (emailInput) emailInput.value = appState.userEmail || "";
+            const examInput = document.getElementById("reg-exam");
+            if (examInput) examInput.value = appState.userExam;
+            const locInput = document.getElementById("reg-location");
+            if (locInput) locInput.value = appState.userLocation;
+            const bioInput = document.getElementById("reg-bio");
+            if (bioInput) bioInput.value = appState.userBio;
+            renderAvatarPresets();
+            renderRegisteredUsersList();
+        }
+
+        function handleRegisterOrUpdateUser(e) {
+            e.preventDefault();
+            const fullName = document.getElementById("reg-fullname").value.trim();
+            if (!fullName) {
+                showToast("Name Required", "Please enter your full name to register.");
+                return;
+            }
+            let handle = document.getElementById("reg-handle").value.trim() || ("@" + fullName.toLowerCase().replace(/\s+/g, "_"));
+            if (!handle.startsWith("@")) handle = "@" + handle;
+            const email = document.getElementById("reg-email").value.trim();
+            const password = document.getElementById("reg-password").value;
+            const exam = document.getElementById("reg-exam").value;
+            const location = document.getElementById("reg-location").value.trim() || "India";
+            const bio = document.getElementById("reg-bio").value.trim() || "Determined to clear my Typing Skill Test with flying colors!";
+            const langPref = document.getElementById("reg-lang-pref").value;
+
+            // If user hasn't uploaded a custom photo yet, generate personalized initials SVG avatar
+            if (appState.userAvatar.startsWith("data:image/svg+xml")) {
+                const initials = fullName.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+                appState.userAvatar = createSvgAvatarDataUri(initials, "#6366f1", "#ec4899");
+            }
+
+            // Check if this email/handle already exists
+            const existingIdx = appState.registeredUsers.findIndex(
+                u => (u.email && email && u.email.toLowerCase() === email.toLowerCase()) ||
+                     (u.handle && u.handle.toLowerCase() === handle.toLowerCase())
+            );
+
+            // IMPORTANT: New registration starts at Streak = Day 1, 0 XP, fresh history
+            appState.username = fullName;
+            appState.userHandle = handle;
+            appState.userEmail = email;
+            appState.userPassword = password;
+            appState.userExam = exam;
+            appState.userLocation = location;
+            appState.userBio = bio;
+            appState.streak = 1; // Day 1 Streak on registration!
+            appState.xp = existingIdx > -1 ? (appState.registeredUsers[existingIdx].xp || 0) : 0;
+            appState.history = existingIdx > -1 ? (appState.registeredUsers[existingIdx].history || []) : [];
+            appState.weakKeyMap = existingIdx > -1 ? (appState.registeredUsers[existingIdx].weakKeyMap || {}) : {};
+
+            const userObj = {
+                id: "KTP-USER-" + (101 + appState.registeredUsers.length),
+                username: fullName,
+                handle: handle,
+                email: email,
+                password: password,
+                exam: exam,
+                location: location,
+                bio: bio,
+                avatar: appState.userAvatar,
+                streak: appState.streak,
+                xp: appState.xp,
+                history: appState.history,
+                weakKeyMap: appState.weakKeyMap
+            };
+
+            if (existingIdx > -1) {
+                appState.registeredUsers[existingIdx] = userObj;
+            } else {
+                appState.registeredUsers.unshift(userObj);
+            }
+            localStorage.setItem("ktp_registered_users", JSON.stringify(appState.registeredUsers));
+            persistActiveUserRecord();
+
+            // Apply language preference to Typing Test
+            const langSelect = document.getElementById("test-language-select");
+            if (langSelect) langSelect.value = langPref;
+
+            updateHeaderGamificationUI();
+            renderHistoryTable();
+            renderDashboardMetrics();
+            renderAvatarPresets();
+            renderRegisteredUsersList();
+
+            // Launch Home / Dashboard page immediately after registration so user sees their profile!
+            switchTab("dashboard");
+            showToast("Registration Complete! (Streak: Day 1)", `Welcome ${fullName}! Your Home Profile is now live.`);
+        }
+
+        function handleUserLogin(e) {
+            e.preventDefault();
+            const identifier = document.getElementById("login-identifier").value.trim().toLowerCase();
+            const password = document.getElementById("login-password").value;
+
+            const foundIdx = appState.registeredUsers.findIndex(u => {
+                const emailMatch = u.email && u.email.toLowerCase() === identifier;
+                const handleMatch = u.handle && (u.handle.toLowerCase() === identifier || u.handle.toLowerCase() === "@" + identifier);
+                const nameMatch = u.username && u.username.toLowerCase() === identifier;
+                return emailMatch || handleMatch || nameMatch;
+            });
+
+            if (foundIdx === -1) {
+                showToast("Account Not Found", "No registered user matches that Email or Username. Please register first!");
+                return;
+            }
+
+            const user = appState.registeredUsers[foundIdx];
+            if (user.password && user.password !== password) {
+                showToast("Incorrect Password", "The password you entered does not match this account's saved credentials.");
+                return;
+            }
+
+            switchRegisteredUser(foundIdx);
+        }
+
+        function renderRegisteredUsersList() {
+            const container = document.getElementById("registered-users-list");
+            if (!container) return;
+            container.innerHTML = "";
+
+            if (appState.registeredUsers.length === 0) {
+                container.innerHTML = `
+                    <div class="p-3 rounded-xl bg-slate-950/60 border border-white/10 text-slate-400 text-[11px] text-center">
+                        No saved accounts on this device yet. Fill out the registration form to create your profile!
+                    </div>
+                `;
+                return;
+            }
+
+            appState.registeredUsers.forEach((u, idx) => {
+                const isActive = u.username === appState.username && u.handle === appState.userHandle;
+                const best = (u.history && u.history.length) ? Math.max(...u.history.map(h => h.netWpm)) : 0;
+                const testsCount = (u.history && u.history.length) ? u.history.length : 0;
+                const row = document.createElement("div");
+                row.className = `p-2.5 rounded-xl border flex items-center justify-between gap-2 ${isActive ? "bg-fuchsia-500/20 border-fuchsia-400/50" : "bg-slate-950/60 border-white/10"}`;
+                row.innerHTML = `
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <img src="${u.avatar}" alt="${u.username}" class="w-9 h-9 rounded-lg object-cover shrink-0" />
+                        <div class="truncate">
+                            <p class="text-xs font-bold text-white truncate">${u.username}</p>
+                            <p class="text-[10px] font-mono text-cyan-300 truncate">${u.handle} • ${testsCount} Tests • Best: ${best} WPM</p>
+                        </div>
+                    </div>
+                    <button type="button" onclick="switchRegisteredUser(${idx})" class="px-2.5 py-1.5 rounded-lg ${isActive ? "vibrant-gradient text-white" : "bg-white/10 hover:bg-white/20 text-slate-200"} text-[10px] font-bold shrink-0">
+                        ${isActive ? "Logged In" : "Login"}
+                    </button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function switchRegisteredUser(idx) {
+            const u = appState.registeredUsers[idx];
+            if (!u) return;
+            appState.username = u.username;
+            appState.userHandle = u.handle;
+            appState.userEmail = u.email || "";
+            appState.userExam = u.exam || "SSC CGL / CHSL Skill Test";
+            appState.userLocation = u.location || "India";
+            appState.userBio = u.bio || "Focused on clearing my Typing Skill Test!";
+            appState.userAvatar = u.avatar || DEFAULT_AVATAR;
+            appState.streak = u.streak || 1;
+            appState.xp = u.xp || 0;
+            appState.history = Array.isArray(u.history) ? u.history : [];
+            appState.weakKeyMap = u.weakKeyMap || {};
+
+            persistActiveUserRecord();
+            populateRegistrationFormFromState();
+            updateHeaderGamificationUI();
+            renderHistoryTable();
+            renderDashboardMetrics();
+
+            // Launch Home Profile Dashboard so user sees their restored stats immediately
+            switchTab("dashboard");
+            showToast("Welcome Back, " + u.username + "!", `Restored ${appState.history.length} saved tests & Streak Day ${appState.streak}.`);
+        }
+
+        function switchToGuestMode() {
+            appState.username = "Guest Candidate";
+            appState.userHandle = "@guest_mode";
+            appState.userExam = "Open Practice Mode";
+            appState.userLocation = "India";
+            appState.userBio = "Practicing in Guest Mode — Register anytime to save certificates!";
+            appState.userAvatar = createSvgAvatarDataUri("GC", "#06b6d4", "#3b82f6");
+            appState.streak = 1;
+            appState.xp = 0;
+            appState.history = [];
+            populateRegistrationFormFromState();
+            updateHeaderGamificationUI();
+            renderHistoryTable();
+            renderDashboardMetrics();
+            switchTab("dashboard");
+            showToast("Guest Mode Active", "Launched Home Profile in Guest Mode (Streak: Day 1).");
         }
 
         // Theme & Settings Controls
         function setTheme(mode) {
-            document.body.classList.remove("theme-light", "theme-contrast");
+            document.body.classList.remove("theme-light", "theme-contrast", "theme-sunset", "theme-ocean");
             if (mode === "light") document.body.classList.add("theme-light");
             if (mode === "contrast") document.body.classList.add("theme-contrast");
+            if (mode === "sunset") document.body.classList.add("theme-sunset");
+            if (mode === "ocean") document.body.classList.add("theme-ocean");
             appState.theme = mode;
-            showToast("Visual Theme Updated", `Switched to ${mode.toUpperCase()} surface theme.`);
+            showToast("Vibrant Theme Updated", `Switched to ${mode.toUpperCase()} gradient surface.`);
         }
 
         function cycleTheme() {
-            const next = appState.theme === "dark" ? "light" : appState.theme === "light" ? "contrast" : "dark";
+            const order = ["dark", "sunset", "ocean", "light", "contrast"];
+            const next = order[(order.indexOf(appState.theme) + 1) % order.length];
             setTheme(next);
         }
 
@@ -2600,6 +3647,9 @@
         }
 
         function openProfileModal() {
+            document.getElementById("profile-name-input").value = appState.username;
+            document.getElementById("profile-handle-input").value = appState.userHandle;
+            document.getElementById("modal-avatar-preview").src = appState.userAvatar;
             const m = document.getElementById("profile-modal");
             m.classList.remove("hidden");
             m.classList.add("flex");
@@ -2610,14 +3660,21 @@
             m.classList.remove("flex");
         }
         function saveUserProfile() {
-            const name = document.getElementById("profile-name-input").value.trim() || "Gautam Sachdev";
+            const name = document.getElementById("profile-name-input").value.trim() || appState.username;
+            let handle = document.getElementById("profile-handle-input").value.trim() || appState.userHandle;
+            if (!handle.startsWith("@")) handle = "@" + handle;
+            const targetExam = document.getElementById("profile-target-exam").value;
+
             appState.username = name;
-            localStorage.setItem("ktp_username", name);
+            appState.userHandle = handle;
+            appState.userExam = targetExam;
+
+            persistActiveUserRecord();
             document.getElementById("cert-name-input").value = name;
-            updateCertificatePreview();
             updateHeaderGamificationUI();
+            populateRegistrationFormFromState();
             closeProfileModal();
-            showToast("Profile Saved", `Welcome, ${name}!`);
+            showToast("Profile Saved", `Updated identity for ${name} (${handle}) across all pages!`);
         }
 
         function adminSaveParagraph() {
@@ -2703,18 +3760,19 @@
         }
 
         /**************************************************************
-         * 14. INITIALIZE PLATFORM ON WINDOW LOAD
+         * 14. INITIALIZE PLATFORM ON WINDOW LOAD (LAUNCH ON REGISTRATION)
          **************************************************************/
         window.onload = function () {
             renderVirtualKeyboard();
             renderPracticeModules();
             renderGovtExamsGrid();
             renderHistoryTable();
-            renderLeaderboardAndBadges();
+            populateRegistrationFormFromState();
             updateHeaderGamificationUI();
             loadTargetPassage();
             setupTypingListeners();
-            switchTab("typing-test");
+            // Always launch on the Registration & Login Gateway page first as requested
+            switchTab("profile");
         };
     </script>
 </body>
